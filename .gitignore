@@ -11,3 +11,5 @@ dist
 /MyPhotos/
 /certs/
 /projects/
+
+.vercel
