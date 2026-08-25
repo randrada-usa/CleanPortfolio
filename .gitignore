@@ -1,0 +1,13 @@
+node_modules
+build
+.react-router
+.vercel
+.env
+.env.local
+dist
+*.log
+
+# Local source assets (served copies live in public/assets)
+/MyPhotos/
+/certs/
+/projects/

@@ -1,0 +1,37 @@
+{
+  "name": "rey-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "react-router dev",
+    "build": "react-router build",
+    "start": "react-router-serve ./build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+    "typecheck": "react-router typegen && tsc --noEmit",
+    "sanity": "sanity"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "latest",
+    "@react-router/node": "7.18.2",
+    "@react-router/serve": "7.18.2",
+    "@sanity/client": "latest",
+    "clsx": "latest",
+    "framer-motion": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router": "7.18.2",
+    "isbot": "^5"
+  },
+  "devDependencies": {
+    "@react-router/dev": "7.18.2",
+    "@tailwindcss/vite": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vercel/react-router": "latest",
+    "sanity": "5.31.2",
+    "tailwindcss": "latest",
+    "typescript": "^5.9.3",
+    "vite": "latest"
+  }
+}

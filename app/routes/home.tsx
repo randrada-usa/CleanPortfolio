@@ -1,0 +1,215 @@
+import type { MetaFunction } from "react-router";
+import { Link, useLoaderData } from "react-router";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Download, Minus, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  certificationCategories,
+  coreStack,
+  experience,
+  socialLinks,
+  type Certification,
+  type CertificationCategory,
+  type Project,
+} from "~/data/site";
+import { ArrowIcon, Footer, Header, ProjectCard, SocialPill } from "~/components/ui";
+import { getCertifications, getProjects } from "~/lib/content.server";
+
+export async function loader() {
+  const [projects, certifications] = await Promise.all([getProjects(), getCertifications()]);
+  return { projects, certifications };
+}
+
+export const meta: MetaFunction = () => [
+  { title: "Rey Jane Andrada — Backend-Focused Developer & Aspiring Data Engineer" },
+  {
+    name: "description",
+    content:
+      "Backend-focused developer and aspiring data engineer building reliable systems, API integrations, and practical computer-vision experiences.",
+  },
+  { property: "og:title", content: "Rey Jane Andrada — Developer Portfolio" },
+  { property: "og:description", content: "Reliable backend systems, practical applications, and a path toward data engineering." },
+  { property: "og:type", content: "website" },
+];
+
+function AboutStack() {
+  return (
+    <section id="about" className="section about-section">
+      <div className="section-inner about-grid">
+        <div className="about-copy">
+          <p className="kicker">/ABOUT</p>
+          <h2>I like building the parts that keep everything else reliable.</h2>
+          <p>
+            I’m a Computer Science student and backend-focused developer based in the Philippines. My work spans database design,
+            serverless functions, API integrations, secure workflows, and real-world interactive systems. I’m now deepening that
+            foundation as I work toward data engineering.
+          </p>
+          <div className="about-actions">
+            <span className="button button-disabled" aria-disabled="true" title="CV coming soon">
+              Download CV <Download size={17} />
+            </span>
+            <a className="button" href={socialLinks.email}>Email Me <ArrowIcon /></a>
+          </div>
+        </div>
+        <div>
+          <p className="kicker">/CORE STACK</p>
+          <div className="stack-grid">
+            {Object.entries(coreStack).map(([group, items]) => (
+              <div className="stack-group" key={group}>
+                <h3>{group}</h3>
+                <div className="tag-list">{items.map((item) => <span key={item}>{item}</span>)}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProjectsSection({ projects }: { projects: Project[] }) {
+  return (
+    <section id="projects" className="section projects-section">
+      <p className="ghost-word" aria-hidden="true">PROJECTS</p>
+      <div className="section-inner">
+        <h2 className="section-heading">/SELECTED PROJECTS</h2>
+        <div className="project-grid">
+          {projects.map((project, index) => <ProjectCard key={project.slug} project={project} priority={index === 0} />)}
+        </div>
+        <div className="center-action"><Link className="button" to="/projects">View All Projects <ArrowIcon /></Link></div>
+      </div>
+    </section>
+  );
+}
+
+const categoryCopy: Record<CertificationCategory, string> = {
+  "Data & Analytics": "Credentials in data analysis, SQL, data engineering, and data science foundations.",
+  "Artificial Intelligence": "Practical AI foundations, responsible use, prompt fluency, and generative-AI workflows.",
+  "Cloud & Development": "Cloud, Python, containers, and the infrastructure foundations behind reliable software.",
+  "Software & Tools": "Developer workflows, collaboration tools, and user-experience foundations.",
+  "Hackathons & Events": "Rapid building, community participation, workshops, and collaborative technology events.",
+};
+
+function CertificationsSection({ certifications }: { certifications: Certification[] }) {
+  const [open, setOpen] = useState<CertificationCategory | null>("Data & Analytics");
+  useEffect(() => {
+    const smallScreen = window.matchMedia("(max-width: 640px)");
+    if (smallScreen.matches) setOpen(null);
+  }, []);
+
+  return (
+    <section id="certifications" className="section certifications-section">
+      <p className="ghost-word" aria-hidden="true">CERTIFICATIONS</p>
+      <div className="section-inner">
+        <h2 className="section-heading">/CERTIFICATIONS</h2>
+        <div className="cert-accordion">
+          {certificationCategories.map((category) => {
+            const active = open === category;
+            const items = certifications.filter((item) => item.category === category);
+            return (
+              <motion.div layout className={`cert-row ${active ? "open" : ""}`} key={category}>
+                <button
+                  className="cert-row-button"
+                  aria-expanded={active}
+                  onClick={() => setOpen(active ? null : category)}
+                >
+                  <span>{category.toUpperCase()}</span>
+                  {active ? <Minus aria-hidden="true" /> : <ArrowUpRight aria-hidden="true" />}
+                </button>
+                <AnimatePresence initial={false}>
+                  {active && (
+                    <motion.div
+                      className="cert-row-content"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                    >
+                      <div className="cert-row-copy">
+                        <p>{categoryCopy[category]}<br />{items.slice(0, 5).map((item) => item.title).join(", ")}.</p>
+                        <Link className="button button-light" to={`/certifications?category=${encodeURIComponent(category)}`}>
+                          View More <ArrowIcon />
+                        </Link>
+                      </div>
+                      <img className="cert-preview" src={items[0].image} alt="" aria-hidden="true" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </div>
+        <div className="center-action"><Link className="button" to="/certifications">View All 25 <ArrowIcon /></Link></div>
+      </div>
+    </section>
+  );
+}
+
+function ExperienceSection() {
+  const [hovered, setHovered] = useState<string | null>(null);
+  return (
+    <section id="experience" className="section experience-section">
+      <p className="ghost-word" aria-hidden="true">EXPERIENCE</p>
+      <div className="section-inner">
+        <div className="experience-top">
+          <h2 className="section-heading">/EXPERIENCE</h2>
+          <p className="experience-tagline">Building &amp; leading since 2023</p>
+        </div>
+        <div className="experience-list">
+          {experience.map((item) => (
+            <div
+              className="experience-row"
+              key={`${item.organization}-${item.role}`}
+              onMouseEnter={() => setHovered(item.role)}
+              onMouseLeave={() => setHovered(null)}
+            >
+              <div><h3>{item.organization}</h3><p>{item.role}</p></div>
+              <time>{item.dates}</time>
+              <AnimatePresence>
+                {hovered === item.role && item.image && (
+                  <motion.img
+                    className="experience-hover"
+                    src={item.image}
+                    alt=""
+                    initial={{ opacity: 0, scale: .9, rotate: 2 }}
+                    animate={{ opacity: 1, scale: 1, rotate: 6 }}
+                    exit={{ opacity: 0, scale: .94 }}
+                  />
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function Home() {
+  const { projects, certifications } = useLoaderData<typeof loader>();
+  return (
+    <main>
+      <section className="hero" id="home">
+        <Header />
+        <h1 className="hero-name" aria-label="Rey Jane Andrada">
+          <span className="name-outline">REY JANE</span><span className="name-solid">ANDRADA</span>
+        </h1>
+        <img className="hero-photo" src="/assets/photos/063d74f9-f3e3-4fdc-b05a-a969275ddb9a.png" alt="Rey Jane Andrada holding a laptop" />
+        <div className="hero-copy">
+          <h1>Backend-Focused Developer<br />Aspiring Data Engineer</h1>
+          <p>I build reliable backend systems and practical applications—then keep learning toward the data platforms behind them.</p>
+          <a className="button button-dark" href={socialLinks.email}>Let’s Work Together <ArrowIcon /></a>
+        </div>
+        <div className="hero-socials">
+          <SocialPill type="github" label="GitHub" />
+          <SocialPill type="linkedin" label="LinkedIn" />
+          <SocialPill type="email" label="Email" />
+        </div>
+      </section>
+      <AboutStack />
+      <ProjectsSection projects={projects} />
+      <CertificationsSection certifications={certifications} />
+      <ExperienceSection />
+      <Footer />
+    </main>
+  );
+}
