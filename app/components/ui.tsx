@@ -18,10 +18,10 @@ export function Availability({ compact = false }: { compact?: boolean }) {
 }
 
 const navLinks = [
-  ["Projects [03]", "/#projects"],
-  ["Certifications [25]", "/#certifications"],
-  ["Experience", "/#experience"],
-  ["Contact", "/#contact"],
+  { label: "Projects", count: "[03]", href: "/#projects" },
+  { label: "Certifications", count: "[25]", href: "/#certifications" },
+  { label: "Experience", count: "[05]", href: "/#experience" },
+  { label: "Contact", count: null, href: "/#contact" },
 ] as const;
 
 export function Header({ inner = false }: { inner?: boolean }) {
@@ -43,9 +43,9 @@ export function Header({ inner = false }: { inner?: boolean }) {
       <div className="header-inner">
         {inner ? <Link className="back-pill" to="/">← Back</Link> : <Availability compact />}
         <nav className="desktop-nav" aria-label="Primary navigation">
-          {navLinks.map(([label, href]) => <a key={label} href={href}>{label}</a>)}
+          {navLinks.map(({ label, count, href }) => <a key={label} href={href}>{label}{count && <small>{count}</small>}</a>)}
         </nav>
-        {!inner && <a className="button button-dark header-cta" href={socialLinks.email}>Let’s Talk <ArrowIcon /></a>}
+        {!inner && <a className="button header-cta" href={socialLinks.email}>Let’s talk</a>}
         {inner && <Availability compact />}
         {!inner && (
           <button className="menu-trigger" onClick={() => setOpen(true)} aria-label="Open menu">
@@ -58,7 +58,7 @@ export function Header({ inner = false }: { inner?: boolean }) {
           <motion.div className="mobile-menu" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
             <button onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
             <nav aria-label="Mobile navigation">
-              {navLinks.map(([label, href], index) => <a key={label} href={href}><span>0{index + 1}</span>{label}</a>)}
+              {navLinks.map(({ label, href }, index) => <a key={label} href={href}><span>0{index + 1}</span>{label}</a>)}
             </nav>
             <a className="button button-light" href={socialLinks.email}>Let’s Talk <ArrowIcon /></a>
           </motion.div>
