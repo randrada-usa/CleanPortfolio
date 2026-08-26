@@ -2,7 +2,7 @@ import type { MetaFunction } from "react-router";
 import { Download, ExternalLink, FileText } from "lucide-react";
 import { Header, PageFooter, Reveal } from "~/components/ui";
 
-const cvPdf = "/assets/cv/Rey-Jane-Andrada-CV-2026-08.pdf";
+const cvPdf = "/assets/cv/Rey-Jane-Andrada-CV.pdf";
 
 export function headers() {
   return { "Cache-Control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400" };
