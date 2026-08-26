@@ -36,6 +36,7 @@ export type Certification = {
 
 const projectAsset = (name: string) => `/assets/projects/${name}`;
 const certAsset = (name: string) => `/assets/certs/${name}`;
+const experienceAsset = (name: string) => `/assets/experiences/${name}`;
 
 export const projects: Project[] = [
   {
@@ -68,7 +69,7 @@ export const projects: Project[] = [
     title: "Iloilo Farmers Hub",
     eyebrow: "Digital Marketplace",
     summary: "A secure marketplace connecting Iloilo farmers directly with local consumers.",
-    image: projectAsset("IFC-v2.webp"),
+    image: projectAsset("IFC-v3.webp"),
     liveUrl: "https://iloilo-farmers-hub.web.app/",
     githubUrl: "https://github.com/randrada-usa",
     tags: ["React", "TypeScript", "Firebase", "Computer Vision"],
@@ -94,7 +95,7 @@ export const projects: Project[] = [
     title: "e-Serbisyo Rizal",
     eyebrow: "Digital Governance Platform",
     summary: "A bilingual AI-assisted platform for digital barangay services.",
-    image: projectAsset("e-serbisyo-rizal-v2.webp"),
+    image: projectAsset("e-serbisyo-rizal-v3.webp"),
     liveUrl: "https://eserbisyorizalv2.web.app/",
     githubUrl: "https://github.com/randrada-usa",
     tags: ["React", "TypeScript", "Firebase", "Gemini API"],
@@ -175,11 +176,11 @@ export const certificationCategories: CertificationCategory[] = [
 ];
 
 export const experience = [
-  { organization: "Institute of Computer Science", role: "Vice President for Technology", dates: "June 2026–Present" },
-  { organization: "Augustinian Developers Society", role: "Web Development Lead", dates: "June 2026–Present" },
-  { organization: "6-BYTE Studios", role: "CEO / Full-Stack Developer", dates: "June 2025–Present", image: projectAsset("wave-and-wish.webp") },
-  { organization: "Holotech Society", role: "Vice Chairperson — External", dates: "June 2025–2026" },
-  { organization: "Augustinian Developers Society", role: "Senior Developer", dates: "Aug 2025–2026" },
+  { organization: "Institute of Computer Science", role: "Vice President for Technology", dates: "June 2026–Present", image: experienceAsset("institute-of-computer-science.webp") },
+  { organization: "Augustinian Developers Society", role: "Web Development Lead", dates: "June 2026–Present", image: experienceAsset("ads-web-development-lead.webp") },
+  { organization: "6-BYTE Studios", role: "CEO / Full-Stack Developer", dates: "June 2025–Present", image: experienceAsset("6-byte-studios.webp") },
+  { organization: "Holotech Society", role: "Vice Chairperson — External", dates: "June 2025–2026", image: experienceAsset("holotech-society.webp") },
+  { organization: "Augustinian Developers Society", role: "Senior Developer", dates: "Aug 2025–2026", image: experienceAsset("ads-senior-developer.webp") },
 ];
 
 export const coreStack = {
