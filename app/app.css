@@ -143,7 +143,7 @@ img { display: block; max-width: 100%; }
 .experience-row h3 { margin: 0 0 .62rem; font-size: 1.28rem; font-weight: 600; }
 .experience-row p { margin: 0; color: #c1c1bf; font-size: 1.06rem; }
 .experience-row time { align-self: center; color: #c8c8c6; font-size: 1.02rem; }
-.experience-hover { position: absolute; z-index: 5; right: 31%; top: 50%; width: min(29vw, 400px); aspect-ratio: 16 / 9; object-fit: cover; border: 8px solid #e8e8e4; box-shadow: 0 20px 42px rgba(0,0,0,.4); transform: translateY(-50%) rotate(6deg); pointer-events: none; }
+.experience-hover { position: absolute; z-index: 5; right: 31%; top: 50%; width: min(29vw, 400px); aspect-ratio: 16 / 9; object-fit: cover; border: 8px solid #e8e8e4; box-shadow: 0 20px 42px rgba(0,0,0,.4); transform: translateY(-72%) rotate(6deg); pointer-events: none; }
 
 .contact-section { position: relative; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 7rem 5vw 2.5rem; text-align: center; background:
   radial-gradient(circle at 20% 80%, rgba(0,0,0,.025), transparent 31%),
