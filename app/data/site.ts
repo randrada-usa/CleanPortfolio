@@ -155,15 +155,15 @@ export const certifications: Certification[] = [
   cert("Python Essentials 1", "Cisco", "Cloud & Development", "CISCO Python Essentials 1.webp", "Core Python syntax, control flow, data structures, and functions."),
   cert("Docker & Kubernetes", "Course Certificate", "Cloud & Development", "Containerization and Virtualization with Docker and Kubernetes.webp", "Containerization, virtualization, and orchestration foundations."),
   cert("GitHub Foundations", "DataCamp", "Software & Tools", "DataCamp Github Foundations Course.webp", "Version control and collaborative development workflows on GitHub."),
-  cert("A.IGNITE", "Event Certificate", "Hackathons & Events", "A.IGNITE.webp", "Participation in an applied AI learning event."),
+  cert("A.IGNITE", "Event Certificate", "Artificial Intelligence", "A.IGNITE.webp", "Participation in an applied AI learning event."),
   cert("AIFEST", "Event Certificate", "Hackathons & Events", "AIFEST.webp", "Participation in an artificial-intelligence festival and challenge."),
-  cert("Chain of Thought", "Event Certificate", "Hackathons & Events", "Chain of Thought.webp", "Participation in a technology and AI learning program."),
+  cert("Chain of Thought", "Event Certificate", "Artificial Intelligence", "Chain of Thought.webp", "Participation in a technology and AI learning program."),
   cert("SIKAPTALA National Hackathon", "SIKAPTALA", "Hackathons & Events", "SIKAPTALA National Hackathon.webp", "National hackathon participation and collaborative product building."),
   cert("Ready, Spark, Charge 2026", "Hackathon", "Hackathons & Events", "Ready, Spark, Charge 2026 Hackathon.webp", "Rapid team-based ideation and software prototyping."),
-  cert("AI Hackathon Workshop — Part 1", "Workshop", "Hackathons & Events", "AI Hackathon Workshop 1.webp", "Hands-on preparation for AI-focused hackathon development."),
-  cert("AI Hackathon Workshop — Part 2", "Workshop", "Hackathons & Events", "AI Hackathon Workshop 2.webp", "Advanced applied preparation for AI-focused hackathon work."),
+  cert("AI Workshop: Human Centric AI & Problem Solving", "Workshop", "Hackathons & Events", "AI Hackathon Workshop 1.webp", "Hands-on preparation for AI-focused hackathon development."),
+  cert("AI Workshop: Technical Architecture & Data Ethics", "Workshop", "Hackathons & Events", "AI Hackathon Workshop 2.webp", "Advanced applied preparation for AI-focused hackathon work."),
   cert("UX Western Visayas", "UX Western Visayas", "Software & Tools", "UIUX.webp", "Community learning in user experience and interface design."),
-  cert("Augustinian Developers Society", "Developer Community", "Hackathons & Events", "GDSC.webp", "Participation and contribution within a student developer community."),
+  cert("Augustinian Developers Society", "Developer Community", "Cloud & Development", "GDSC.webp", "Participation and contribution within a student developer community."),
 ];
 
 export const certificationCategories: CertificationCategory[] = [

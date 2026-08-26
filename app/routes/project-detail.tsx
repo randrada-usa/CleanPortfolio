@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "react-router";
 import { Code2, ExternalLink } from "lucide-react";
 import { useLoaderData } from "react-router";
-import { Header, PageFooter, ProjectCard } from "~/components/ui";
+import { Header, PageFooter, ProjectCard, Reveal } from "~/components/ui";
 import { getProjects } from "~/lib/content.server";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -28,7 +28,7 @@ export default function ProjectDetail() {
   return (
     <main className="detail-page">
       <Header inner />
-      <div className="detail-main">
+      <Reveal className="detail-main" amount={0.02}>
         <section className="detail-hero">
           <div className="detail-tags tag-list"><span>{project.projectType}</span><span>{project.team}</span></div>
           <div className="detail-title">
@@ -66,7 +66,7 @@ export default function ProjectDetail() {
           <h2>/MORE PROJECTS</h2>
           <div className="project-grid">{related.map((item) => <ProjectCard key={item.slug} project={item} />)}</div>
         </section>
-      </div>
+      </Reveal>
       <PageFooter />
     </main>
   );

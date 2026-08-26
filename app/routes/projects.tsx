@@ -2,7 +2,7 @@ import type { MetaFunction } from "react-router";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useLoaderData } from "react-router";
-import { Header, PageFooter, ProjectCard } from "~/components/ui";
+import { Header, PageFooter, ProjectCard, Reveal } from "~/components/ui";
 import { getProjects } from "~/lib/content.server";
 
 export async function loader() { return getProjects(); }
@@ -26,7 +26,7 @@ export default function ProjectsArchive() {
   return (
     <main className="archive-page">
       <Header inner />
-      <div className="archive-main">
+      <Reveal className="archive-main" amount={0.02}>
         <h1 className="archive-title">/PROJECTS</h1>
         <p className="archive-count">{projects.length} projects</p>
         <div className="search-row">
@@ -39,7 +39,7 @@ export default function ProjectsArchive() {
         <div className="archive-grid">
           {filtered.length ? filtered.map((project) => <ProjectCard key={project.slug} project={project} />) : <p className="empty-state">No projects match that search.</p>}
         </div>
-      </div>
+      </Reveal>
       <PageFooter />
     </main>
   );

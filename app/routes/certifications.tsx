@@ -2,7 +2,7 @@ import type { MetaFunction } from "react-router";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useLoaderData, useSearchParams } from "react-router";
-import { CertificationCard, Header, PageFooter } from "~/components/ui";
+import { CertificationCard, Header, PageFooter, Reveal } from "~/components/ui";
 import { certificationCategories, type CertificationCategory } from "~/data/site";
 import { getCertifications } from "~/lib/content.server";
 
@@ -39,7 +39,7 @@ export default function CertificationsArchive() {
   return (
     <main className="archive-page">
       <Header inner />
-      <div className="archive-main">
+      <Reveal className="archive-main" amount={0.02}>
         <h1 className="archive-title">/CERTIFICATIONS</h1>
         <p className="archive-count">{certifications.length} certifications</p>
         <div className="search-row">
@@ -56,7 +56,7 @@ export default function CertificationsArchive() {
         <div className="archive-grid">
           {filtered.length ? filtered.map((item) => <CertificationCard key={item.slug} certification={item} />) : <p className="empty-state">No certifications match that search.</p>}
         </div>
-      </div>
+      </Reveal>
       <PageFooter />
     </main>
   );
