@@ -55,17 +55,12 @@ img { display: block; max-width: 100%; }
 .mobile-menu {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   padding: 2rem 1.5rem;
   color: white;
-  background: #1c1c1c;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  will-change: opacity;
+  background: #181818;
   touch-action: manipulation;
   overscroll-behavior: contain;
 }

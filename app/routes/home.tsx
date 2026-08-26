@@ -194,14 +194,10 @@ function ExperienceSection() {
           <p className="experience-tagline">Building &amp; leading since 2023</p>
         </div>
         <div className="experience-list">
-          {experience.map((item, index) => (
-            <motion.div
+          {experience.map((item) => (
+            <div
               className="experience-row"
               key={`${item.organization}-${item.role}`}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: "some", margin: "0px 0px -30px 0px" }}
-              transition={{ duration: 0.62, delay: index * 0.065, ease: [0.22, 1, 0.36, 1] }}
               onMouseEnter={() => setHovered(item.role)}
               onMouseLeave={() => setHovered(null)}
             >
@@ -219,7 +215,7 @@ function ExperienceSection() {
                   />
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           ))}
         </div>
       </Reveal>

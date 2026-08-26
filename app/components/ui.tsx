@@ -1,7 +1,8 @@
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Code2, Link2, Mail, Menu, X } from "lucide-react";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router";
 import type { Certification, Project } from "~/data/site";
 import { socialLinks } from "~/data/site";
@@ -13,9 +14,6 @@ export function ArrowIcon() {
 export function Reveal({
   children,
   className,
-  delay = 0,
-  amount = "some",
-  distance = 18,
 }: {
   children: ReactNode;
   className?: string;
@@ -23,25 +21,7 @@ export function Reveal({
   amount?: number | "some" | "all";
   distance?: number;
 }) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
-  const hidden = distance ? { opacity: 0, y: distance } : { opacity: 0 };
-  const visible = distance ? { opacity: 1, y: 0 } : { opacity: 1 };
-  return (
-    <motion.div
-      className={className}
-      initial={hidden}
-      whileInView={visible}
-      viewport={{ once: true, amount: amount ?? "some", margin: "0px 0px -30px 0px" }}
-      transition={{ duration: 0.68, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className={className}>{children}</div>;
 }
 
 export function Availability({ compact = false }: { compact?: boolean }) {
@@ -62,9 +42,16 @@ const navLinks = [
 export function Header({ inner = false }: { inner?: boolean }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const location = useLocation();
 
-  useEffect(() => setOpen(false), [location.pathname, location.hash]);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname, location.hash]);
 
   useEffect(() => {
     if (inner) return;
@@ -73,21 +60,6 @@ export function Header({ inner = false }: { inner?: boolean }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [inner]);
-
-  // Prevent background scroll and layout jitter when mobile menu is open
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-      document.body.style.touchAction = "none";
-    } else {
-      document.body.style.overflow = "";
-      document.body.style.touchAction = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-      document.body.style.touchAction = "";
-    };
-  }, [open]);
 
   return (
     <>
@@ -106,31 +78,36 @@ export function Header({ inner = false }: { inner?: boolean }) {
           )}
         </div>
       </header>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-          >
-            <button type="button" onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
-            <nav className="mobile-navigation" aria-label="Mobile navigation">
-              {navLinks.map(({ label, href }, index) => (
-                <a
-                  key={label}
-                  href={href}
-                  onClick={() => setOpen(false)}
-                >
-                  <span>0{index + 1}</span>{label}
-                </a>
-              ))}
-            </nav>
-            <a className="button button-light" href={socialLinks.email} onClick={() => setOpen(false)}>Let’s Talk <ArrowIcon /></a>
-          </motion.div>
+
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                className="mobile-menu"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                <button type="button" onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
+                <nav className="mobile-navigation" aria-label="Mobile navigation">
+                  {navLinks.map(({ label, href }, index) => (
+                    <a
+                      key={label}
+                      href={href}
+                      onClick={() => setOpen(false)}
+                    >
+                      <span>0{index + 1}</span>{label}
+                    </a>
+                  ))}
+                </nav>
+                <a className="button button-light" href={socialLinks.email} onClick={() => setOpen(false)}>Let’s Talk <ArrowIcon /></a>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </>
   );
 }
@@ -145,35 +122,11 @@ export function SocialPill({ type, label }: { type: keyof typeof socialLinks; la
 }
 
 export function ProjectCard({ project, priority = false }: { project: Project; priority?: boolean }) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    return (
-      <article className="project-card">
-        <Link to={`/projects/${project.slug}`} aria-label={`View ${project.title}`}>
-          <div className="card-media">
-            <img src={project.image} alt={`${project.title} interface`} loading={priority ? "eager" : "lazy"} />
-            <span className="card-label">{project.eyebrow}</span>
-            <span className="card-arrow"><ArrowIcon /></span>
-          </div>
-          <div className="card-body">
-            <h3>{project.title}</h3>
-            <p>{project.summary}</p>
-            <div className="tag-list">{project.tags.slice(0, 4).map((tag) => <span key={tag}>{tag}</span>)}</div>
-          </div>
-        </Link>
-      </article>
-    );
-  }
-
   return (
     <motion.article
       className="project-card"
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: "some", margin: "0px 0px -30px 0px" }}
       whileHover={{ y: -6 }}
-      transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.25 }}
     >
       <Link to={`/projects/${project.slug}`} aria-label={`View ${project.title}`}>
         <div className="card-media">
@@ -192,28 +145,11 @@ export function ProjectCard({ project, priority = false }: { project: Project; p
 }
 
 export function CertificationCard({ certification }: { certification: Certification }) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    return (
-      <article className="cert-card">
-        <Link to={`/certifications/${certification.slug}`} aria-label={`View ${certification.title}`}>
-          <div className="cert-media"><img src={certification.image} alt={`${certification.title} certificate`} loading="lazy" /></div>
-          <h3>{certification.title}</h3>
-          <div className="tag-list"><span>{certification.category}</span><span>{certification.issuer}</span></div>
-        </Link>
-      </article>
-    );
-  }
-
   return (
     <motion.article
       className="cert-card"
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: "some", margin: "0px 0px -30px 0px" }}
       whileHover={{ y: -5 }}
-      transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.22 }}
     >
       <Link to={`/certifications/${certification.slug}`} aria-label={`View ${certification.title}`}>
         <div className="cert-media"><img src={certification.image} alt={`${certification.title} certificate`} loading="lazy" /></div>
