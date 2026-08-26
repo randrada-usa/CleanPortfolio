@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import type { Certification, Project } from "~/data/site";
 import { socialLinks } from "~/data/site";
-import contactAvatar from "../../MyPhotos/DSC_5066.JPG";
 
 export function ArrowIcon() {
   return <ArrowUpRight aria-hidden="true" size={18} strokeWidth={1.7} />;
@@ -155,7 +154,7 @@ export function Footer() {
         <a className="button button-dark" href={socialLinks.email}>Contact Me <ArrowIcon /></a>
       </Reveal>
       <Reveal className="footer-links" delay={0.08}>
-        <span className="identity-pill"><img src={contactAvatar} alt="" /> Rey Jane Andrada</span>
+        <span className="identity-pill"><img src="/assets/photos/contact-avatar.webp" alt="" /> Rey Jane Andrada</span>
         <SocialPill type="github" label="GitHub" />
         <SocialPill type="linkedin" label="LinkedIn" />
         <SocialPill type="email" label="Email" />
