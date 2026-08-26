@@ -59,7 +59,6 @@ function AboutStack() {
           </p>
           <div className="about-actions">
             <Link className="button button-dark" to="/cv" prefetch="intent">View CV <ArrowIcon /></Link>
-            <a className="button" href={socialLinks.email}>Email Me <ArrowIcon /></a>
           </div>
         </div>
         <div>
