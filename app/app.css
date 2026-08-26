@@ -71,7 +71,7 @@ img { display: block; max-width: 100%; }
   }
   .site-header:not(.inner-header).scrolled {
     top: .65rem;
-    width: min(440px, calc(100% - 2rem));
+    width: min(460px, calc(100% - 2rem));
     padding: .4rem;
     border-color: rgba(0,0,0,.1);
     border-radius: 999px;
@@ -94,7 +94,7 @@ img { display: block; max-width: 100%; }
   .site-header:not(.inner-header) .availability { max-width: 260px; }
   .site-header:not(.inner-header) .header-cta { max-width: 160px; }
   .site-header:not(.inner-header).scrolled .header-inner { grid-template-columns: 0fr auto 0fr; }
-  .site-header:not(.inner-header).scrolled .desktop-nav { justify-content: center; gap: .35rem; font-size: .96rem; }
+  .site-header:not(.inner-header).scrolled .desktop-nav { justify-content: center; gap: .75rem; font-size: .96rem; }
   .site-header:not(.inner-header).scrolled .desktop-nav a { z-index: 0; align-items: center; justify-content: center; min-height: 38px; padding: .48rem .82rem; border-radius: 999px; transition: color .25s ease, background-color .25s ease; }
   .site-header:not(.inner-header).scrolled .desktop-nav a::before,
   .site-header:not(.inner-header).scrolled .desktop-nav a::after { display: none; }
