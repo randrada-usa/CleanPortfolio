@@ -51,11 +51,27 @@ img { display: block; max-width: 100%; }
 .header-cta { justify-self: end; min-height: 48px; padding-inline: 1.42rem; color: white; background: #1e1e1e; border-color: #343434; font-size: .98rem; font-weight: 550; box-shadow: none; }
 .back-pill { justify-self: start; min-height: 44px; padding: .68rem 1.12rem; font-size: .92rem; font-weight: 600; box-shadow: none; }
 .inner-header .availability { justify-self: end; }
-.menu-trigger { display: none; margin-left: auto; padding: .35rem; border: 0; background: transparent; }
-.mobile-menu { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; padding: 2rem; color: white; background: #202020; }
-.mobile-menu > button { align-self: end; color: white; border: 0; background: none; }
+.menu-trigger { display: none; margin-left: auto; padding: .45rem; border: 0; background: transparent; color: inherit; cursor: pointer; touch-action: manipulation; }
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  color: white;
+  background: #1c1c1c;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: opacity;
+  touch-action: manipulation;
+  overscroll-behavior: contain;
+}
+.mobile-menu > button { align-self: end; padding: .5rem; color: white; border: 0; background: none; cursor: pointer; touch-action: manipulation; }
 .mobile-menu nav { display: grid; margin: auto 0; }
-.mobile-menu nav a { display: flex; gap: 1rem; align-items: baseline; padding: 1rem 0; border-bottom: 1px solid #444; font-size: clamp(2rem, 12vw, 4rem); }
+.mobile-menu nav a { display: flex; gap: 1rem; align-items: baseline; padding: 1rem 0; border-bottom: 1px solid #383838; font-size: clamp(2rem, 12vw, 4rem); -webkit-tap-highlight-color: transparent; }
 .mobile-menu nav span { color: #777; font-size: .7rem; }
 .mobile-menu .button { align-self: start; }
 

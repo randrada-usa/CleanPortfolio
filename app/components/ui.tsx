@@ -65,6 +65,7 @@ export function Header({ inner = false }: { inner?: boolean }) {
   const location = useLocation();
 
   useEffect(() => setOpen(false), [location.pathname, location.hash]);
+
   useEffect(() => {
     if (inner) return;
     const onScroll = () => setScrolled(window.scrollY > 90);
@@ -72,6 +73,21 @@ export function Header({ inner = false }: { inner?: boolean }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [inner]);
+
+  // Prevent background scroll and layout jitter when mobile menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    };
+  }, [open]);
 
   return (
     <>
@@ -84,7 +100,7 @@ export function Header({ inner = false }: { inner?: boolean }) {
           {!inner && <a className="button header-cta" href={socialLinks.email}>Let’s talk</a>}
           {inner && <Availability compact />}
           {!inner && (
-            <button className="menu-trigger" onClick={() => setOpen(true)} aria-label="Open menu">
+            <button className="menu-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open menu">
               <Menu />
             </button>
           )}
@@ -92,12 +108,26 @@ export function Header({ inner = false }: { inner?: boolean }) {
       </header>
       <AnimatePresence>
         {open && (
-          <motion.div className="mobile-menu" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
-            <button onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
+          <motion.div
+            className="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+          >
+            <button type="button" onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
             <nav className="mobile-navigation" aria-label="Mobile navigation">
-              {navLinks.map(({ label, href }, index) => <a key={label} href={href}><span>0{index + 1}</span>{label}</a>)}
+              {navLinks.map(({ label, href }, index) => (
+                <a
+                  key={label}
+                  href={href}
+                  onClick={() => setOpen(false)}
+                >
+                  <span>0{index + 1}</span>{label}
+                </a>
+              ))}
             </nav>
-            <a className="button button-light" href={socialLinks.email}>Let’s Talk <ArrowIcon /></a>
+            <a className="button button-light" href={socialLinks.email} onClick={() => setOpen(false)}>Let’s Talk <ArrowIcon /></a>
           </motion.div>
         )}
       </AnimatePresence>
