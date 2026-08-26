@@ -46,7 +46,9 @@ img { display: block; max-width: 100%; }
 .desktop-nav a { position: relative; display: inline-flex; align-items: baseline; gap: .38rem; }
 .desktop-nav small { color: #aaa; font-size: .7rem; font-weight: 550; }
 .desktop-nav a::after { content: ""; position: absolute; height: 1px; left: 0; right: 100%; bottom: -.35rem; background: currentColor; transition: right .25s; }
-.desktop-nav a:hover::after { right: 0; }
+.desktop-nav a::before { content: ""; position: absolute; top: -.65rem; left: 50%; width: 5px; height: 5px; border-radius: 50%; background: var(--green); opacity: 0; transform: translate(-50%, 4px) scale(.5); transition: opacity .25s ease, transform .3s cubic-bezier(.22,1,.36,1); }
+.desktop-nav a:hover::after, .desktop-nav a.is-active::after { right: 0; }
+.desktop-nav a.is-active::before { opacity: 1; transform: translate(-50%, 0) scale(1); }
 .header-cta { justify-self: end; min-height: 48px; padding-inline: 1.42rem; color: white; background: #1e1e1e; border-color: #343434; font-size: .98rem; font-weight: 550; box-shadow: none; }
 .back-pill { justify-self: start; min-height: 44px; padding: .68rem 1.12rem; font-size: .92rem; font-weight: 600; box-shadow: none; }
 .inner-header .availability { justify-self: end; }
@@ -235,6 +237,22 @@ img { display: block; max-width: 100%; }
 .meta-item strong { font-size: 1.2rem; }
 .detail-image { width: 100%; max-height: 78vh; object-fit: cover; border: 1px solid #ddd; background: white; }
 .certificate-detail-image { object-fit: contain; padding: 1rem; }
+.private-dialog-overlay { position: fixed; z-index: 1000; inset: 0; background: rgba(15,15,15,.48); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.private-dialog-content { position: fixed; z-index: 1001; top: 50%; left: 50%; width: min(500px, calc(100% - 2rem)); padding: 2.2rem; border: 1px solid rgba(255,255,255,.1); border-radius: 26px; color: white; background: #242424; box-shadow: 0 28px 80px rgba(0,0,0,.32); transform: translate(-50%, -50%); }
+.private-dialog-overlay[data-state="open"] { animation: dialog-overlay-in .25s ease-out; }
+.private-dialog-overlay[data-state="closed"] { animation: dialog-overlay-out .2s ease-in; }
+.private-dialog-content[data-state="open"] { animation: private-dialog-in .35s cubic-bezier(.22,1,.36,1); }
+.private-dialog-content[data-state="closed"] { animation: private-dialog-out .2s ease-in; }
+.private-dialog-close { position: absolute; top: 1rem; right: 1rem; display: grid; width: 40px; height: 40px; place-items: center; padding: 0; border: 1px solid #4b4b4b; border-radius: 50%; color: white; background: transparent; cursor: pointer; transition: color .2s, background-color .2s, transform .2s; }
+.private-dialog-close:hover { color: #222; background: white; transform: rotate(4deg); }
+.private-dialog-label { display: inline-flex; margin-bottom: 2rem; padding: .48rem .72rem; border: 1px solid #4c4c4c; border-radius: 999px; color: #cfcfcd; font-size: .72rem; font-weight: 650; letter-spacing: .08em; }
+.private-dialog-content h2 { max-width: 390px; margin: 0; font-size: clamp(2rem, 5vw, 3.2rem); line-height: .98; letter-spacing: -.055em; }
+.private-dialog-content p { margin: 1.35rem 0 2rem; color: #c9c9c6; font-size: 1rem; line-height: 1.7; }
+.private-dialog-action { min-width: 132px; color: #1d1d1d; background: white; border-color: white; cursor: pointer; }
+@keyframes dialog-overlay-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dialog-overlay-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes private-dialog-in { from { opacity: 0; transform: translate(-50%, calc(-50% + 18px)) scale(.97); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes private-dialog-out { from { opacity: 1; transform: translate(-50%, -50%) scale(1); } to { opacity: 0; transform: translate(-50%, calc(-50% + 10px)) scale(.985); } }
 .case-study { display: grid; grid-template-columns: .7fr 1.3fr; gap: 8vw; padding: 8rem 0; }
 .case-study h2 { position: sticky; top: 2rem; align-self: start; margin: 0; font-size: clamp(2rem, 4vw, 4rem); letter-spacing: -.055em; }
 .case-block { padding: 0 0 3rem; margin-bottom: 3rem; border-bottom: 1px solid var(--line); }

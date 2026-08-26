@@ -1,5 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "react-router";
-import { Code2, ExternalLink } from "lucide-react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { Code2, ExternalLink, X } from "lucide-react";
+import { useState } from "react";
 import { useLoaderData, useLocation } from "react-router";
 import { Header, PageFooter, ProjectCard, Reveal } from "~/components/ui";
 import { getProjects } from "~/lib/content.server";
@@ -26,9 +28,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export default function ProjectDetail() {
   const { project, related } = useLoaderData<typeof loader>();
   const location = useLocation();
+  const [privateNoticeOpen, setPrivateNoticeOpen] = useState(false);
   const requestedBackTo = (location.state as { backTo?: string } | null)?.backTo;
   const backTo = requestedBackTo === "/projects" ? "/projects" : "/#projects";
   const unavailable = (label: string) => {
+    if (project.slug === "wave-and-wish") {
+      setPrivateNoticeOpen(true);
+      return;
+    }
     window.alert(`${label} is currently unavailable for ${project.title}.`);
   };
 
@@ -75,6 +82,20 @@ export default function ProjectDetail() {
         </section>
       </Reveal>
       <PageFooter />
+      <Dialog.Root open={privateNoticeOpen} onOpenChange={setPrivateNoticeOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="private-dialog-overlay" />
+          <Dialog.Content className="private-dialog-content">
+            <Dialog.Close className="private-dialog-close" aria-label="Close private project notice"><X size={20} /></Dialog.Close>
+            <span className="private-dialog-label">PRIVATE COMMISSION</span>
+            <Dialog.Title>Wave &amp; Wish is not publicly accessible.</Dialog.Title>
+            <Dialog.Description>
+              This project was created as a private commission, so both the live version and source repository are private.
+            </Dialog.Description>
+            <Dialog.Close className="button button-dark private-dialog-action">Understood</Dialog.Close>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </main>
   );
 }

@@ -33,17 +33,26 @@ export function Availability({ compact = false }: { compact?: boolean }) {
 }
 
 const navLinks = [
-  { label: "Projects", count: "[03]", href: "/#projects" },
-  { label: "Certifications", count: "[25]", href: "/#certifications" },
-  { label: "Experience", count: "[05]", href: "/#experience" },
-  { label: "Contact", count: null, href: "/#contact" },
+  { id: "projects", label: "Projects", count: "[03]", href: "/#projects" },
+  { id: "certifications", label: "Certifications", count: "[25]", href: "/#certifications" },
+  { id: "experience", label: "Experience", count: "[05]", href: "/#experience" },
+  { id: "contact", label: "Contact", count: null, href: "/#contact" },
 ] as const;
+
+type NavSection = typeof navLinks[number]["id"];
+
+function sectionFromPath(pathname: string): NavSection | null {
+  if (pathname.startsWith("/projects")) return "projects";
+  if (pathname.startsWith("/certifications")) return "certifications";
+  return null;
+}
 
 export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backTo?: string }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const location = useLocation();
+  const [activeSection, setActiveSection] = useState<NavSection | null>(() => sectionFromPath(location.pathname));
 
   useEffect(() => {
     setMounted(true);
@@ -61,13 +70,49 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
     return () => window.removeEventListener("scroll", onScroll);
   }, [inner]);
 
+  useEffect(() => {
+    const routeSection = sectionFromPath(location.pathname);
+    if (location.pathname !== "/") {
+      setActiveSection(routeSection);
+      return;
+    }
+
+    let frame = 0;
+    const updateActiveSection = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const marker = window.innerHeight * .42;
+        const visible = navLinks.find(({ id }) => {
+          const section = document.getElementById(id);
+          if (!section) return false;
+          const bounds = section.getBoundingClientRect();
+          return bounds.top <= marker && bounds.bottom > marker;
+        });
+        setActiveSection(visible?.id ?? null);
+      });
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, [location.pathname]);
+
   return (
     <>
       <header className={`${inner ? "site-header inner-header" : "site-header"} ${scrolled ? "scrolled" : ""}`}>
         <div className="header-inner">
           {inner ? <Link className="back-pill" to={backTo} prefetch="intent">← Back</Link> : <Availability compact />}
           <nav className="desktop-nav" aria-label="Primary navigation">
-            {navLinks.map(({ label, count, href }) => <a key={label} href={href}>{label}{count && <small>{count}</small>}</a>)}
+            {navLinks.map(({ id, label, count, href }) => (
+              <a className={activeSection === id ? "is-active" : undefined} aria-current={activeSection === id ? "location" : undefined} key={id} href={href}>
+                {label}{count && <small>{count}</small>}
+              </a>
+            ))}
           </nav>
           {!inner && <a className="button header-cta" href={socialLinks.email}>Let’s talk</a>}
           {inner && <Availability compact />}
@@ -92,9 +137,11 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
               >
                 <button type="button" onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
                 <nav className="mobile-navigation" aria-label="Mobile navigation">
-                  {navLinks.map(({ label, href }, index) => (
+                  {navLinks.map(({ id, label, href }, index) => (
                     <a
-                      key={label}
+                      className={activeSection === id ? "is-active" : undefined}
+                      aria-current={activeSection === id ? "location" : undefined}
+                      key={id}
                       href={href}
                       onClick={() => setOpen(false)}
                     >
