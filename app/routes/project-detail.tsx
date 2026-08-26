@@ -1,4 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "react-router";
+import { Code2, ExternalLink } from "lucide-react";
 import { useLoaderData } from "react-router";
 import { Header, PageFooter, ProjectCard } from "~/components/ui";
 import { getProjects } from "~/lib/content.server";
@@ -20,6 +21,9 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function ProjectDetail() {
   const { project, related } = useLoaderData<typeof loader>();
+  const unavailable = (label: string) => {
+    window.alert(`${label} is currently unavailable for ${project.title}.`);
+  };
 
   return (
     <main className="detail-page">
@@ -27,7 +31,22 @@ export default function ProjectDetail() {
       <div className="detail-main">
         <section className="detail-hero">
           <div className="detail-tags tag-list"><span>{project.projectType}</span><span>{project.team}</span></div>
-          <div className="detail-title"><h1>{project.title}</h1><p className="lead">{project.summary}</p></div>
+          <div className="detail-title">
+            <h1>{project.title}</h1>
+            <p className="lead">{project.summary}</p>
+            <div className="detail-actions">
+              {project.githubUrl ? (
+                <a className="button" href={project.githubUrl} target="_blank" rel="noreferrer"><Code2 size={18} /> GitHub</a>
+              ) : (
+                <button className="button" type="button" onClick={() => unavailable("GitHub repository")}><Code2 size={18} /> GitHub</button>
+              )}
+              {project.liveUrl ? (
+                <a className="button button-dark" href={project.liveUrl} target="_blank" rel="noreferrer">View Live <ExternalLink size={18} /></a>
+              ) : (
+                <button className="button button-dark" type="button" onClick={() => unavailable("Live version")}>View Live <ExternalLink size={18} /></button>
+              )}
+            </div>
+          </div>
           <aside className="detail-meta">
             <div className="meta-item"><span>My Role</span><strong>{project.role}</strong></div>
             <div className="meta-item"><span>Timeline</span><strong>{project.timeline}</strong></div>

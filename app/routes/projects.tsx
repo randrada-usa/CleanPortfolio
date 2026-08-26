@@ -1,4 +1,5 @@
 import type { MetaFunction } from "react-router";
+import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useLoaderData } from "react-router";
 import { Header, PageFooter, ProjectCard } from "~/components/ui";
@@ -30,7 +31,10 @@ export default function ProjectsArchive() {
         <p className="archive-count">{projects.length} projects</p>
         <div className="search-row">
           <label className="sr-only" htmlFor="project-search">Search projects</label>
-          <input id="project-search" className="search-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by title or tag…" />
+          <div className="search-field">
+            <Search aria-hidden="true" size={18} />
+            <input id="project-search" className="search-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by title or tag…" />
+          </div>
         </div>
         <div className="archive-grid">
           {filtered.length ? filtered.map((project) => <ProjectCard key={project.slug} project={project} />) : <p className="empty-state">No projects match that search.</p>}

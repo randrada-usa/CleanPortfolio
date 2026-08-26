@@ -1,4 +1,5 @@
 import type { MetaFunction } from "react-router";
+import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useLoaderData, useSearchParams } from "react-router";
 import { CertificationCard, Header, PageFooter } from "~/components/ui";
@@ -43,7 +44,10 @@ export default function CertificationsArchive() {
         <p className="archive-count">{certifications.length} certifications</p>
         <div className="search-row">
           <label className="sr-only" htmlFor="cert-search">Search certifications</label>
-          <input id="cert-search" className="search-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by title or issuer…" />
+          <div className="search-field">
+            <Search aria-hidden="true" size={18} />
+            <input id="cert-search" className="search-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by title or issuer…" />
+          </div>
           <button className={`filter-button ${category === "All" ? "active" : ""}`} onClick={() => chooseCategory("All")}>All</button>
           {certificationCategories.map((item) => (
             <button className={`filter-button ${category === item ? "active" : ""}`} key={item} onClick={() => chooseCategory(item)}>{item}</button>

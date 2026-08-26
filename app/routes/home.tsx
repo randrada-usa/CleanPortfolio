@@ -35,9 +35,9 @@ export const meta: MetaFunction = () => [
 function AboutStack() {
   return (
     <section id="about" className="section about-section">
+      <p className="ghost-word" aria-hidden="true">ABOUT</p>
       <div className="section-inner about-grid">
         <div className="about-copy">
-          <p className="kicker">/ABOUT</p>
           <h2>I like building the parts that keep everything else reliable.</h2>
           <p>
             I’m a Computer Science student and backend-focused developer based in the Philippines. My work spans database design,
@@ -52,7 +52,7 @@ function AboutStack() {
           </div>
         </div>
         <div>
-          <p className="kicker">/CORE STACK</p>
+          <h2 className="core-stack-title">/CORE STACK</h2>
           <div className="stack-grid">
             {Object.entries(coreStack).map(([group, items]) => (
               <div className="stack-group" key={group}>
@@ -125,7 +125,15 @@ function CertificationsSection({ certifications }: { certifications: Certificati
                       exit={{ opacity: 0, height: 0 }}
                     >
                       <div className="cert-row-copy">
-                        <p>{categoryCopy[category]}<br />{items.slice(0, 5).map((item) => item.title).join(", ")}.</p>
+                        <p>
+                          {categoryCopy[category]}<br />
+                          {items.slice(0, 5).map((item, index) => (
+                            <span key={item.slug}>
+                              {item.title}{index < Math.min(items.length, 5) - 1 ? ", " : "."}
+                              {category === "Data & Analytics" && index === 3 && <br />}
+                            </span>
+                          ))}
+                        </p>
                         <Link className="button button-light" to={`/certifications?category=${encodeURIComponent(category)}`}>
                           View More <ArrowIcon />
                         </Link>

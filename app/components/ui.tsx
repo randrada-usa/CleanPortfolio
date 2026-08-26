@@ -111,10 +111,12 @@ export function CertificationCard({ certification }: { certification: Certificat
 export function Footer() {
   return (
     <footer id="contact" className="contact-section">
-      <Availability />
-      <h2>HAVE A PROJECT IN MIND?</h2>
-      <p>Let’s turn ideas into reliable systems that deliver real impact.</p>
-      <a className="button button-dark" href={socialLinks.email}>Contact Me <ArrowIcon /></a>
+      <div className="contact-main">
+        <Availability />
+        <h2>HAVE A PROJECT IN MIND?</h2>
+        <p>Let’s turn ideas into reliable systems that deliver real impact.</p>
+        <a className="button button-dark" href={socialLinks.email}>Contact Me <ArrowIcon /></a>
+      </div>
       <div className="footer-links">
         <span className="identity-pill"><img src="/assets/photos/063d74f9-f3e3-4fdc-b05a-a969275ddb9a.png" alt="" /> Rey Jane Andrada</span>
         <SocialPill type="github" label="GitHub" />
