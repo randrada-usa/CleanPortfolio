@@ -7,6 +7,10 @@ import { getProjects } from "~/lib/content.server";
 
 export async function loader() { return getProjects(); }
 
+export function headers() {
+  return { "Cache-Control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400" };
+}
+
 export const meta: MetaFunction = () => [
   { title: "Projects — Rey Jane Andrada" },
   { name: "description", content: "Backend systems, digital platforms, and computer-vision projects by Rey Jane Andrada." },

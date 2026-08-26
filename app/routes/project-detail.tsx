@@ -11,6 +11,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
   return { project, related: projects.filter((item) => item.slug !== project.slug).slice(0, 2) };
 }
 
+export function headers() {
+  return { "Cache-Control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400" };
+}
+
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const project = data?.project;
   return [

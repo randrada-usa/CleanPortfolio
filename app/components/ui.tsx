@@ -65,7 +65,7 @@ export function Header({ inner = false }: { inner?: boolean }) {
     <>
       <header className={`${inner ? "site-header inner-header" : "site-header"} ${scrolled ? "scrolled" : ""}`}>
         <div className="header-inner">
-          {inner ? <Link className="back-pill" to="/">← Back</Link> : <Availability compact />}
+          {inner ? <Link className="back-pill" to="/" prefetch="intent">← Back</Link> : <Availability compact />}
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navLinks.map(({ label, count, href }) => <a key={label} href={href}>{label}{count && <small>{count}</small>}</a>)}
           </nav>
@@ -85,10 +85,10 @@ export function Header({ inner = false }: { inner?: boolean }) {
             {open && (
               <motion.div
                 className="mobile-menu"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
               >
                 <button type="button" onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
                 <nav className="mobile-navigation" aria-label="Mobile navigation">
@@ -128,7 +128,7 @@ export function ProjectCard({ project, priority = false }: { project: Project; p
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25 }}
     >
-      <Link to={`/projects/${project.slug}`} aria-label={`View ${project.title}`}>
+      <Link to={`/projects/${project.slug}`} prefetch="intent" aria-label={`View ${project.title}`}>
         <div className="card-media">
           <img src={project.image} alt={`${project.title} interface`} loading={priority ? "eager" : "lazy"} />
           <span className="card-label">{project.eyebrow}</span>
@@ -151,7 +151,7 @@ export function CertificationCard({ certification }: { certification: Certificat
       whileHover={{ y: -5 }}
       transition={{ duration: 0.22 }}
     >
-      <Link to={`/certifications/${certification.slug}`} aria-label={`View ${certification.title}`}>
+      <Link to={`/certifications/${certification.slug}`} prefetch="intent" aria-label={`View ${certification.title}`}>
         <div className="cert-media"><img src={certification.image} alt={`${certification.title} certificate`} loading="lazy" /></div>
         <h3>{certification.title}</h3>
         <div className="tag-list"><span>{certification.category}</span><span>{certification.issuer}</span></div>

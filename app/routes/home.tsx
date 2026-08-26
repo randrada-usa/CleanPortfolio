@@ -20,6 +20,10 @@ export async function loader() {
   return { projects, certifications };
 }
 
+export function headers() {
+  return { "Cache-Control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400" };
+}
+
 export const meta: MetaFunction = () => [
   { title: "Rey Jane Andrada — Backend-Focused Developer & Aspiring Data Engineer" },
   {
@@ -85,7 +89,7 @@ function ProjectsSection({ projects }: { projects: Project[] }) {
         <div className="project-grid">
           {projects.map((project, index) => <ProjectCard key={project.slug} project={project} priority={index === 0} />)}
         </div>
-        <div className="center-action"><Link className="button" to="/projects">View All Projects <ArrowIcon /></Link></div>
+        <div className="center-action"><Link className="button" to="/projects" prefetch="render">View All Projects <ArrowIcon /></Link></div>
       </Reveal>
     </section>
   );
@@ -150,7 +154,7 @@ function CertificationsSection({ certifications }: { certifications: Certificati
                             </span>
                           ))}
                         </p>
-                        <Link className="button button-light" tabIndex={active ? 0 : -1} to={`/certifications?category=${encodeURIComponent(category)}`}>
+                        <Link className="button button-light" tabIndex={active ? 0 : -1} to={`/certifications?category=${encodeURIComponent(category)}`} prefetch="intent">
                           View More <ArrowIcon />
                         </Link>
                       </div>
@@ -177,7 +181,7 @@ function CertificationsSection({ certifications }: { certifications: Certificati
             );
           })}
         </div>
-        <div className="center-action"><Link className="button" to="/certifications">View All 25 <ArrowIcon /></Link></div>
+        <div className="center-action"><Link className="button" to="/certifications" prefetch="render">View All 25 <ArrowIcon /></Link></div>
       </Reveal>
     </section>
   );

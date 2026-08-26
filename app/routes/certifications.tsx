@@ -8,6 +8,10 @@ import { getCertifications } from "~/lib/content.server";
 
 export async function loader() { return getCertifications(); }
 
+export function headers() {
+  return { "Cache-Control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400" };
+}
+
 export const meta: MetaFunction = () => [
   { title: "Certifications — Rey Jane Andrada" },
   { name: "description", content: "Data, AI, cloud, development, and hackathon credentials earned by Rey Jane Andrada." },
