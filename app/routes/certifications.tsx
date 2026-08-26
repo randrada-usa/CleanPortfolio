@@ -1,4 +1,5 @@
 import type { MetaFunction } from "react-router";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useLoaderData, useLocation, useSearchParams } from "react-router";
@@ -20,6 +21,7 @@ export const meta: MetaFunction = () => [
 export default function CertificationsArchive() {
   const certifications = useLoaderData<typeof loader>();
   const location = useLocation();
+  const prefersReducedMotion = useReducedMotion();
   const [params, setParams] = useSearchParams();
   const initial = params.get("category");
   const [category, setCategory] = useState<"All" | CertificationCategory>(
@@ -59,7 +61,31 @@ export default function CertificationsArchive() {
           ))}
         </div>
         <div className="archive-grid">
-          {filtered.length ? filtered.map((item) => <CertificationCard key={item.slug} certification={item} backTo={`${location.pathname}${location.search}`} />) : <p className="empty-state">No certifications match that search.</p>}
+          <AnimatePresence initial={false} mode="popLayout">
+            {filtered.length ? filtered.map((item) => (
+              <motion.div
+                className="filter-card-shell"
+                key={item.slug}
+                layout={!prefersReducedMotion}
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 14, scale: .985 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -8, scale: .985 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: .3, ease: [.22, 1, .36, 1], layout: { duration: .36, ease: [.22, 1, .36, 1] } }}
+              >
+                <CertificationCard certification={item} backTo={`${location.pathname}${location.search}`} />
+              </motion.div>
+            )) : (
+              <motion.p
+                className="empty-state"
+                key="empty-certifications"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+              >
+                No certifications match that search.
+              </motion.p>
+            )}
+          </AnimatePresence>
         </div>
       </Reveal>
       <PageFooter />

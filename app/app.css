@@ -206,6 +206,7 @@ img { display: block; max-width: 100%; }
 .filter-button { padding: .65rem .9rem; border: 1px solid #dededb; border-radius: 999px; background: white; font-size: .72rem; cursor: pointer; }
 .filter-button.active { color: white; background: #1e1e1e; border-color: #1e1e1e; }
 .archive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+.filter-card-shell, .filter-card-shell .cert-card { height: 100%; }
 .cert-card { overflow: hidden; padding-bottom: 1rem; border: 1px solid #e0e0dc; background: white; box-shadow: 0 14px 34px rgba(0,0,0,.05); }
 .cert-media { aspect-ratio: 16 / 10; overflow: hidden; background: #eee; }
 .cert-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
