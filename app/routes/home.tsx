@@ -1,7 +1,7 @@
 import type { MetaFunction } from "react-router";
 import { Link, useLoaderData } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Download, X } from "lucide-react";
+import { ArrowUpRight, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   certificationCategories,
@@ -58,9 +58,7 @@ function AboutStack() {
             foundation as I work toward data engineering.
           </p>
           <div className="about-actions">
-            <span className="button button-disabled" aria-disabled="true" title="CV coming soon">
-              Download CV <Download size={17} />
-            </span>
+            <Link className="button button-dark" to="/cv" prefetch="intent">View CV <ArrowIcon /></Link>
             <a className="button" href={socialLinks.email}>Email Me <ArrowIcon /></a>
           </div>
         </div>

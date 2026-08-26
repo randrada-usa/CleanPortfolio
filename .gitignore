@@ -11,5 +11,7 @@ dist
 /MyPhotos/
 /certs/
 /projects/
+/CV/
+/tmp/
 
 .vercel
