@@ -110,7 +110,14 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navLinks.map(({ id, label, href }) => (
               <a className={activeSection === id ? "is-active" : undefined} aria-current={activeSection === id ? "location" : undefined} key={id} href={href}>
-                {label}
+                {!inner && scrolled && activeSection === id && (
+                  <motion.span
+                    className="desktop-nav-active-pill"
+                    layoutId="desktop-active-section"
+                    transition={{ type: "spring", stiffness: 430, damping: 36 }}
+                  />
+                )}
+                <span className="desktop-nav-label">{label}</span>
               </a>
             ))}
           </nav>
