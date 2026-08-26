@@ -43,12 +43,13 @@ export const projects: Project[] = [
     slug: "wave-and-wish",
     title: "Wave & Wish",
     eyebrow: "Computer Vision Game",
-    summary: "A touchless festival game controlled entirely through real-time hand gestures.",
+    summary:
+      "Led a six-person team to deliver a touchless festival game in seven days, serving 280+ players with zero crashes.",
     image: projectAsset("wave-and-wish.webp"),
     tags: ["Python", "Pygame", "OpenCV", "MediaPipe"],
-    role: "Full-Stack Game Developer",
-    team: "6-BYTE Studios",
-    timeline: "Capiztahan 2026",
+    role: "Development Lead & Overall Team Lead",
+    team: "6-BYTE Studios · 6-person team",
+    timeline: "7-day build · Capiztahan 2026",
     projectType: "Team Project",
     challenge:
       "Build a camera-controlled festival game that could survive a seven-hour public event, difficult lighting, rapid player turnover, and a fixed physical-prize inventory.",
@@ -59,6 +60,7 @@ export const projects: Project[] = [
       "Packaged the Python application for Windows with a custom PyInstaller specification covering MediaPipe models and OpenCV dependencies.",
     ],
     results: [
+      "Event-ready game delivered in seven days",
       "280+ players served in seven hours",
       "170 physical prizes distributed",
       "0 crashes during the event",
@@ -68,13 +70,14 @@ export const projects: Project[] = [
     slug: "iloilo-farmers-hub",
     title: "Iloilo Farmers Hub",
     eyebrow: "Digital Marketplace",
-    summary: "A secure marketplace connecting Iloilo farmers directly with local consumers.",
+    summary:
+      "Led backend development for a four-person farmer marketplace, informed by 20+ interviews and validated through five test orders.",
     image: projectAsset("IFC-v3.webp"),
     liveUrl: "https://iloilo-farmers-hub.web.app/",
     githubUrl: "https://github.com/randrada-usa",
     tags: ["React", "TypeScript", "Firebase", "Computer Vision"],
     role: "Backend Lead & Frontend Contributor",
-    team: "Academic Team Project",
+    team: "4-person Academic Team",
     timeline: "Oct 2025–Apr 2026",
     projectType: "Team Project",
     challenge:
@@ -85,22 +88,23 @@ export const projects: Project[] = [
       "Implemented chunked image and video uploads, Firestore security rules, authentication flows, and deployment infrastructure.",
     ],
     results: [
-      "Consistent inventory under concurrent orders",
-      "Server-side protection for API keys and privileged workflows",
-      "More reliable uploads on low-memory mobile devices",
+      "Requirements informed by interviews with 20+ farmers in Oton, Iloilo",
+      "Five end-to-end test orders completed during development",
+      "Image and video uploads validated up to 15 MB",
     ],
   },
   {
     slug: "e-serbisyo-rizal",
     title: "e-Serbisyo Rizal",
     eyebrow: "Digital Governance Platform",
-    summary: "A bilingual AI-assisted platform for digital barangay services.",
+    summary:
+      "Led backend and AI integration for a four-person barangay platform, validating five service workflows with 15 test participants at zero operating cost.",
     image: projectAsset("e-serbisyo-rizal-v3.webp"),
     liveUrl: "https://eserbisyorizalv2.web.app/",
     githubUrl: "https://github.com/randrada-usa",
     tags: ["React", "TypeScript", "Firebase", "Gemini API"],
     role: "Backend Lead & API Integration Owner",
-    team: "Academic Team Project",
+    team: "4-person Academic Team",
     timeline: "Feb–May 2025",
     projectType: "Team Project",
     challenge:
@@ -111,9 +115,9 @@ export const projects: Project[] = [
       "Configured Firebase rules that permit public conversations while protecting administrative audit logs.",
     ],
     results: [
+      "All five service workflows validated with 15 test participants at a barangay hall",
       "Zero-cost operating model using Firebase Spark and Gemini free tiers",
-      "Bilingual support for public-service questions",
-      "Separated public interaction data from restricted admin records",
+      "English, Filipino, and basic Hiligaynon interactions supported",
     ],
   },
 ];
