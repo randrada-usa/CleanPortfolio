@@ -71,8 +71,8 @@ img { display: block; max-width: 100%; }
   }
   .site-header:not(.inner-header).scrolled {
     top: .65rem;
-    width: min(520px, calc(100% - 2rem));
-    padding: .4rem .55rem;
+    width: min(440px, calc(100% - 2rem));
+    padding: .4rem;
     border-color: rgba(0,0,0,.1);
     border-radius: 999px;
     background: rgba(255,255,255,.88);
