@@ -27,7 +27,7 @@ export function Reveal({
 export function Availability({ compact = false }: { compact?: boolean }) {
   return (
     <span className={compact ? "availability compact" : "availability"}>
-      <i aria-hidden="true" /> Open to Backend &amp; Data Opportunities
+      <i aria-hidden="true" /> Open to Opportunities
     </span>
   );
 }

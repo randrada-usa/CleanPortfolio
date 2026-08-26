@@ -34,8 +34,8 @@ img { display: block; max-width: 100%; }
 .button-light { color: #111; background: white; }
 .button-disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
 .availability { min-height: 42px; padding: .5rem .82rem; font-size: .9rem; font-weight: 500; }
-.availability.compact { min-height: 48px; padding: .64rem 1.18rem; gap: .72rem; font-size: .94rem; line-height: 1.25; box-shadow: 0 6px 16px rgba(0,0,0,.045); }
-.availability i { flex: 0 0 auto; width: 10px; height: 10px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(39,199,122,.1); }
+.availability.compact { min-height: 46px; padding: .58rem 1rem; font-size: .94rem; box-shadow: 0 6px 16px rgba(0,0,0,.045); }
+.availability i { width: 10px; height: 10px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(39,199,122,.1); }
 .site-header:not(.inner-header) .availability { color: white; background: #1e1e1e; border-color: #343434; box-shadow: 0 8px 20px rgba(0,0,0,.13); }
 
 .site-header { position: absolute; z-index: 50; top: 0; left: 0; right: 0; padding: 2.25rem 3.8vw 1.8rem; }
@@ -71,7 +71,7 @@ img { display: block; max-width: 100%; }
   }
   .site-header:not(.inner-header).scrolled {
     top: .65rem;
-    width: min(1220px, calc(100% - 2rem));
+    width: min(1120px, calc(100% - 2rem));
     padding: .62rem .85rem .62rem 1.05rem;
     border-color: rgba(0,0,0,.08);
     border-radius: 999px;
@@ -88,7 +88,7 @@ img { display: block; max-width: 100%; }
     transition: min-height .5s cubic-bezier(.22,1,.36,1), padding .5s cubic-bezier(.22,1,.36,1), font-size .5s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
   }
   .site-header:not(.inner-header).scrolled .desktop-nav { gap: clamp(1.3rem, 1.8vw, 1.9rem); font-size: .99rem; }
-  .site-header:not(.inner-header).scrolled .availability.compact { min-height: 44px; padding: .56rem 1.05rem; gap: .65rem; font-size: .88rem; }
+  .site-header:not(.inner-header).scrolled .availability.compact { min-height: 42px; padding: .5rem .9rem; font-size: .9rem; }
   .site-header:not(.inner-header).scrolled .header-cta { min-height: 44px; padding-inline: 1.25rem; font-size: .94rem; }
 }
 .mobile-menu {
@@ -309,7 +309,7 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 640px) {
   .site-header { padding: 1.35rem 1rem 1rem; }
-  .availability.compact { min-height: 40px; padding: .48rem .72rem; gap: .55rem; font-size: .72rem; }
+  .availability.compact { min-height: 40px; padding: .46rem .75rem; font-size: .76rem; }
   .hero { height: 100svh; min-height: 0; }
   .hero-photo { top: 74px; height: clamp(380px, 58vh, 500px); object-position: 50% 18%; mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); }
   .hero-name { bottom: clamp(230px, 29vh, 250px); font-size: clamp(3.6rem, 17vw, 4.4rem); font-weight: 850; }
