@@ -10,17 +10,34 @@ export function ArrowIcon() {
   return <ArrowUpRight aria-hidden="true" size={18} strokeWidth={1.7} />;
 }
 
-export function Reveal({ children, className, delay = 0, amount = 0.12, distance = 18 }: { children: ReactNode; className?: string; delay?: number; amount?: number; distance?: number }) {
+export function Reveal({
+  children,
+  className,
+  delay = 0,
+  amount = "some",
+  distance = 18,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  amount?: number | "some" | "all";
+  distance?: number;
+}) {
   const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   const hidden = distance ? { opacity: 0, y: distance } : { opacity: 0 };
   const visible = distance ? { opacity: 1, y: 0 } : { opacity: 1 };
   return (
     <motion.div
       className={className}
-      initial={reduceMotion ? false : hidden}
-      whileInView={reduceMotion ? undefined : visible}
-      viewport={{ once: true, amount }}
-      transition={{ duration: 0.78, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={hidden}
+      whileInView={visible}
+      viewport={{ once: true, amount: amount ?? "some", margin: "0px 0px -30px 0px" }}
+      transition={{ duration: 0.68, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -77,7 +94,7 @@ export function Header({ inner = false }: { inner?: boolean }) {
         {open && (
           <motion.div className="mobile-menu" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
             <button onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
-            <nav aria-label="Mobile navigation">
+            <nav className="mobile-navigation" aria-label="Mobile navigation">
               {navLinks.map(({ label, href }, index) => <a key={label} href={href}><span>0{index + 1}</span>{label}</a>)}
             </nav>
             <a className="button button-light" href={socialLinks.email}>Let’s Talk <ArrowIcon /></a>
@@ -99,13 +116,33 @@ export function SocialPill({ type, label }: { type: keyof typeof socialLinks; la
 
 export function ProjectCard({ project, priority = false }: { project: Project; priority?: boolean }) {
   const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return (
+      <article className="project-card">
+        <Link to={`/projects/${project.slug}`} aria-label={`View ${project.title}`}>
+          <div className="card-media">
+            <img src={project.image} alt={`${project.title} interface`} loading={priority ? "eager" : "lazy"} />
+            <span className="card-label">{project.eyebrow}</span>
+            <span className="card-arrow"><ArrowIcon /></span>
+          </div>
+          <div className="card-body">
+            <h3>{project.title}</h3>
+            <p>{project.summary}</p>
+            <div className="tag-list">{project.tags.slice(0, 4).map((tag) => <span key={tag}>{tag}</span>)}</div>
+          </div>
+        </Link>
+      </article>
+    );
+  }
+
   return (
     <motion.article
       className="project-card"
-      initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
-      whileHover={reduceMotion ? undefined : { y: -6 }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: "some", margin: "0px 0px -30px 0px" }}
+      whileHover={{ y: -6 }}
       transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link to={`/projects/${project.slug}`} aria-label={`View ${project.title}`}>
@@ -126,13 +163,26 @@ export function ProjectCard({ project, priority = false }: { project: Project; p
 
 export function CertificationCard({ certification }: { certification: Certification }) {
   const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return (
+      <article className="cert-card">
+        <Link to={`/certifications/${certification.slug}`} aria-label={`View ${certification.title}`}>
+          <div className="cert-media"><img src={certification.image} alt={`${certification.title} certificate`} loading="lazy" /></div>
+          <h3>{certification.title}</h3>
+          <div className="tag-list"><span>{certification.category}</span><span>{certification.issuer}</span></div>
+        </Link>
+      </article>
+    );
+  }
+
   return (
     <motion.article
       className="cert-card"
-      initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
-      whileHover={reduceMotion ? undefined : { y: -5 }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: "some", margin: "0px 0px -30px 0px" }}
+      whileHover={{ y: -5 }}
       transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link to={`/certifications/${certification.slug}`} aria-label={`View ${certification.title}`}>

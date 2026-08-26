@@ -101,10 +101,22 @@ const categoryCopy: Record<CertificationCategory, string> = {
 
 function CertificationsSection({ certifications }: { certifications: Certification[] }) {
   const [open, setOpen] = useState<CertificationCategory | null>("Data & Analytics");
+
   useEffect(() => {
     const smallScreen = window.matchMedia("(max-width: 640px)");
     if (smallScreen.matches) setOpen(null);
   }, []);
+
+  // Preload category preview images so accordion previews are instant
+  useEffect(() => {
+    certificationCategories.forEach((category) => {
+      const firstItem = certifications.find((item) => item.category === category);
+      if (firstItem?.image) {
+        const img = new Image();
+        img.src = firstItem.image;
+      }
+    });
+  }, [certifications]);
 
   return (
     <section id="certifications" className="section certifications-section">
@@ -146,16 +158,18 @@ function CertificationsSection({ certifications }: { certifications: Certificati
                   </div>
                 </div>
                 <AnimatePresence initial={false}>
-                  {active && (
+                  {active && items[0]?.image && (
                     <motion.img
                       className="cert-preview"
                       src={items[0].image}
                       alt=""
                       aria-hidden="true"
+                      loading="eager"
+                      decoding="async"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: 0.15 }}
                     />
                   )}
                 </AnimatePresence>
@@ -186,7 +200,7 @@ function ExperienceSection() {
               key={`${item.organization}-${item.role}`}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.35 }}
+              viewport={{ once: true, amount: "some", margin: "0px 0px -30px 0px" }}
               transition={{ duration: 0.62, delay: index * 0.065, ease: [0.22, 1, 0.36, 1] }}
               onMouseEnter={() => setHovered(item.role)}
               onMouseLeave={() => setHovered(null)}
