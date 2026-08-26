@@ -33,10 +33,10 @@ export function Availability({ compact = false }: { compact?: boolean }) {
 }
 
 const navLinks = [
-  { id: "projects", label: "Projects", count: "[03]", href: "/#projects" },
-  { id: "certifications", label: "Certifications", count: "[25]", href: "/#certifications" },
-  { id: "experience", label: "Experience", count: "[05]", href: "/#experience" },
-  { id: "contact", label: "Contact", count: null, href: "/#contact" },
+  { id: "projects", label: "Projects", href: "/#projects" },
+  { id: "certifications", label: "Certifications", href: "/#certifications" },
+  { id: "experience", label: "Experience", href: "/#experience" },
+  { id: "contact", label: "Contact", href: "/#contact" },
 ] as const;
 
 type NavSection = typeof navLinks[number]["id"];
@@ -108,9 +108,9 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
         <div className="header-inner">
           {inner ? <Link className="back-pill" to={backTo} prefetch="intent">← Back</Link> : <Availability compact />}
           <nav className="desktop-nav" aria-label="Primary navigation">
-            {navLinks.map(({ id, label, count, href }) => (
+            {navLinks.map(({ id, label, href }) => (
               <a className={activeSection === id ? "is-active" : undefined} aria-current={activeSection === id ? "location" : undefined} key={id} href={href}>
-                {label}{count && <small>{count}</small>}
+                {label}
               </a>
             ))}
           </nav>
@@ -137,7 +137,7 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
               >
                 <button type="button" onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
                 <nav className="mobile-navigation" aria-label="Mobile navigation">
-                  {navLinks.map(({ id, label, href }, index) => (
+                  {navLinks.map(({ id, label, href }) => (
                     <a
                       className={activeSection === id ? "is-active" : undefined}
                       aria-current={activeSection === id ? "location" : undefined}
@@ -145,7 +145,7 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
                       href={href}
                       onClick={() => setOpen(false)}
                     >
-                      <span>0{index + 1}</span>{label}
+                      {label}
                     </a>
                   ))}
                 </nav>

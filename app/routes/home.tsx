@@ -7,7 +7,6 @@ import {
   certificationCategories,
   coreStack,
   experience,
-  socialLinks,
   type Certification,
   type CertificationCategory,
   type Project,
@@ -245,7 +244,13 @@ export default function Home() {
         <motion.div className="hero-copy" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, delay: .28, ease: [0.22, 1, 0.36, 1] }}>
           <h1>Backend-Focused Developer<br />Aspiring Data Engineer</h1>
           <p>I build reliable backend systems and practical applications—then keep learning toward the data platforms behind them.</p>
-          <a className="button button-dark" href={socialLinks.email}>Let’s Work Together <ArrowIcon /></a>
+          <span className="hero-location">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+              <circle cx="12" cy="10" r="2.5" />
+            </svg>
+            Iloilo City, Philippines
+          </span>
         </motion.div>
         <motion.div className="hero-socials" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .75, delay: .38, ease: [0.22, 1, 0.36, 1] }}>
           <SocialPill type="github" label="GitHub" />
