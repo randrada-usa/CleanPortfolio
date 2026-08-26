@@ -39,7 +39,7 @@ const navLinks = [
   { label: "Contact", count: null, href: "/#contact" },
 ] as const;
 
-export function Header({ inner = false }: { inner?: boolean }) {
+export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backTo?: string }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -65,7 +65,7 @@ export function Header({ inner = false }: { inner?: boolean }) {
     <>
       <header className={`${inner ? "site-header inner-header" : "site-header"} ${scrolled ? "scrolled" : ""}`}>
         <div className="header-inner">
-          {inner ? <Link className="back-pill" to="/" prefetch="intent">← Back</Link> : <Availability compact />}
+          {inner ? <Link className="back-pill" to={backTo} prefetch="intent">← Back</Link> : <Availability compact />}
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navLinks.map(({ label, count, href }) => <a key={label} href={href}>{label}{count && <small>{count}</small>}</a>)}
           </nav>

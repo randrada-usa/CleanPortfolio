@@ -1,7 +1,7 @@
 import type { MetaFunction } from "react-router";
 import { Link, useLoaderData } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Download, Minus, Plus } from "lucide-react";
+import { ArrowUpRight, Download, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   certificationCategories,
@@ -139,7 +139,7 @@ function CertificationsSection({ certifications }: { certifications: Certificati
                   onClick={() => setOpen(active ? null : category)}
                 >
                   <span>{category.toUpperCase()}</span>
-                  {active ? <Minus aria-hidden="true" /> : <ArrowUpRight aria-hidden="true" />}
+                  {active ? <X aria-hidden="true" /> : <ArrowUpRight aria-hidden="true" />}
                 </button>
                 <div className="cert-row-reveal" aria-hidden={!active}>
                   <div className="cert-row-clip">

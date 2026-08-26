@@ -31,7 +31,7 @@ export default function ProjectDetail() {
 
   return (
     <main className="detail-page">
-      <Header inner />
+      <Header inner backTo="/#projects" />
       <Reveal className="detail-main" amount={0.02}>
         <section className="detail-hero">
           <div className="detail-tags tag-list"><span>{project.projectType}</span><span>{project.team}</span></div>

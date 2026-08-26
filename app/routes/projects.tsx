@@ -29,7 +29,7 @@ export default function ProjectsArchive() {
 
   return (
     <main className="archive-page">
-      <Header inner />
+      <Header inner backTo="/#projects" />
       <Reveal className="archive-main" amount={0.02}>
         <h1 className="archive-title">/PROJECTS</h1>
         <p className="archive-count">{projects.length} projects</p>

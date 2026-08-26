@@ -19,6 +19,7 @@ html { scroll-behavior: smooth; scrollbar-width: none; }
 html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; height: 0; }
 body { margin: 0; min-width: 320px; background: var(--paper); }
 a { color: inherit; text-decoration: none; }
+a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 button, input { font: inherit; }
 img { display: block; max-width: 100%; }
 ::selection { color: white; background: #222; }
@@ -29,7 +30,6 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 8px 20px rgba(0,0,0,.07); white-space: nowrap;
 }
 .button { min-height: 43px; padding: 0 1.12rem; font-size: .92rem; font-weight: 600; transition: transform .2s, box-shadow .2s; }
-.button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.14); }
 .button-dark { color: white; background: #1e1e1e; border-color: #343434; }
 .button-light { color: #111; background: white; }
 .button-disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
@@ -81,7 +81,6 @@ img { display: block; max-width: 100%; }
 .hero-copy .button { min-height: 46px; padding-inline: 1.25rem; font-size: .96rem; }
 .hero-socials { position: absolute; z-index: 5; right: 4.5vw; bottom: 5.5%; display: grid; gap: .9rem; }
 .social-pill { justify-content: center; min-width: 134px; min-height: 48px; padding: .62rem .94rem; font-size: .94rem; box-shadow: 0 6px 16px rgba(0,0,0,.045); transition: color .2s ease, background-color .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
-.social-pill:hover { color: #30302f; background: #ededeb; border-color: #d4d4d0; box-shadow: 0 9px 20px rgba(0,0,0,.08); transform: translateY(-2px); }
 .mobile-email { display: none; }
 
 .section { position: relative; min-height: 100svh; padding: clamp(5rem, 9vw, 9rem) clamp(1.2rem, 5vw, 5rem); overflow-x: clip; }
@@ -111,10 +110,8 @@ img { display: block; max-width: 100%; }
 .project-card { overflow: hidden; background: #fafafa; border: 1px solid #e4e4e0; box-shadow: 0 16px 45px rgba(0,0,0,.07); }
 .card-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #ecece8; }
 .card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s, filter .4s; filter: saturate(.82); }
-.project-card:hover img { transform: scale(1.025); filter: saturate(1); }
 .card-label { position: absolute; top: .75rem; left: .75rem; padding: .42rem .65rem; border-radius: 999px; background: white; font-size: .6rem; font-weight: 700; text-transform: uppercase; }
 .card-arrow { position: absolute; right: 1rem; bottom: 1rem; display: grid; place-items: center; width: 44px; height: 44px; opacity: 0; border-radius: 50%; background: white; transform: translateY(8px); transition: opacity .25s, transform .25s; }
-.project-card:hover .card-arrow { opacity: 1; transform: translateY(0); }
 .card-body { padding: 1.1rem; }
 .card-body h3 { margin: 0 0 .72rem; font-size: 1.45rem; line-height: 1.25; letter-spacing: -.035em; }
 .cert-card h3 { margin: 0 0 .65rem; font-size: 1.15rem; line-height: 1.35; letter-spacing: -.03em; }
@@ -174,7 +171,14 @@ img { display: block; max-width: 100%; }
 .cert-card { overflow: hidden; padding-bottom: 1rem; border: 1px solid #e0e0dc; background: white; box-shadow: 0 14px 34px rgba(0,0,0,.05); }
 .cert-media { aspect-ratio: 16 / 10; overflow: hidden; background: #eee; }
 .cert-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
-.cert-card:hover img { transform: scale(1.02); }
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.14); }
+  .social-pill:hover { color: #30302f; background: #ededeb; border-color: #d4d4d0; box-shadow: 0 9px 20px rgba(0,0,0,.08); transform: translateY(-2px); }
+  .project-card:hover img { transform: scale(1.025); filter: saturate(1); }
+  .project-card:hover .card-arrow { opacity: 1; transform: translateY(0); }
+  .cert-card:hover img { transform: scale(1.02); }
+}
 .cert-card h3, .cert-card .tag-list { margin-inline: 1rem; }
 .cert-card h3 { margin-top: 1rem; min-height: 2.7em; }
 .empty-state { grid-column: 1 / -1; padding: 5rem 0; color: #777; text-align: center; }

@@ -30,7 +30,7 @@ export default function CertificationDetail() {
 
   return (
     <main className="detail-page">
-      <Header inner />
+      <Header inner backTo="/#certifications" />
       <Reveal className="detail-main" amount={0.02}>
         <section className="detail-hero">
           <div className="detail-tags tag-list"><span>{certification.category}</span><span>{certification.issuer}</span></div>

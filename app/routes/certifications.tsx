@@ -42,7 +42,7 @@ export default function CertificationsArchive() {
 
   return (
     <main className="archive-page">
-      <Header inner />
+      <Header inner backTo="/#certifications" />
       <Reveal className="archive-main" amount={0.02}>
         <h1 className="archive-title">/CERTIFICATIONS</h1>
         <p className="archive-count">{certifications.length} certifications</p>
