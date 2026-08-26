@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "react-router";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useLocation } from "react-router";
 import { CertificationCard, Header, PageFooter, Reveal } from "~/components/ui";
 import { getCertifications } from "~/lib/content.server";
 
@@ -27,10 +27,13 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function CertificationDetail() {
   const { certification, related } = useLoaderData<typeof loader>();
+  const location = useLocation();
+  const requestedBackTo = (location.state as { backTo?: string } | null)?.backTo;
+  const backTo = requestedBackTo?.startsWith("/certifications") ? requestedBackTo : "/#certifications";
 
   return (
     <main className="detail-page">
-      <Header inner backTo="/#certifications" />
+      <Header inner backTo={backTo} />
       <Reveal className="detail-main" amount={0.02}>
         <section className="detail-hero">
           <div className="detail-tags tag-list"><span>{certification.category}</span><span>{certification.issuer}</span></div>
@@ -44,7 +47,7 @@ export default function CertificationDetail() {
         <img className="detail-image certificate-detail-image" src={certification.image} alt={`${certification.title} certificate`} />
         <section className="more-section">
           <h2>/MORE CERTIFICATES</h2>
-          <div className="archive-grid">{related.map((item) => <CertificationCard key={item.slug} certification={item} />)}</div>
+          <div className="archive-grid">{related.map((item) => <CertificationCard key={item.slug} certification={item} backTo={backTo} />)}</div>
         </section>
       </Reveal>
       <PageFooter />

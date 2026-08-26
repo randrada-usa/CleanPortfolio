@@ -1,7 +1,7 @@
 import type { MetaFunction } from "react-router";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useLoaderData, useSearchParams } from "react-router";
+import { useLoaderData, useLocation, useSearchParams } from "react-router";
 import { CertificationCard, Header, PageFooter, Reveal } from "~/components/ui";
 import { certificationCategories, type CertificationCategory } from "~/data/site";
 import { getCertifications } from "~/lib/content.server";
@@ -19,6 +19,7 @@ export const meta: MetaFunction = () => [
 
 export default function CertificationsArchive() {
   const certifications = useLoaderData<typeof loader>();
+  const location = useLocation();
   const [params, setParams] = useSearchParams();
   const initial = params.get("category");
   const [category, setCategory] = useState<"All" | CertificationCategory>(
@@ -58,7 +59,7 @@ export default function CertificationsArchive() {
           ))}
         </div>
         <div className="archive-grid">
-          {filtered.length ? filtered.map((item) => <CertificationCard key={item.slug} certification={item} />) : <p className="empty-state">No certifications match that search.</p>}
+          {filtered.length ? filtered.map((item) => <CertificationCard key={item.slug} certification={item} backTo={`${location.pathname}${location.search}`} />) : <p className="empty-state">No certifications match that search.</p>}
         </div>
       </Reveal>
       <PageFooter />

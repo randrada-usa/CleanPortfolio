@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs, MetaFunction } from "react-router";
 import { Code2, ExternalLink } from "lucide-react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useLocation } from "react-router";
 import { Header, PageFooter, ProjectCard, Reveal } from "~/components/ui";
 import { getProjects } from "~/lib/content.server";
 
@@ -25,13 +25,16 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function ProjectDetail() {
   const { project, related } = useLoaderData<typeof loader>();
+  const location = useLocation();
+  const requestedBackTo = (location.state as { backTo?: string } | null)?.backTo;
+  const backTo = requestedBackTo === "/projects" ? "/projects" : "/#projects";
   const unavailable = (label: string) => {
     window.alert(`${label} is currently unavailable for ${project.title}.`);
   };
 
   return (
     <main className="detail-page">
-      <Header inner backTo="/#projects" />
+      <Header inner backTo={backTo} />
       <Reveal className="detail-main" amount={0.02}>
         <section className="detail-hero">
           <div className="detail-tags tag-list"><span>{project.projectType}</span><span>{project.team}</span></div>
@@ -68,7 +71,7 @@ export default function ProjectDetail() {
         </section>
         <section className="more-section">
           <h2>/MORE PROJECTS</h2>
-          <div className="project-grid">{related.map((item) => <ProjectCard key={item.slug} project={item} />)}</div>
+          <div className="project-grid">{related.map((item) => <ProjectCard key={item.slug} project={item} backTo={backTo} />)}</div>
         </section>
       </Reveal>
       <PageFooter />

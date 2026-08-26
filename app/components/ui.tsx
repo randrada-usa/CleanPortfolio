@@ -121,14 +121,22 @@ export function SocialPill({ type, label }: { type: keyof typeof socialLinks; la
   );
 }
 
-export function ProjectCard({ project, priority = false }: { project: Project; priority?: boolean }) {
+export function ProjectCard({
+  project,
+  priority = false,
+  backTo = "/#projects",
+}: {
+  project: Project;
+  priority?: boolean;
+  backTo?: string;
+}) {
   return (
     <motion.article
       className="project-card"
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25 }}
     >
-      <Link to={`/projects/${project.slug}`} prefetch="intent" aria-label={`View ${project.title}`}>
+      <Link to={`/projects/${project.slug}`} state={{ backTo }} prefetch="intent" aria-label={`View ${project.title}`}>
         <div className="card-media">
           <img src={project.image} alt={`${project.title} interface`} loading={priority ? "eager" : "lazy"} />
           <span className="card-label">{project.eyebrow}</span>
@@ -144,14 +152,20 @@ export function ProjectCard({ project, priority = false }: { project: Project; p
   );
 }
 
-export function CertificationCard({ certification }: { certification: Certification }) {
+export function CertificationCard({
+  certification,
+  backTo = "/#certifications",
+}: {
+  certification: Certification;
+  backTo?: string;
+}) {
   return (
     <motion.article
       className="cert-card"
       whileHover={{ y: -5 }}
       transition={{ duration: 0.22 }}
     >
-      <Link to={`/certifications/${certification.slug}`} prefetch="intent" aria-label={`View ${certification.title}`}>
+      <Link to={`/certifications/${certification.slug}`} state={{ backTo }} prefetch="intent" aria-label={`View ${certification.title}`}>
         <div className="cert-media"><img src={certification.image} alt={`${certification.title} certificate`} loading="lazy" /></div>
         <h3>{certification.title}</h3>
         <div className="tag-list"><span>{certification.category}</span><span>{certification.issuer}</span></div>
