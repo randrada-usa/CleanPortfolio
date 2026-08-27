@@ -246,6 +246,7 @@ img { display: block; max-width: 100%; }
 .cv-document-heading .kicker { margin-bottom: .55rem; }
 .cv-document-heading h2 { margin: 0; font-size: clamp(1.7rem, 3vw, 3rem); letter-spacing: -.045em; }
 .cv-pdf-preview { display: block; width: min(950px, 100%); height: clamp(900px, 118vw, 1230px); margin: auto; border: 0; background: white; box-shadow: 0 20px 55px rgba(0,0,0,.1); }
+.cv-pdf-preview img { width: 100%; height: 100%; object-fit: contain; }
 .cv-mobile-preview { display: none; }
 .private-dialog-overlay { position: fixed; z-index: 1000; inset: 0; background: rgba(15,15,15,.48); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .private-dialog-content { position: fixed; z-index: 1001; top: 50%; left: 50%; width: min(500px, calc(100% - 2rem)); padding: 2.2rem; border: 1px solid rgba(255,255,255,.1); border-radius: 26px; color: white; background: #242424; box-shadow: 0 28px 80px rgba(0,0,0,.32); transform: translate(-50%, -50%); }
