@@ -146,7 +146,7 @@ img { display: block; max-width: 100%; }
 
 .projects-section { min-height: 100svh; background: white; border-inline: 1px solid var(--line); }
 .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-.project-card { overflow: hidden; background: #fafafa; border: 1px solid #e4e4e0; box-shadow: 0 16px 45px rgba(0,0,0,.07); }
+.project-card { overflow: hidden; border-radius: 5px; background: #fafafa; border: 1px solid #e4e4e0; box-shadow: 0 16px 45px rgba(0,0,0,.07); }
 .card-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #ecece8; }
 .card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s, filter .4s; filter: saturate(.82); }
 .card-label { position: absolute; top: .75rem; left: .75rem; padding: .42rem .65rem; border-radius: 999px; background: white; font-size: .6rem; font-weight: 700; text-transform: uppercase; }
@@ -208,7 +208,7 @@ img { display: block; max-width: 100%; }
 .filter-button.active { color: white; background: #1e1e1e; border-color: #1e1e1e; }
 .archive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
 .filter-card-shell, .filter-card-shell .cert-card { height: 100%; }
-.cert-card { overflow: hidden; padding-bottom: 1rem; border: 1px solid #e0e0dc; background: white; box-shadow: 0 14px 34px rgba(0,0,0,.05); }
+.cert-card { overflow: hidden; border-radius: 5px; padding-bottom: 1rem; border: 1px solid #e0e0dc; background: white; box-shadow: 0 14px 34px rgba(0,0,0,.05); }
 .cert-media { aspect-ratio: 16 / 10; overflow: hidden; background: #eee; }
 .cert-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
 
