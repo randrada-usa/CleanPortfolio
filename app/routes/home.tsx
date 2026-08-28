@@ -14,6 +14,81 @@ import {
 import { ArrowIcon, Footer, Header, ProjectCard, Reveal, SocialPill } from "~/components/ui";
 import { getCertifications, getProjects } from "~/lib/content.server";
 
+const homeSections = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "projects", label: "Projects" },
+  { id: "certifications", label: "Certifications" },
+  { id: "experience", label: "Experience" },
+  { id: "contact", label: "Contact" },
+] as const;
+
+type HomeSectionId = typeof homeSections[number]["id"];
+
+function HomeSectionRail() {
+  const [activeSection, setActiveSection] = useState<HomeSectionId>("home");
+
+  useEffect(() => {
+    let frame = 0;
+
+    const updateActiveSection = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const marker = window.innerHeight * 0.5;
+        const sections = homeSections
+          .map(({ id }) => ({ id, element: document.getElementById(id) }))
+          .filter((section): section is { id: HomeSectionId; element: HTMLElement } => Boolean(section.element));
+        const visible = sections.find(({ element }) => {
+          const bounds = element.getBoundingClientRect();
+          return bounds.top <= marker && bounds.bottom > marker;
+        });
+
+        if (visible) {
+          setActiveSection(visible.id);
+          return;
+        }
+
+        const nearest = sections.reduce<{ id: HomeSectionId; distance: number } | null>((closest, { id, element }) => {
+          const bounds = element.getBoundingClientRect();
+          const distance = Math.abs(bounds.top + bounds.height / 2 - marker);
+          return !closest || distance < closest.distance ? { id, distance } : closest;
+        }, null);
+        if (nearest) setActiveSection(nearest.id);
+      });
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, []);
+
+  return (
+    <nav className="home-section-rail" aria-label="Page sections">
+      {homeSections.map(({ id, label }) => {
+        const active = activeSection === id;
+        return (
+          <a
+            key={id}
+            className={active ? "is-active" : undefined}
+            href={`#${id}`}
+            aria-label={`Go to ${label}`}
+            aria-current={active ? "location" : undefined}
+            onClick={() => setActiveSection(id)}
+          >
+            <span>{label}</span>
+            <i aria-hidden="true" />
+          </a>
+        );
+      })}
+    </nav>
+  );
+}
+
 export async function loader() {
   const [projects, certifications] = await Promise.all([getProjects(), getCertifications()]);
   return { projects, certifications };
@@ -227,6 +302,7 @@ export default function Home() {
   const { projects, certifications } = useLoaderData<typeof loader>();
   return (
     <main>
+      <HomeSectionRail />
       <section className="hero" id="home">
         <Header />
         <motion.h1 className="hero-name" aria-label="Rey Jane Andrada" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .85, ease: [0.22, 1, 0.36, 1] }}>
