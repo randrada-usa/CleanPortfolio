@@ -199,3 +199,7 @@ export const socialLinks = {
   github: "https://github.com/randrada-usa",
   linkedin: "https://www.linkedin.com/in/rey-jane-andrada-49701242a/",
 };
+
+export const talkLink =
+  "https://docs.google.com/document/d/141SQkY9nhEd1oyZcked7em1c5J0ZtOu_Psxwyg6Rm6E/edit?usp=sharing";
+

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router";
 import type { Certification, Project } from "~/data/site";
-import { socialLinks } from "~/data/site";
+import { socialLinks, talkLink } from "~/data/site";
 
 export function ArrowIcon() {
   return <ArrowUpRight aria-hidden="true" size={18} strokeWidth={1.7} />;
@@ -114,7 +114,11 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
               </a>
             ))}
           </nav>
-          {!inner && <a className="button header-cta" href={socialLinks.email}>Let’s talk</a>}
+          {!inner && (
+            <a className="button header-cta" href={talkLink} target="_blank" rel="noreferrer">
+              Let’s talk
+            </a>
+          )}
           {inner && <Availability compact />}
           {!inner && (
             <button className="menu-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open menu">
@@ -149,7 +153,15 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
                     </a>
                   ))}
                 </nav>
-                <a className="button button-light" href={socialLinks.email} onClick={() => setOpen(false)}>Let’s Talk <ArrowIcon /></a>
+                <a
+                  className="button button-light"
+                  href={talkLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setOpen(false)}
+                >
+                  Let’s Talk <ArrowIcon />
+                </a>
               </motion.div>
             )}
           </AnimatePresence>,
