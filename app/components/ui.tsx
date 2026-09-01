@@ -50,6 +50,7 @@ function sectionFromPath(pathname: string): NavSection | null {
 export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backTo?: string }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [mounted, setMounted] = useState(false);
   const location = useLocation();
   const [activeSection, setActiveSection] = useState<NavSection | null>(() => sectionFromPath(location.pathname));
@@ -60,14 +61,42 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
 
   useEffect(() => {
     setOpen(false);
+    setHidden(false);
   }, [location.pathname, location.hash]);
 
   useEffect(() => {
     if (inner) return;
-    const onScroll = () => setScrolled(window.scrollY > 90);
+    let lastScrollY = window.scrollY;
+    let frame = 0;
+
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const isScrolled = currentScrollY > 70;
+        setScrolled(isScrolled);
+
+        if (!isScrolled) {
+          setHidden(false);
+        } else {
+          const diff = currentScrollY - lastScrollY;
+          // Hide when scrolling down, reveal immediately when scrolling up
+          if (diff > 6 && currentScrollY > 120) {
+            setHidden(true);
+          } else if (diff < -6) {
+            setHidden(false);
+          }
+        }
+        lastScrollY = Math.max(0, currentScrollY);
+      });
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [inner]);
 
   useEffect(() => {
@@ -104,7 +133,9 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
 
   return (
     <>
-      <header className={`${inner ? "site-header inner-header" : "site-header"} ${scrolled ? "scrolled" : ""}`}>
+      <header
+        className={`${inner ? "site-header inner-header" : "site-header"} ${scrolled ? "scrolled" : ""} ${hidden ? "nav-hidden" : ""}`}
+      >
         <div className="header-inner">
           {inner ? <Link className="back-pill" to={backTo} prefetch="intent">← Back</Link> : <Availability compact />}
           <nav className="desktop-nav" aria-label="Primary navigation">
@@ -122,7 +153,7 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
           {inner && <Availability compact />}
           {!inner && (
             <button className="menu-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open menu">
-              <Menu />
+              <Menu size={20} />
             </button>
           )}
         </div>
