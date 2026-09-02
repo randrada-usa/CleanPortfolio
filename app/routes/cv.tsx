@@ -45,13 +45,12 @@ export default function CvPage() {
             </div>
             <FileText aria-hidden="true" size={30} strokeWidth={1.5} />
           </div>
-          <a className="cv-pdf-preview" href={cvPdf} target="_blank" rel="noreferrer" aria-label="Open Rey Jane Andrada's CV as a PDF">
+          <div className="cv-pdf-preview">
             <img src={cvPreview} alt="Preview of Rey Jane Andrada's current one-page curriculum vitae" />
-          </a>
-          <a className="cv-mobile-preview" href={cvPdf} target="_blank" rel="noreferrer" aria-label="Open Rey Jane Andrada's CV as a PDF">
+          </div>
+          <div className="cv-mobile-preview">
             <img src={cvPreview} alt="Preview of Rey Jane Andrada's one-page curriculum vitae" />
-            <span>Tap to open the full PDF <ExternalLink size={17} /></span>
-          </a>
+          </div>
         </section>
       </Reveal>
       <PageFooter />
