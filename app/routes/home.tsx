@@ -240,7 +240,7 @@ export default function Home() {
         </motion.h1>
         <motion.img
           className="hero-photo"
-          src="/assets/photos/063d74f9-f3e3-4fdc-b05a-a969275ddb9a.png"
+          src="/assets/photos/427227d6-2a2a-4b17-9a69-a8baeed439f71.png"
           alt="Rey Jane Andrada holding a laptop"
           draggable={false}
           initial={{ opacity: 0 }}

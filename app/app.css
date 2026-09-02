@@ -71,9 +71,7 @@ img { display: block; max-width: 100%; }
 .desktop-nav { display: flex; align-items: center; gap: clamp(1.45rem, 2.15vw, 2.3rem); font-size: 1.03rem; font-weight: 550; }
 .desktop-nav a { position: relative; display: inline-flex; align-items: baseline; gap: .38rem; }
 .desktop-nav a::after { content: ""; position: absolute; height: 1px; left: 0; right: 100%; bottom: -.35rem; background: currentColor; transition: right .25s; }
-.desktop-nav a::before { content: ""; position: absolute; top: -.65rem; left: 50%; width: 5px; height: 5px; border-radius: 50%; background: var(--green); opacity: 0; transform: translate(-50%, 4px) scale(.5); transition: opacity .25s ease, transform .3s cubic-bezier(.22,1,.36,1); }
 .desktop-nav a:hover::after, .desktop-nav a.is-active::after { right: 0; }
-.desktop-nav a.is-active::before { opacity: 1; transform: translate(-50%, 0) scale(1); }
 .header-cta { justify-self: end; min-height: 48px; padding-inline: 1.42rem; color: white; background: #1e1e1e; border-color: #343434; font-size: .98rem; font-weight: 550; box-shadow: none; }
 .back-pill { justify-self: start; min-height: 44px; padding: .68rem 1.12rem; font-size: .92rem; font-weight: 600; box-shadow: none; }
 .inner-header .availability { justify-self: end; }
@@ -224,9 +222,15 @@ img { display: block; max-width: 100%; }
 .contact-main { width: min(1200px, calc(100% - 2rem)); margin: auto 0; display: flex; flex-direction: column; align-items: center; }
 .contact-section h2 { margin: 2rem 0 .9rem; font-size: clamp(2.4rem, 5vw, 5.6rem); line-height: .98; font-weight: 800; letter-spacing: -.025em; white-space: nowrap; }
 .contact-main > p { max-width: 600px; margin: 0 0 1.8rem; color: #686866; }
-.footer-links { width: min(1320px, 100%); display: grid; grid-template-columns: 1fr repeat(3, auto); align-items: center; gap: clamp(.7rem, 3vw, 3.5rem); margin-top: auto; padding-top: 5rem; }
+.footer-links { width: min(1320px, 100%); display: grid; grid-template-columns: 1fr repeat(3, auto) auto; align-items: center; gap: clamp(.7rem, 3vw, 3.5rem); margin-top: auto; padding-top: 5rem; }
 .identity-pill { justify-self: start; padding: .45rem .75rem .45rem .45rem; font-size: .75rem; }
 .identity-pill img { width: 28px; height: 28px; object-fit: cover; object-position: 50% 20%; border-radius: 50%; }
+.back-to-top {
+  display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid #343434;
+  border-radius: 50%; color: white; background: #1e1e1e; cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,.13);
+  transition: color .2s ease, background-color .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
 
 .archive-page, .detail-page { min-height: 100vh; background: var(--paper); }
 .archive-main, .detail-main { width: min(1420px, calc(100% - 8vw)); margin: auto; padding: 4rem 0 7rem; }
@@ -248,6 +252,7 @@ img { display: block; max-width: 100%; }
 @media (hover: hover) and (pointer: fine) {
   .button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.14); }
   .social-pill:hover { color: #30302f; background: #ededeb; border-color: #d4d4d0; box-shadow: 0 9px 20px rgba(0,0,0,.08); transform: translateY(-2px); }
+  .back-to-top:hover { transform: scale(1.05); box-shadow: 0 12px 24px rgba(0,0,0,.18); }
   .project-card:hover img { transform: scale(1.025); filter: saturate(1); }
   .project-card:hover .card-arrow { opacity: 1; transform: translateY(0); }
   .cert-card:hover img { transform: scale(1.02); }
@@ -430,6 +435,7 @@ img { display: block; max-width: 100%; }
   .footer-links { grid-template-columns: 1fr 1fr; gap: .65rem; margin-top: auto; }
   .footer-links .social-pill, .footer-links .identity-pill { width: 100%; min-height: 42px; justify-content: center; padding: .52rem .75rem; font-size: .8rem; }
   .identity-pill img { width: 16px; height: 16px; }
+  .back-to-top { width: 42px; height: 42px; justify-self: center; }
   .archive-main, .detail-main { width: calc(100% - 2rem); padding-top: 2rem; }
   .archive-title { font-size: 3.4rem; }
   .search-row { margin-bottom: 2rem; }

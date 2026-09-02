@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Code2, Link2, Mail, Menu, X } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Code2, Link2, Mail, Menu, X } from "lucide-react";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -234,19 +234,23 @@ export function CertificationCard({
 }
 
 export function Footer() {
+  const scrollToTop = () => {
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer id="contact" className="contact-section">
       <Reveal className="contact-main" distance={0}>
-        <Availability />
         <h2>HAVE A PROJECT IN MIND?</h2>
         <p>Let’s turn ideas into reliable systems that deliver real impact.</p>
         <a className="button button-dark" href={socialLinks.email}>Contact Me <ArrowIcon /></a>
       </Reveal>
       <Reveal className="footer-links" delay={0.08}>
-        <span className="identity-pill"><img src="/assets/photos/contact-avatar.webp" alt="" /> Rey Jane Andrada</span>
+        <Link className="identity-pill" to="/#home" prefetch="intent"><img src="/assets/photos/contact-avatar.webp" alt="" /> Rey Jane Andrada</Link>
         <SocialPill type="github" label="GitHub" />
         <SocialPill type="linkedin" label="LinkedIn" />
         <SocialPill type="email" label="Email" />
+        <button className="back-to-top" type="button" onClick={scrollToTop} aria-label="Back to top"><ArrowUp size={20} /></button>
       </Reveal>
     </footer>
   );
