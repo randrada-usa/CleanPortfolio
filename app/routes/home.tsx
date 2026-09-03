@@ -83,9 +83,9 @@ function ProjectsSection({ projects }: { projects: Project[] }) {
       <Reveal className="section-inner">
         <h2 className="section-heading">/SELECTED PROJECTS</h2>
         <div className="project-grid">
-          {projects.map((project, index) => <ProjectCard key={project.slug} project={project} priority={index === 0} />)}
+          {projects.map((project) => <ProjectCard key={project.slug} project={project} />)}
         </div>
-        <div className="center-action"><Link className="button" to="/projects" prefetch="render">View All Projects <ArrowIcon /></Link></div>
+        <div className="center-action"><Link className="button" to="/projects" prefetch="intent">View All Projects <ArrowIcon /></Link></div>
       </Reveal>
     </section>
   );
@@ -101,22 +101,21 @@ const categoryCopy: Record<CertificationCategory, string> = {
 
 function CertificationsSection({ certifications }: { certifications: Certification[] }) {
   const [open, setOpen] = useState<CertificationCategory | null>("Data & Analytics");
+  const [showPreviews, setShowPreviews] = useState(false);
 
   useEffect(() => {
     const smallScreen = window.matchMedia("(max-width: 640px)");
     if (smallScreen.matches) setOpen(null);
   }, []);
 
-  // Preload category preview images so accordion previews are instant
+  // Match the CSS breakpoint and never request previews that mobile hides.
   useEffect(() => {
-    certificationCategories.forEach((category) => {
-      const firstItem = certifications.find((item) => item.category === category);
-      if (firstItem?.image) {
-        const img = new Image();
-        img.src = firstItem.image;
-      }
-    });
-  }, [certifications]);
+    const desktop = window.matchMedia("(min-width: 901px)");
+    const update = () => setShowPreviews(desktop.matches);
+    update();
+    desktop.addEventListener("change", update);
+    return () => desktop.removeEventListener("change", update);
+  }, []);
 
   return (
     <section id="certifications" className="section certifications-section">
@@ -158,13 +157,13 @@ function CertificationsSection({ certifications }: { certifications: Certificati
                   </div>
                 </div>
                 <AnimatePresence initial={false}>
-                  {active && items[0]?.image && (
+                  {showPreviews && active && items[0]?.image && (
                     <motion.img
                       className="cert-preview"
                       src={items[0].image}
                       alt=""
                       aria-hidden="true"
-                      loading="eager"
+                      loading="lazy"
                       decoding="async"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -177,7 +176,7 @@ function CertificationsSection({ certifications }: { certifications: Certificati
             );
           })}
         </div>
-        <div className="center-action"><Link className="button" to="/certifications" prefetch="render">View All 25 <ArrowIcon /></Link></div>
+        <div className="center-action"><Link className="button" to="/certifications" prefetch="intent">View All 25 <ArrowIcon /></Link></div>
       </Reveal>
     </section>
   );
@@ -235,19 +234,21 @@ export default function Home() {
     <main>
       <section className="hero" id="home">
         <Header />
-        <motion.h1 className="hero-name" aria-label="Rey Jane Andrada" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .85, ease: [0.22, 1, 0.36, 1] }}>
+        <h1 className="hero-name" aria-label="Rey Jane Andrada">
           <span className="name-outline">REY JANE</span><span className="name-solid">ANDRADA</span>
-        </motion.h1>
-        <motion.img
+        </h1>
+        <img
           className="hero-photo"
-          src="/assets/photos/427227d6-2a2a-4b17-9a69-a8baeed439f71.png"
+          src="/assets/photos/hero-768.webp"
+          srcSet="/assets/photos/hero-480.webp 480w, /assets/photos/hero-768.webp 768w, /assets/photos/hero-1024.webp 1024w"
+          sizes="(max-width: 900px) 100vw, (max-width: 1323px) 62vw, 820px"
+          width={1024}
+          height={1168}
+          fetchPriority="high"
           alt="Rey Jane Andrada holding a laptop"
           draggable={false}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: .95, delay: .12, ease: [0.22, 1, 0.36, 1] }}
         />
-        <motion.div className="hero-copy" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, delay: .28, ease: [0.22, 1, 0.36, 1] }}>
+        <div className="hero-copy">
           <h1>Backend-Focused Developer<br />Aspiring Data Engineer</h1>
           <p>I build reliable backend systems and practical applications—then keep learning toward the data platforms behind them.</p>
           <span className="hero-location">
@@ -257,12 +258,12 @@ export default function Home() {
             </svg>
             Iloilo City, Philippines
           </span>
-        </motion.div>
-        <motion.div className="hero-socials" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .75, delay: .38, ease: [0.22, 1, 0.36, 1] }}>
+        </div>
+        <div className="hero-socials">
           <SocialPill type="github" label="GitHub" />
           <SocialPill type="linkedin" label="LinkedIn" />
           <SocialPill type="email" label="Email" />
-        </motion.div>
+        </div>
       </section>
       <AboutStack />
       <ProjectsSection projects={projects} />

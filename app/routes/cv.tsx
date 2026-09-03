@@ -46,10 +46,10 @@ export default function CvPage() {
             <FileText aria-hidden="true" size={30} strokeWidth={1.5} />
           </div>
           <div className="cv-pdf-preview">
-            <img src={cvPreview} alt="Preview of Rey Jane Andrada's current one-page curriculum vitae" />
+            <img src={cvPreview} alt="Preview of Rey Jane Andrada's current one-page curriculum vitae" draggable={false} />
           </div>
           <div className="cv-mobile-preview">
-            <img src={cvPreview} alt="Preview of Rey Jane Andrada's one-page curriculum vitae" />
+            <img src={cvPreview} alt="Preview of Rey Jane Andrada's one-page curriculum vitae" draggable={false} />
           </div>
         </section>
       </Reveal>

@@ -16,11 +16,12 @@ export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
   { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
   { rel: "manifest", href: "/site.webmanifest" },
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
   {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap",
+    rel: "preload",
+    href: "/assets/fonts/manrope-latin-v20.woff2",
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
   },
 ];
 

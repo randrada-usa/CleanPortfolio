@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router";
 import type { Certification, Project } from "~/data/site";
 import { socialLinks, talkLink } from "~/data/site";
+import { projectCardImage } from "~/lib/images";
 
 export function ArrowIcon() {
   return <ArrowUpRight aria-hidden="true" size={18} strokeWidth={1.7} />;
@@ -197,7 +198,7 @@ export function ProjectCard({
     >
       <Link to={`/projects/${project.slug}`} state={{ backTo }} prefetch="intent" aria-label={`View ${project.title}`}>
         <div className="card-media">
-          <img src={project.image} alt={`${project.title} interface`} loading={priority ? "eager" : "lazy"} />
+          <img {...projectCardImage(project.image)} alt={`${project.title} interface`} loading={priority ? "eager" : "lazy"} decoding="async" />
           <span className="card-label">{project.eyebrow}</span>
           <span className="card-arrow"><ArrowIcon /></span>
         </div>
