@@ -25,13 +25,19 @@ The adapter in `app/lib/content.server.ts` automatically falls back to local con
 The homepage uses transparent WebP portrait variants at 480, 768, and 1024 px
 (quality 85), generated from `public/assets/photos/427227d6-2a2a-4b17-9a69-a8baeed439f71.png`.
 Project cards use 480, 800, and 1200 px WebP variants (quality 82); detail pages
-continue to use the original screenshots. When replacing a local image, regenerate
+reuse these on smaller screens and add 1600 and 1920 px variants for larger screens.
+Experience hover previews use 400 and 800 px WebP variants (quality 82).
+When replacing a local image, regenerate
 its variants and keep the source mapping in `app/lib/images.ts` in sync. Unmapped
 images, including CMS images, fall back to their supplied URL.
 
 Manrope's Latin WOFF2 is hosted in `public/assets/fonts`, alongside its SIL Open
 Font License. The hero is visible in the server-rendered HTML; certificate preview
-images are requested only on desktop, and lazily when they approach the viewport.
+images are requested only on desktop. Certificate and experience preview sets are
+preloaded at low priority when their section comes within 400 px of the viewport.
+Project cards preload the responsive detail image on pointer hover, keyboard focus,
+or pointer down, alongside React Router's existing route prefetching. Speculative
+image preloads are skipped on data-saver and 2G connections; visible images still load.
 
 ## CV
 

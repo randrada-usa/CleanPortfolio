@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useLoaderData, useLocation } from "react-router";
 import { Header, PageFooter, ProjectCard, Reveal } from "~/components/ui";
 import { getProjects } from "~/lib/content.server";
+import { projectDetailImage } from "~/lib/images";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const projects = await getProjects();
@@ -67,7 +68,7 @@ export default function ProjectDetail() {
             <div className="meta-item"><span>Stack</span><strong>{project.tags.join(" · ")}</strong></div>
           </aside>
         </section>
-        <img className="detail-image" src={project.image} alt={`${project.title} project`} />
+        <img className="detail-image" {...projectDetailImage(project.image)} alt={`${project.title} project`} loading="eager" fetchPriority="high" decoding="async" />
         <section className="case-study">
           <h2>/CASE STUDY</h2>
           <div>

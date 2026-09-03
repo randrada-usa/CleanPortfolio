@@ -2,7 +2,7 @@ import type { MetaFunction } from "react-router";
 import { Link, useLoaderData } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   certificationCategories,
   coreStack,
@@ -13,6 +13,8 @@ import {
 } from "~/data/site";
 import { ArrowIcon, Footer, Header, ProjectCard, Reveal, SocialPill } from "~/components/ui";
 import { getCertifications, getProjects } from "~/lib/content.server";
+import { experiencePreviewImage } from "~/lib/images";
+import { usePreviewImages } from "~/lib/use-preview-images";
 
 export async function loader() {
   const [projects, certifications] = await Promise.all([getProjects(), getCertifications()]);
@@ -101,24 +103,19 @@ const categoryCopy: Record<CertificationCategory, string> = {
 
 function CertificationsSection({ certifications }: { certifications: Certification[] }) {
   const [open, setOpen] = useState<CertificationCategory | null>("Data & Analytics");
-  const [showPreviews, setShowPreviews] = useState(false);
+  const previewImages = useMemo(() => certificationCategories.flatMap((category) => {
+    const image = certifications.find((item) => item.category === category)?.image;
+    return image ? [{ src: image }] : [];
+  }), [certifications]);
+  const { sectionRef, enabled: showPreviews } = usePreviewImages(previewImages);
 
   useEffect(() => {
     const smallScreen = window.matchMedia("(max-width: 640px)");
     if (smallScreen.matches) setOpen(null);
   }, []);
 
-  // Match the CSS breakpoint and never request previews that mobile hides.
-  useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 901px)");
-    const update = () => setShowPreviews(desktop.matches);
-    update();
-    desktop.addEventListener("change", update);
-    return () => desktop.removeEventListener("change", update);
-  }, []);
-
   return (
-    <section id="certifications" className="section certifications-section">
+    <section ref={sectionRef} id="certifications" className="section certifications-section">
       <p className="ghost-word" aria-hidden="true">CERTIFICATIONS</p>
       <Reveal className="section-inner">
         <h2 className="section-heading">/CERTIFICATIONS</h2>
@@ -182,10 +179,13 @@ function CertificationsSection({ certifications }: { certifications: Certificati
   );
 }
 
+const experiencePreviews = experience.flatMap((item) => item.image ? [experiencePreviewImage(item.image)] : []);
+
 function ExperienceSection() {
   const [hovered, setHovered] = useState<string | null>(null);
+  const { sectionRef, enabled: showPreviews } = usePreviewImages(experiencePreviews, "(min-width: 901px) and (hover: hover)");
   return (
-    <section id="experience" className="section experience-section">
+    <section ref={sectionRef} id="experience" className="section experience-section">
       <p className="ghost-word" aria-hidden="true">EXPERIENCE</p>
       <Reveal className="section-inner">
         <div className="experience-top">
@@ -203,11 +203,12 @@ function ExperienceSection() {
               <div><h3>{item.organization}</h3><p>{item.role}</p></div>
               <time>{item.dates}</time>
               <AnimatePresence>
-                {hovered === item.role && item.image && (
+                {showPreviews && hovered === item.role && item.image && (
                   <motion.img
                     className="experience-hover"
-                    src={item.image}
+                    {...experiencePreviewImage(item.image)}
                     alt=""
+                    decoding="async"
                     initial={{ opacity: 0, scale: .9, rotate: 2 }}
                     animate={{ opacity: 1, scale: 1, rotate: 6 }}
                     exit={{ opacity: 0, scale: .94 }}

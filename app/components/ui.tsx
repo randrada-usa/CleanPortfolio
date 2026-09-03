@@ -6,7 +6,8 @@ import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router";
 import type { Certification, Project } from "~/data/site";
 import { socialLinks, talkLink } from "~/data/site";
-import { projectCardImage } from "~/lib/images";
+import { projectCardImage, projectDetailImage } from "~/lib/images";
+import { preloadImage } from "~/lib/image-preload";
 
 export function ArrowIcon() {
   return <ArrowUpRight aria-hidden="true" size={18} strokeWidth={1.7} />;
@@ -196,7 +197,12 @@ export function ProjectCard({
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25 }}
     >
-      <Link to={`/projects/${project.slug}`} state={{ backTo }} prefetch="intent" aria-label={`View ${project.title}`}>
+      <Link
+        to={`/projects/${project.slug}`} state={{ backTo }} prefetch="intent" aria-label={`View ${project.title}`}
+        onPointerEnter={(event) => { if (event.pointerType !== "touch") preloadImage(projectDetailImage(project.image)); }}
+        onFocus={() => preloadImage(projectDetailImage(project.image))}
+        onPointerDown={() => preloadImage(projectDetailImage(project.image))}
+      >
         <div className="card-media">
           <img {...projectCardImage(project.image)} alt={`${project.title} interface`} loading={priority ? "eager" : "lazy"} decoding="async" />
           <span className="card-label">{project.eyebrow}</span>
