@@ -345,12 +345,16 @@ img { display: block; max-width: 100%; }
     width: 38px;
     height: 38px;
   }
-  .hero { height: 100svh; min-height: 0; }
-  .hero-name { top: auto; bottom: clamp(218px, 29vh, 250px); display: grid; gap: 0; text-align: center; white-space: normal; }
+}
+
+@media (max-width: 900px), (max-width: 1100px) and (orientation: portrait) {
+  /* Keep the portrait, name and copy in one flow; short screens can scroll. */
+  .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; height: auto; min-height: 100svh; padding: 90px 0 36px; }
+  .hero-name { position: relative; z-index: 3; order: 1; top: auto; bottom: auto; left: auto; right: auto; display: grid; gap: 0; margin: -20px 1rem 0; text-align: center; white-space: normal; }
   .hero-name .name-outline { color: #222; -webkit-text-stroke: 0; font-size: .48em; letter-spacing: .08em; }
   .hero-name .name-solid { font-size: .82em; }
-  .hero-photo { top: 55px; bottom: auto; width: 100%; height: clamp(330px, 52vh, 480px); object-fit: cover; object-position: 50% 17%; mask-image: linear-gradient(to bottom, #000 72%, transparent 100%); }
-  .hero-copy { left: 8vw; right: 8vw; bottom: 28px; width: auto; text-align: center; }
+  .hero-photo { position: relative; order: 0; flex-shrink: 0; top: auto; bottom: auto; left: auto; width: min(100%, 600px); height: clamp(280px, calc(100svh - 390px), 560px); transform: none; object-fit: cover; object-position: 50% 17%; mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.72) 78%, transparent 96%); }
+  .hero-copy { position: relative; order: 2; left: auto; right: auto; bottom: auto; width: min(640px, 84%); margin-top: 20px; text-align: center; }
   .hero-copy h1 { font-size: 1.25rem; }
   .hero-copy p { max-width: 470px; margin-inline: auto; }
   .hero-socials {
@@ -383,6 +387,9 @@ img { display: block; max-width: 100%; }
     right: auto;
     transform: none;
   }
+}
+
+@media (max-width: 900px) {
   .about-grid { grid-template-columns: 1fr; }
   .project-grid, .archive-grid { grid-template-columns: repeat(2, 1fr); }
   .cert-preview, .experience-hover { display: none; }
@@ -411,16 +418,16 @@ img { display: block; max-width: 100%; }
     width: 36px;
     height: 36px;
   }
-  .hero { height: 100svh; min-height: 0; }
+  .hero { height: auto; min-height: 100svh; }
   .hero-photo {
-    top: 74px;
+    top: auto;
     height: clamp(280px, calc(100svh - 365px), 470px);
     object-position: 50% 18%;
     mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.72) 78%, transparent 96%);
   }
-  .hero-name { bottom: clamp(230px, 29vh, 250px); font-size: clamp(3.6rem, 17vw, 4.4rem); font-weight: 850; }
+  .hero-name { bottom: auto; font-size: clamp(3.6rem, 17vw, 4.4rem); font-weight: 850; }
   .hero-name .name-outline, .hero-name .name-solid { font-weight: 850; }
-  .hero-copy { bottom: clamp(34px, 6.5svh, 56px); }
+  .hero-copy { bottom: auto; }
   .hero-copy p { margin-bottom: 1rem; font-size: .78rem; line-height: 1.6; }
   .hero-socials {
     top: 108px;

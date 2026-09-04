@@ -242,7 +242,7 @@ export default function Home() {
           className="hero-photo"
           src="/assets/photos/hero-768.webp"
           srcSet="/assets/photos/hero-480.webp 480w, /assets/photos/hero-768.webp 768w, /assets/photos/hero-1024.webp 1024w"
-          sizes="(max-width: 900px) 100vw, (max-width: 1323px) 62vw, 820px"
+          sizes="(max-width: 600px) 100vw, (max-width: 900px) 600px, (max-width: 1100px) and (orientation: portrait) 600px, (max-width: 1323px) 62vw, 820px"
           width={1024}
           height={1168}
           fetchPriority="high"
