@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs, MetaFunction } from "react-router";
 import { useLoaderData, useLocation } from "react-router";
-import { CertificationCard, Header, PageFooter, Reveal } from "~/components/ui";
+import { CertificationCard, Footer, Header, Reveal } from "~/components/ui";
 import { getCertifications } from "~/lib/content.server";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -50,7 +50,7 @@ export default function CertificationDetail() {
           <div className="archive-grid">{related.map((item) => <CertificationCard key={item.slug} certification={item} backTo={backTo} />)}</div>
         </section>
       </Reveal>
-      <PageFooter />
+      <Footer />
     </main>
   );
 }

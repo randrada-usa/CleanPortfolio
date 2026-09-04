@@ -2,7 +2,7 @@ import type { MetaFunction } from "react-router";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useLoaderData } from "react-router";
-import { Header, PageFooter, ProjectCard, Reveal } from "~/components/ui";
+import { Footer, Header, ProjectCard, Reveal } from "~/components/ui";
 import { getProjects } from "~/lib/content.server";
 
 export async function loader() { return getProjects(); }
@@ -44,7 +44,7 @@ export default function ProjectsArchive() {
           {filtered.length ? filtered.map((project) => <ProjectCard key={project.slug} project={project} backTo="/projects" />) : <p className="empty-state">No projects match that search.</p>}
         </div>
       </Reveal>
-      <PageFooter />
+      <Footer />
     </main>
   );
 }

@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Code2, ExternalLink, X } from "lucide-react";
 import { useState } from "react";
 import { useLoaderData, useLocation } from "react-router";
-import { Header, PageFooter, ProjectCard, Reveal } from "~/components/ui";
+import { Footer, Header, ProjectCard, Reveal } from "~/components/ui";
 import { getProjects } from "~/lib/content.server";
 import { projectDetailImage } from "~/lib/images";
 
@@ -82,7 +82,7 @@ export default function ProjectDetail() {
           <div className="project-grid">{related.map((item) => <ProjectCard key={item.slug} project={item} backTo={backTo} />)}</div>
         </section>
       </Reveal>
-      <PageFooter />
+      <Footer />
       <Dialog.Root open={privateNoticeOpen} onOpenChange={setPrivateNoticeOpen}>
         <Dialog.Portal>
           <Dialog.Overlay className="private-dialog-overlay" />

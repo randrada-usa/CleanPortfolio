@@ -3,7 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useLoaderData, useLocation, useSearchParams } from "react-router";
-import { CertificationCard, Header, PageFooter, Reveal } from "~/components/ui";
+import { CertificationCard, Footer, Header, Reveal } from "~/components/ui";
 import { certificationCategories, type CertificationCategory } from "~/data/site";
 import { getCertifications } from "~/lib/content.server";
 
@@ -88,7 +88,7 @@ export default function CertificationsArchive() {
           </AnimatePresence>
         </div>
       </Reveal>
-      <PageFooter />
+      <Footer />
     </main>
   );
 }

@@ -1,6 +1,6 @@
 import type { MetaFunction } from "react-router";
 import { Download, ExternalLink, FileText } from "lucide-react";
-import { Header, PageFooter, Reveal } from "~/components/ui";
+import { Footer, Header, Reveal } from "~/components/ui";
 
 const cvPdf = "/assets/cv/Rey-Jane-Andrada-CV-2026-08.pdf";
 const cvPreview = "/assets/cv/rey-jane-andrada-cv-preview-2026-08-v3.webp";
@@ -53,7 +53,7 @@ export default function CvPage() {
           </div>
         </section>
       </Reveal>
-      <PageFooter />
+      <Footer />
     </main>
   );
 }
