@@ -9,6 +9,7 @@ import {
   useRouteError,
 } from "react-router";
 import "./app.css";
+import { PortfolioLoader } from "~/components/portfolio-loader";
 
 export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon.ico", sizes: "any" },
@@ -46,7 +47,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return <><PortfolioLoader /><Outlet /></>;
 }
 
 export function ErrorBoundary() {

@@ -33,6 +33,40 @@ button, input { font: inherit; }
 img { display: block; max-width: 100%; }
 ::selection { color: white; background: #222; }
 
+.portfolio-loader {
+  position: fixed; z-index: 10000; inset: 0; display: grid; place-items: center;
+  background: var(--loader-background, #fff);
+}
+.portfolio-loader.is-exiting { animation: loader-exit .42s cubic-bezier(.4,0,.2,1) forwards; }
+.portfolio-loader-word {
+  display: inline-block;
+  color: transparent;
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2.4rem, 7.5vw, 5.5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  transition: transform .42s cubic-bezier(.4,0,.2,1);
+}
+.portfolio-loader.is-exiting .portfolio-loader-word { transform: scale(.985); }
+.portfolio-loader-word span {
+  display: block;
+  color: transparent;
+  white-space: nowrap;
+  -webkit-text-stroke: 2px var(--loader-ink, #151515);
+  background: linear-gradient(var(--loader-ink, #151515) 0 0) 0 / 0% 100% no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: loader-fill-sweep 2.2s cubic-bezier(.45,0,.2,1) infinite;
+}
+@keyframes loader-fill-sweep {
+  0% { background-size: 0% 100%; }
+  70%, 88% { background-size: 120% 100%; }
+  100% { background-size: 0% 100%; }
+}
+@keyframes loader-exit { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+
 .button, .availability, .social-pill, .identity-pill, .back-pill {
   display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
   border: 1px solid rgba(20,20,20,.12); border-radius: 999px; background: white;
@@ -481,6 +515,8 @@ img { display: block; max-width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .portfolio-loader.is-exiting { animation-duration: .01ms; }
+  .portfolio-loader-word span { background-size: 100% 100%; animation: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }

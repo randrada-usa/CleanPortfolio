@@ -111,9 +111,9 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
           {inner ? <Link className="back-pill" to={backTo} prefetch="intent">← Back</Link> : <Availability compact />}
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navLinks.map(({ id, label, href }) => (
-              <a className={activeSection === id ? "is-active" : undefined} aria-current={activeSection === id ? "location" : undefined} key={id} href={href}>
+              <Link className={activeSection === id ? "is-active" : undefined} aria-current={activeSection === id ? "location" : undefined} key={id} to={href}>
                 {label}
-              </a>
+              </Link>
             ))}
           </nav>
           {!inner && (
@@ -144,15 +144,15 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
                 <button type="button" onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
                 <nav className="mobile-navigation" aria-label="Mobile navigation">
                   {navLinks.map(({ id, label, href }) => (
-                    <a
+                    <Link
                       className={activeSection === id ? "is-active" : undefined}
                       aria-current={activeSection === id ? "location" : undefined}
                       key={id}
-                      href={href}
+                      to={href}
                       onClick={() => setOpen(false)}
                     >
                       {label}
-                    </a>
+                    </Link>
                   ))}
                 </nav>
                 <a

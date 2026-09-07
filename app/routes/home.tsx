@@ -227,8 +227,40 @@ export default function Home() {
   const { projects, certifications } = useLoaderData<typeof loader>();
 
   useEffect(() => {
+    const scrollKey = "portfolio-home-scroll";
+    const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const shouldRestorePosition = navigation?.type === "reload";
+    let frame = 0;
+
     document.documentElement.classList.add("home-scrollbar");
-    return () => document.documentElement.classList.remove("home-scrollbar");
+
+    if (shouldRestorePosition) {
+      const savedPosition = Number.parseFloat(sessionStorage.getItem(scrollKey) ?? "");
+      if (Number.isFinite(savedPosition)) {
+        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo({ top: savedPosition })));
+      }
+    }
+
+    const savePosition = () => sessionStorage.setItem(scrollKey, String(window.scrollY));
+    const rememberPosition = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(savePosition);
+    };
+    const saveBeforeLeaving = () => {
+      cancelAnimationFrame(frame);
+      savePosition();
+    };
+
+    window.addEventListener("scroll", rememberPosition, { passive: true });
+    window.addEventListener("pagehide", saveBeforeLeaving);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      savePosition();
+      window.removeEventListener("scroll", rememberPosition);
+      window.removeEventListener("pagehide", saveBeforeLeaving);
+      document.documentElement.classList.remove("home-scrollbar");
+    };
   }, []);
 
   return (
