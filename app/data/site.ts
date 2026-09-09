@@ -159,6 +159,7 @@ export const certifications: Certification[] = [
   cert("AI on the Cloud", "AWS & Google Cloud", "Cloud & Development", "AI on the Cloud_ Training Models Without a GPU using AWS and Google Cloud_certificate.webp", "Training AI models with managed cloud resources rather than local GPUs."),
   cert("Python Essentials 1", "Cisco", "Cloud & Development", "CISCO Python Essentials 1.webp", "Core Python syntax, control flow, data structures, and functions."),
   cert("Docker & Kubernetes", "Course Certificate", "Cloud & Development", "Containerization and Virtualization with Docker and Kubernetes-v2.webp", "Containerization, virtualization, and orchestration foundations."),
+  cert("GitHub Foundations Certification", "GitHub", "Software & Tools", "GitHub Foundations Certification.webp", "Industry-recognized validation of foundational GitHub concepts, collaborative development, repositories, and project management."),
   cert("GitHub Foundations", "DataCamp", "Software & Tools", "DataCamp Github Foundations Course-v2.webp", "Version control and collaborative development workflows on GitHub."),
   cert("A.IGNITE", "Event Certificate", "Artificial Intelligence", "A.IGNITE.webp", "Participation in an applied AI learning event."),
   cert("AIFEST", "Event Certificate", "Hackathons & Events", "AIFEST.webp", "Participation in an artificial-intelligence festival and challenge."),

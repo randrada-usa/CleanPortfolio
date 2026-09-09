@@ -173,7 +173,7 @@ function CertificationsSection({ certifications }: { certifications: Certificati
             );
           })}
         </div>
-        <div className="center-action"><Link className="button" to="/certifications" prefetch="intent">View All 25 <ArrowIcon /></Link></div>
+        <div className="center-action"><Link className="button" to="/certifications" prefetch="intent">View All 26 <ArrowIcon /></Link></div>
       </Reveal>
     </section>
   );
