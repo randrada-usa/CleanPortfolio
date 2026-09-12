@@ -198,7 +198,7 @@ export const coreStack = {
 export const socialLinks = {
   email: "mailto:rayalejaga12@gmail.com",
   github: "https://github.com/randrada-usa",
-  linkedin: "https://www.linkedin.com/in/rey-jane-andrada-49701242a/",
+  linkedin: "https://www.linkedin.com/in/rjandrada/",
 };
 
 export const talkLink =

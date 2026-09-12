@@ -61,6 +61,7 @@ export const meta: MetaFunction = () => [
         url: absoluteUrl("/"),
         image: absoluteUrl("/assets/brand/link-preview.png"),
         jobTitle: "Backend-Focused Developer and Aspiring Data Engineer",
+        gender: "Male",
         sameAs: [socialLinks.github, socialLinks.linkedin],
         knowsAbout: ["Backend Development", "Data Engineering", "Python", "TypeScript", "React", "SQL", "Firebase"],
       },
