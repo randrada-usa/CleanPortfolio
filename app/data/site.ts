@@ -78,7 +78,7 @@ export const projects: Project[] = [
     role: "Development Lead & Overall Team Lead",
     team: "6-BYTE Studios · 6-person team",
     timeline: "7-day build · Capiztahan 2026",
-    projectType: "Team Project",
+    projectType: "Commisioned Festival Game",
     challenge:
       "Build a camera-controlled festival game that could survive a seven-hour public event, difficult lighting, rapid player turnover, and a fixed physical-prize inventory.",
     approach: [
