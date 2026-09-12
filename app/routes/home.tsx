@@ -20,7 +20,12 @@ import { absoluteUrl, canonicalMeta } from "~/lib/seo";
 
 export async function loader() {
   const [projects, certifications] = await Promise.all([getProjects(), getCertifications()]);
-  return { projects, certifications };
+  const selectedProjectSlugs = ["iloilo-farmers-hub", "e-serbisyo-rizal", "wave-and-wish"];
+  const selectedProjects = selectedProjectSlugs
+    .map((slug) => projects.find((project) => project.slug === slug))
+    .filter((project): project is Project => Boolean(project));
+
+  return { projects: selectedProjects, certifications };
 }
 
 export function headers() {
