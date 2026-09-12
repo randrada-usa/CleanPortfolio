@@ -1,4 +1,4 @@
-export const siteUrl = "https://devbyrey.me";
+export const siteUrl = "https://www.devbyrey.me";
 
 export function absoluteUrl(path = "/") {
   return new URL(path, siteUrl).toString();

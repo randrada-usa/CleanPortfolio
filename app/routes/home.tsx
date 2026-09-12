@@ -37,15 +37,15 @@ export const meta: MetaFunction = () => [
   { property: "og:title", content: "Rey Jane Andrada — Developer Portfolio" },
   { property: "og:description", content: "Reliable backend systems, practical applications, and a path toward data engineering." },
   { property: "og:type", content: "website" },
-  { property: "og:url", content: "https://devbyrey.me/" },
-  { property: "og:image", content: "https://devbyrey.me/assets/brand/link-preview.png" },
+  { property: "og:url", content: "https://www.devbyrey.me/" },
+  { property: "og:image", content: "https://www.devbyrey.me/assets/brand/link-preview.png" },
   { property: "og:image:width", content: "1200" },
   { property: "og:image:height", content: "630" },
   { property: "og:image:alt", content: "Rey Jane Andrada — Backend-Focused Developer and Aspiring Data Engineer" },
   { name: "twitter:card", content: "summary_large_image" },
   { name: "twitter:title", content: "Rey Jane Andrada — Developer Portfolio" },
   { name: "twitter:description", content: "Reliable backend systems, practical applications, and a path toward data engineering." },
-  { name: "twitter:image", content: "https://devbyrey.me/assets/brand/link-preview.png" },
+  { name: "twitter:image", content: "https://www.devbyrey.me/assets/brand/link-preview.png" },
   canonicalMeta("/"),
   {
     "script:ld+json": {
