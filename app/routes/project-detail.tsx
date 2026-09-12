@@ -34,8 +34,10 @@ export default function ProjectDetail() {
   const [privateNoticeOpen, setPrivateNoticeOpen] = useState(false);
   const requestedBackTo = (location.state as { backTo?: string } | null)?.backTo;
   const backTo = requestedBackTo === "/projects" ? "/projects" : "/#projects";
+  const isPrivateCommission = ["wave-and-wish", "praise-and-pray"].includes(project.slug);
+  const hasPrivateRepository = isPrivateCommission || project.slug === "icslink";
   const unavailable = (label: string) => {
-    if (["wave-and-wish", "praise-and-pray"].includes(project.slug)) {
+    if (hasPrivateRepository) {
       setPrivateNoticeOpen(true);
       return;
     }
@@ -90,10 +92,12 @@ export default function ProjectDetail() {
           <Dialog.Overlay className="private-dialog-overlay" />
           <Dialog.Content className="private-dialog-content">
             <Dialog.Close className="private-dialog-close" aria-label="Close private project notice"><X size={20} /></Dialog.Close>
-            <span className="private-dialog-label">PRIVATE COMMISSION</span>
-            <Dialog.Title>{project.title} is not publicly accessible.</Dialog.Title>
+            <span className="private-dialog-label">{isPrivateCommission ? "PRIVATE COMMISSION" : "PRIVATE REPOSITORY"}</span>
+            <Dialog.Title>{isPrivateCommission ? `${project.title} is not publicly accessible.` : `${project.title}'s source code is private.`}</Dialog.Title>
             <Dialog.Description>
-              This project was created as a private commission, so both the live version and source repository are private.
+              {isPrivateCommission
+                ? "This project was created as a private commission, so both the live version and source repository are private."
+                : "ICSLink is an internal Institute of Computer Science project. Its source repository is private, but the deployed platform is available through View Live."}
             </Dialog.Description>
             <Dialog.Close className="button button-dark private-dialog-action">Understood</Dialog.Close>
           </Dialog.Content>

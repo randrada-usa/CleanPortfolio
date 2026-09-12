@@ -40,6 +40,34 @@ const experienceAsset = (name: string) => `/assets/experiences/${name}`;
 
 export const projects: Project[] = [
   {
+    slug: "icslink",
+    title: "ICSLink",
+    eyebrow: "Event Management Platform",
+    summary:
+      "Led a three-person team through a two-week sprint to build an internal event platform that unifies discovery, registration, QR ticketing, attendance, and reporting for the Institute of Computer Science.",
+    image: projectAsset("icslink.webp"),
+    liveUrl: "https://icslink.pages.dev/",
+    tags: ["React 19", "TypeScript", "Supabase", "Cloudflare Pages"],
+    role: "Development Lead",
+    team: "Institute of Computer Science · 3-person team",
+    timeline: "2-week sprint · September 2026",
+    projectType: "Internal Organization Project",
+    challenge:
+      "Replace disconnected event forms, paper attendance sheets, and manually maintained spreadsheets with one responsive system for students, guests, and organizers—without sacrificing access control or attendance integrity.",
+    approach: [
+      "Led the architecture and implementation of a React 19 and TypeScript interface backed by Supabase PostgreSQL, Google OAuth, role-based access, Edge Functions, and Storage.",
+      "Built event management, registration, QR ticket generation, attendance scanning, duplicate prevention, check-in and checkout flows, and exportable reporting.",
+      "Coordinated the three-person team, reviewed contributions before merge, and established continuous integration with 75 automated tests plus 44 Playwright desktop and mobile browser scenarios.",
+    ],
+    results: [
+      "150 potential organization members · pilot target",
+      "Around 50 attendees per event · pilot target",
+      "5–10 second check-in with two scanners · pilot target",
+      "Approximately 15 minutes saved per 50-person event · estimate",
+      "75 automated tests and 44 browser scenarios",
+    ],
+  },
+  {
     slug: "wave-and-wish",
     title: "Wave & Wish",
     eyebrow: "Computer Vision Game",
