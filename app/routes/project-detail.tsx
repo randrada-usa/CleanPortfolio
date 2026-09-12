@@ -35,7 +35,7 @@ export default function ProjectDetail() {
   const requestedBackTo = (location.state as { backTo?: string } | null)?.backTo;
   const backTo = requestedBackTo === "/projects" ? "/projects" : "/#projects";
   const unavailable = (label: string) => {
-    if (project.slug === "wave-and-wish") {
+    if (["wave-and-wish", "praise-and-pray"].includes(project.slug)) {
       setPrivateNoticeOpen(true);
       return;
     }
@@ -91,7 +91,7 @@ export default function ProjectDetail() {
           <Dialog.Content className="private-dialog-content">
             <Dialog.Close className="private-dialog-close" aria-label="Close private project notice"><X size={20} /></Dialog.Close>
             <span className="private-dialog-label">PRIVATE COMMISSION</span>
-            <Dialog.Title>Wave &amp; Wish is not publicly accessible.</Dialog.Title>
+            <Dialog.Title>{project.title} is not publicly accessible.</Dialog.Title>
             <Dialog.Description>
               This project was created as a private commission, so both the live version and source repository are private.
             </Dialog.Description>

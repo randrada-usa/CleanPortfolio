@@ -3,6 +3,7 @@ export type ResponsiveImage = { src: string; srcSet?: string; sizes?: string; wi
 // Originals remain available; each view requests only the resolution it needs.
 const localProjectImages = new Set([
   "/assets/projects/wave-and-wish.webp",
+  "/assets/projects/praise-and-pray.webp",
   "/assets/projects/IFC-v3.webp",
   "/assets/projects/e-serbisyo-rizal-v3.webp",
 ]);

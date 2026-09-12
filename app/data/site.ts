@@ -67,6 +67,32 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "praise-and-pray",
+    title: "Praise & Pray",
+    eyebrow: "Gesture-Controlled Church Game",
+    summary:
+      "Led a six-person team to deliver a commissioned gesture-controlled game for Estancia Baptist Church in three weeks, serving approximately 20–40 participants per weekend day.",
+    image: projectAsset("praise-and-pray.webp"),
+    tags: ["Python", "Pygame", "OpenCV", "MediaPipe"],
+    role: "Development Lead & Overall Team Lead",
+    team: "6-BYTE Studios · 6-person team",
+    timeline: "3-week commissioned build",
+    projectType: "Commissioned Church Game",
+    challenge:
+      "Create an engaging touchless game for recurring church activities, combining reliable hand tracking with a client-specific visual identity and a setup that could run smoothly during weekend programs.",
+    approach: [
+      "Adapted the gesture-control architecture used for Wave & Wish, mapping MediaPipe hand landmarks to responsive in-game movement through OpenCV.",
+      "Led the team in tailoring the gameplay, interface, and visual presentation to Estancia Baptist Church and its participants.",
+      "Prepared the Python game for dependable Windows operation so church staff could run it during recurring weekend activities.",
+    ],
+    results: [
+      "Paid commission delivered in three weeks",
+      "Approximately 20–40 participants per weekend day",
+      "Touchless gameplay tailored for Estancia Baptist Church",
+      "Recurring use during weekend church activities",
+    ],
+  },
+  {
     slug: "iloilo-farmers-hub",
     title: "Iloilo Farmers Hub",
     eyebrow: "Digital Marketplace",
