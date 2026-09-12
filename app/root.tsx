@@ -12,6 +12,7 @@ import "./app.css";
 import { PortfolioLoader } from "~/components/portfolio-loader";
 
 export const links: LinksFunction = () => [
+  { rel: "icon", href: "/android-chrome-192x192.png", type: "image/png", sizes: "192x192" },
   { rel: "icon", href: "/favicon.ico", sizes: "any" },
   { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
   { rel: "icon", href: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
