@@ -6,6 +6,7 @@ import { useLoaderData, useLocation, useSearchParams } from "react-router";
 import { CertificationCard, Footer, Header, Reveal } from "~/components/ui";
 import { certificationCategories, type CertificationCategory } from "~/data/site";
 import { getCertifications } from "~/lib/content.server";
+import { canonicalMeta } from "~/lib/seo";
 
 export async function loader() { return getCertifications(); }
 
@@ -16,6 +17,7 @@ export function headers() {
 export const meta: MetaFunction = () => [
   { title: "Certifications — Rey Jane Andrada" },
   { name: "description", content: "Data, AI, cloud, development, and hackathon credentials earned by Rey Jane Andrada." },
+  canonicalMeta("/certifications"),
 ];
 
 export default function CertificationsArchive() {

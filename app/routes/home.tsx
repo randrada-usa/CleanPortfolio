@@ -7,6 +7,7 @@ import {
   certificationCategories,
   coreStack,
   experience,
+  socialLinks,
   type Certification,
   type CertificationCategory,
   type Project,
@@ -15,6 +16,7 @@ import { ArrowIcon, Footer, Header, ProjectCard, Reveal, SocialPill } from "~/co
 import { getCertifications, getProjects } from "~/lib/content.server";
 import { experiencePreviewImage } from "~/lib/images";
 import { usePreviewImages } from "~/lib/use-preview-images";
+import { absoluteUrl, canonicalMeta } from "~/lib/seo";
 
 export async function loader() {
   const [projects, certifications] = await Promise.all([getProjects(), getCertifications()]);
@@ -44,6 +46,26 @@ export const meta: MetaFunction = () => [
   { name: "twitter:title", content: "Rey Jane Andrada — Developer Portfolio" },
   { name: "twitter:description", content: "Reliable backend systems, practical applications, and a path toward data engineering." },
   { name: "twitter:image", content: "https://devbyrey.me/assets/brand/link-preview.png" },
+  canonicalMeta("/"),
+  {
+    "script:ld+json": {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "@id": absoluteUrl("/#profile-page"),
+      url: absoluteUrl("/"),
+      name: "Rey Jane Andrada — Developer Portfolio",
+      mainEntity: {
+        "@type": "Person",
+        "@id": absoluteUrl("/#rey-jane-andrada"),
+        name: "Rey Jane Andrada",
+        url: absoluteUrl("/"),
+        image: absoluteUrl("/assets/brand/link-preview.png"),
+        jobTitle: "Backend-Focused Developer and Aspiring Data Engineer",
+        sameAs: [socialLinks.github, socialLinks.linkedin],
+        knowsAbout: ["Backend Development", "Data Engineering", "Python", "TypeScript", "React", "SQL", "Firebase"],
+      },
+    },
+  },
 ];
 
 function AboutStack() {

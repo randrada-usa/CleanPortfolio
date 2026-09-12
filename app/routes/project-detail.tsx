@@ -6,6 +6,7 @@ import { useLoaderData, useLocation } from "react-router";
 import { Footer, Header, ProjectCard, Reveal } from "~/components/ui";
 import { getProjects } from "~/lib/content.server";
 import { projectDetailImage } from "~/lib/images";
+import { canonicalMeta } from "~/lib/seo";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const projects = await getProjects();
@@ -23,6 +24,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     { title: project ? `${project.title} — Rey Jane Andrada` : "Project Not Found" },
     { name: "description", content: project?.summary ?? "Project case study by Rey Jane Andrada." },
+    canonicalMeta(project ? `/projects/${project.slug}` : "/projects"),
   ];
 };
 

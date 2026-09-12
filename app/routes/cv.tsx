@@ -1,6 +1,7 @@
 import type { MetaFunction } from "react-router";
 import { Download, ExternalLink, FileText } from "lucide-react";
 import { Footer, Header, Reveal } from "~/components/ui";
+import { canonicalMeta } from "~/lib/seo";
 
 const cvPdf = "/assets/cv/Rey-Jane-Andrada-CV-2026-08.pdf";
 const cvPreview = "/assets/cv/rey-jane-andrada-cv-preview-2026-08-v3.webp";
@@ -12,6 +13,7 @@ export function headers() {
 export const meta: MetaFunction = () => [
   { title: "Curriculum Vitae — Rey Jane Andrada" },
   { name: "description", content: "View or download Rey Jane Andrada's curriculum vitae." },
+  canonicalMeta("/cv"),
 ];
 
 export default function CvPage() {

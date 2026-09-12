@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useLoaderData } from "react-router";
 import { Footer, Header, ProjectCard, Reveal } from "~/components/ui";
 import { getProjects } from "~/lib/content.server";
+import { canonicalMeta } from "~/lib/seo";
 
 export async function loader() { return getProjects(); }
 
@@ -14,6 +15,7 @@ export function headers() {
 export const meta: MetaFunction = () => [
   { title: "Projects — Rey Jane Andrada" },
   { name: "description", content: "Backend systems, digital platforms, and computer-vision projects by Rey Jane Andrada." },
+  canonicalMeta("/projects"),
 ];
 
 export default function ProjectsArchive() {

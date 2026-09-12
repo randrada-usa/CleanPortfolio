@@ -2,6 +2,7 @@ import type { LoaderFunctionArgs, MetaFunction } from "react-router";
 import { useLoaderData, useLocation } from "react-router";
 import { CertificationCard, Footer, Header, Reveal } from "~/components/ui";
 import { getCertifications } from "~/lib/content.server";
+import { canonicalMeta } from "~/lib/seo";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const certifications = await getCertifications();
@@ -22,6 +23,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     { title: certification ? `${certification.title} — Rey Jane Andrada` : "Certification Not Found" },
     { name: "description", content: certification?.description ?? "Certification earned by Rey Jane Andrada." },
+    canonicalMeta(certification ? `/certifications/${certification.slug}` : "/certifications"),
   ];
 };
 
