@@ -135,7 +135,10 @@ function CertificationsSection({ certifications }: { certifications: Certificati
     const image = certifications.find((item) => item.category === category)?.image;
     return image ? [{ src: image }] : [];
   }), [certifications]);
-  const { sectionRef, enabled: showPreviews } = usePreviewImages(previewImages);
+  const { sectionRef, enabled: showPreviews } = usePreviewImages(
+    previewImages,
+    "(min-width: 1101px) and (hover: hover) and (pointer: fine)",
+  );
 
   useEffect(() => {
     const smallScreen = window.matchMedia("(max-width: 640px)");

@@ -301,6 +301,12 @@ img { display: block; max-width: 100%; }
   .project-card:hover .card-arrow { opacity: 1; transform: translateY(0); }
   .cert-card:hover img { transform: scale(1.02); }
 }
+
+@media (max-width: 1100px), (hover: none), (pointer: coarse) {
+  .cert-preview { display: none; }
+  .cert-row-copy { max-width: 75%; }
+}
+
 .cert-card h3, .cert-card .tag-list { margin-inline: 1rem; }
 .cert-card h3 { margin-top: 1rem; min-height: 2.7em; }
 .empty-state { grid-column: 1 / -1; padding: 5rem 0; color: #777; text-align: center; }
