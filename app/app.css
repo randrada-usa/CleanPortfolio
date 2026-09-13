@@ -245,7 +245,7 @@ img { display: block; max-width: 100%; }
 .cert-row-content { position: relative; min-height: 150px; display: flex; align-items: end; justify-content: space-between; gap: 2rem; padding: 0 1.2rem 1.6rem; }
 .cert-row-copy { max-width: 54%; }
 .cert-row-copy p { margin: 0 0 1.35rem; color: #d6d6d4; font-size: 1rem; line-height: 1.72; }
-.cert-preview { position: absolute; z-index: 5; right: 6%; bottom: 25%; width: min(31vw, 390px); aspect-ratio: 16 / 10; object-fit: cover; border: 8px solid #efefeb; box-shadow: 0 18px 40px rgba(0,0,0,.35); transform: rotate(6deg); }
+.cert-preview { position: absolute; z-index: 5; right: 10%; bottom: 25%; width: min(31vw, 390px); aspect-ratio: 16 / 10; object-fit: cover; border: 8px solid #efefeb; box-shadow: 0 18px 40px rgba(0,0,0,.35); transform: rotate(6deg); }
 .cert-row .button { min-height: 44px; padding-inline: 1.15rem; font-size: .9rem; }
 
 .experience-section { min-height: 100svh; color: white; background: var(--dark); border-inline: 1px solid #333; }
