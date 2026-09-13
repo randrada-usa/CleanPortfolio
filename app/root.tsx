@@ -29,15 +29,16 @@ export const links: LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ colorScheme: "light", backgroundColor: "#f7f7f5" }}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light" />
         <meta name="theme-color" content="#f7f7f5" />
         <Meta />
         <Links />
       </head>
-      <body>
+      <body style={{ backgroundColor: "#f7f7f5" }}>
         {children}
         <ScrollRestoration />
         <script defer src="/_vercel/insights/script.js" />

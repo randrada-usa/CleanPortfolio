@@ -10,6 +10,7 @@
 }
 
 :root {
+  color-scheme: light;
   --paper: #f7f7f5;
   --white: #fff;
   --ink: #151515;
