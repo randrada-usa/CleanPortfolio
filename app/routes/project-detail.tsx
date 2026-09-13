@@ -35,7 +35,10 @@ export default function ProjectDetail() {
   const requestedBackTo = (location.state as { backTo?: string } | null)?.backTo;
   const backTo = requestedBackTo === "/projects" ? "/projects" : "/#projects";
   const isPrivateCommission = ["wave-and-wish", "praise-and-pray"].includes(project.slug);
-  const hasPrivateRepository = isPrivateCommission || project.slug === "icslink";
+  const hasPrivateRepository = isPrivateCommission || ["icslink", "duely"].includes(project.slug);
+  const privateRepositoryDescription = project.slug === "duely"
+    ? "Duely is an actively developed Android beta. Its source repository is private, and no public beta build is available yet."
+    : "ICSLink is an internal Institute of Computer Science project. Its source repository is private, but the deployed platform is available through View Live.";
   const unavailable = (label: string) => {
     if (hasPrivateRepository) {
       setPrivateNoticeOpen(true);
@@ -97,7 +100,7 @@ export default function ProjectDetail() {
             <Dialog.Description>
               {isPrivateCommission
                 ? "This project was created as a private commission, so both the live version and source repository are private."
-                : "ICSLink is an internal Institute of Computer Science project. Its source repository is private, but the deployed platform is available through View Live."}
+                : privateRepositoryDescription}
             </Dialog.Description>
             <Dialog.Close className="button button-dark private-dialog-action">Understood</Dialog.Close>
           </Dialog.Content>

@@ -40,6 +40,34 @@ const experienceAsset = (name: string) => `/assets/experiences/${name}`;
 
 export const projects: Project[] = [
   {
+    slug: "duely",
+    title: "Duely",
+    eyebrow: "AI Student Task Organizer",
+    summary:
+      "Founded and led development of an Android-first student organizer that turns assignment photos into editable, prioritized tasks through privacy-conscious OCR and optional AI assistance.",
+    image: projectAsset("duely.webp"),
+    tags: ["React Native", "Expo", "TypeScript", "Supabase", "Google ML Kit", "Gemini"],
+    role: "Founder, Product & Technical Lead",
+    team: "Independent Product · 3-person team",
+    timeline: "Aug 2026–Present · Active beta",
+    projectType: "Independent Mobile Product",
+    challenge:
+      "Reduce the work of transferring assignment details from handouts, screenshots, and photos into a task manager while keeping imperfect OCR understandable, editable, and privacy-conscious for students.",
+    approach: [
+      "Built the Android-first application with React Native, Expo Router, TypeScript, offline persistence, reminders, task prioritization, calendar views, and responsive onboarding flows.",
+      "Designed an on-device Google ML Kit OCR pipeline with deterministic field parsing, field-level uncertainty, provenance, and an editable confirmation step before anything is saved.",
+      "Added optional Gemini-assisted extraction through an authenticated Supabase Edge Function with explicit consent, quota enforcement, cancellation refunds, timeouts, and fallback to local OCR results.",
+      "Implemented Google authentication, PostgreSQL Row Level Security, cloud backup, restoration, synchronization, automated testing, accessibility improvements, and Android release verification.",
+    ],
+    results: [
+      "153 automated tests passing",
+      "24-case English, Filipino, and mixed-language parser evaluation",
+      "99.5% token accuracy across a controlled 12-image synthetic OCR pack",
+      "6/6 clear deadlines extracted and 3/3 missing deadlines correctly avoided",
+      "3/3 ambiguous deadlines flagged for user review",
+    ],
+  },
+  {
     slug: "icslink",
     title: "ICSLink",
     eyebrow: "Event Management Platform",
