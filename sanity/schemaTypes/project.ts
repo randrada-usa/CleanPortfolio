@@ -7,6 +7,7 @@ export const projectType = defineType({
   fields: [
     defineField({ name: "title", type: "string", validation: (rule) => rule.required() }),
     defineField({ name: "slug", type: "slug", options: { source: "title" }, validation: (rule) => rule.required() }),
+    defineField({ name: "published", type: "boolean", initialValue: true }),
     defineField({ name: "order", type: "number" }),
     defineField({ name: "eyebrow", title: "Card label", type: "string" }),
     defineField({ name: "summary", type: "text", rows: 3, validation: (rule) => rule.required() }),

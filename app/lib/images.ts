@@ -2,6 +2,7 @@ export type ResponsiveImage = { src: string; srcSet?: string; sizes?: string; wi
 
 // Originals remain available; each view requests only the resolution it needs.
 const localProjectImages = new Set([
+  "/assets/projects/ads-website-2026.webp",
   "/assets/projects/duely.webp",
   "/assets/projects/icslink.webp",
   "/assets/projects/wave-and-wish.webp",

@@ -1,5 +1,6 @@
 export type Project = {
   slug: string;
+  published?: boolean;
   title: string;
   eyebrow: string;
   summary: string;
@@ -39,6 +40,36 @@ const certAsset = (name: string) => `/assets/certs/${name}`;
 const experienceAsset = (name: string) => `/assets/experiences/${name}`;
 
 export const projects: Project[] = [
+  {
+    slug: "augustinian-developer-society-website",
+    published: false,
+    title: "Augustinian Developer Society Website",
+    eyebrow: "Organization Website",
+    summary:
+      "Led frontend development and design implementation for ADS USA's official responsive website, bringing its story, initiatives, events, departments, team, and partners into a Sanity-managed experience.",
+    image: projectAsset("ads-website-2026.webp"),
+    githubUrl: "https://github.com/randrada-usa/ADS_website_2026",
+    tags: ["Next.js 16", "React 19", "TypeScript", "Sanity", "GSAP", "styled-components"],
+    role: "Web Development Lead",
+    team: "Augustinian Developer Society · 4-person development team",
+    timeline: "Aug 30, 2026–Present · Awaiting launch",
+    projectType: "Official Organization Website",
+    challenge:
+      "Translate a highly animated visual direction into a clear, accessible organization website that remains consistent across desktop, tablet, and mobile while giving the team a maintainable way to manage evolving content.",
+    approach: [
+      "Led frontend and design implementation across the homepage, navigation, organization story, initiatives, events, departments, team profiles, partners, FAQs, and shared site structure.",
+      "Built reusable GSAP animation patterns with viewport-triggered playback and reduced-motion support so movement enhances the experience without obscuring content or compromising accessibility.",
+      "Created breakpoint-specific responsive layouts and interaction refinements for desktop, tablet, and mobile, including adaptable navigation and content presentation.",
+      "Integrated Sanity CMS, Portable Text, embedded Studio, and draft preview workflows to let the organization maintain structured content beyond the initial launch.",
+    ],
+    results: [
+      "Unified the organization's public story, initiatives, events, departments, members, and partners in one responsive experience",
+      "Established a reusable content system for ongoing updates through Sanity CMS",
+      "Delivered responsive behavior across desktop, tablet, and mobile layouts",
+      "Included reduced-motion behavior and accessibility-conscious animation patterns",
+      "Prepared the website for final content review, sign-off, and public launch",
+    ],
+  },
   {
     slug: "duely",
     title: "Duely",
