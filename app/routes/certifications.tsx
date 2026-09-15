@@ -8,6 +8,17 @@ import { certificationCategories, type CertificationCategory } from "~/data/site
 import { getCertifications } from "~/lib/content.server";
 import { canonicalMeta } from "~/lib/seo";
 
+function certificationPriority(title: string, issuer: string) {
+  if (title === "Data Analyst Associate") return 0;
+  if (title === "SQL Associate") return 1;
+  if (title === "GitHub Foundations Certification") return 2;
+  if (title === "AI Fundamentals") return 3;
+  if (issuer === "Anthropic" || title.startsWith("Claude")) return 4;
+  if (issuer.includes("AWS") || title.startsWith("AWS ")) return 5;
+  if (issuer.includes("Cisco")) return 6;
+  return 7;
+}
+
 export async function loader() { return getCertifications(); }
 
 export function headers() {
@@ -33,12 +44,16 @@ export default function CertificationsArchive() {
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    return certifications.filter((item) => {
-      const matchesCategory = category === "All" || item.category === category;
-      const matchesQuery = !needle || [item.title, item.issuer, item.category].join(" ").toLowerCase().includes(needle);
-      return matchesCategory && matchesQuery;
-    });
-  }, [category, query]);
+    return certifications
+      .map((item, index) => ({ item, index }))
+      .filter(({ item }) => {
+        const matchesCategory = category === "All" || item.category === category;
+        const matchesQuery = !needle || [item.title, item.issuer, item.category].join(" ").toLowerCase().includes(needle);
+        return matchesCategory && matchesQuery;
+      })
+      .sort((a, b) => certificationPriority(a.item.title, a.item.issuer) - certificationPriority(b.item.title, b.item.issuer) || a.index - b.index)
+      .map(({ item }) => item);
+  }, [certifications, category, query]);
 
   const chooseCategory = (next: "All" | CertificationCategory) => {
     setCategory(next);
