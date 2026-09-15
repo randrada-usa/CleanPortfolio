@@ -276,6 +276,7 @@ export const certifications: Certification[] = [
   cert("GitHub Foundations Certification", "GitHub", "Software & Tools", "GitHub Foundations Certification.webp", "Industry-recognized validation of foundational GitHub concepts, collaborative development, repositories, and project management."),
   cert("GitHub Foundations", "DataCamp", "Software & Tools", "DataCamp Github Foundations Course-v2.webp", "Version control and collaborative development workflows on GitHub."),
   cert("A.IGNITE", "Event Certificate", "Artificial Intelligence", "A.IGNITE.webp", "Participation in an applied AI learning event."),
+  cert("AWS Community Day Philippines 2026", "AWS User Group Philippines", "Hackathons & Events", "AWS Community Day Philippines 2026.webp", "Participation in the second day of AWS Community Day Philippines 2026, centered on the Build, Break, Repeat theme."),
   cert("AIFEST", "Event Certificate", "Hackathons & Events", "AIFEST.webp", "Participation in an artificial-intelligence festival and challenge."),
   cert("Chain of Thought", "Event Certificate", "Artificial Intelligence", "Chain of Thought.webp", "Participation in a technology and AI learning program."),
   cert("SIKAPTALA National Hackathon", "SIKAPTALA", "Hackathons & Events", "SIKAPTALA National Hackathon.webp", "National hackathon participation and collaborative product building."),
