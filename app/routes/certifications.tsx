@@ -8,15 +8,20 @@ import { certificationCategories, type CertificationCategory } from "~/data/site
 import { getCertifications } from "~/lib/content.server";
 import { canonicalMeta } from "~/lib/seo";
 
-function certificationPriority(title: string, issuer: string) {
+function certificationPriority(title: string, issuer: string, category: "All" | CertificationCategory) {
+  if (category === "Cloud & Development") {
+    if (title === "Foundations of Prompt Engineering") return 0;
+    if (title === "Python Developer Associate") return 1;
+  }
   if (title === "Data Analyst Associate") return 0;
   if (title === "SQL Associate") return 1;
   if (title === "GitHub Foundations Certification") return 2;
   if (title === "AI Fundamentals") return 3;
-  if (issuer === "Anthropic" || title.startsWith("Claude")) return 4;
-  if (issuer.includes("AWS") || title.startsWith("AWS ")) return 5;
-  if (issuer.includes("Cisco")) return 6;
-  return 7;
+  if (title === "Python Developer Associate") return 4;
+  if (issuer === "Anthropic" || title.startsWith("Claude")) return 5;
+  if (issuer.includes("AWS") || title.startsWith("AWS ")) return 6;
+  if (issuer.includes("Cisco")) return 7;
+  return 8;
 }
 
 export async function loader() { return getCertifications(); }
@@ -51,7 +56,7 @@ export default function CertificationsArchive() {
         const matchesQuery = !needle || [item.title, item.issuer, item.category].join(" ").toLowerCase().includes(needle);
         return matchesCategory && matchesQuery;
       })
-      .sort((a, b) => certificationPriority(a.item.title, a.item.issuer) - certificationPriority(b.item.title, b.item.issuer) || a.index - b.index)
+      .sort((a, b) => certificationPriority(a.item.title, a.item.issuer, category) - certificationPriority(b.item.title, b.item.issuer, category) || a.index - b.index)
       .map(({ item }) => item);
   }, [certifications, category, query]);
 
