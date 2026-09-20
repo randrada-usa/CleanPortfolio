@@ -21,7 +21,14 @@ import { absoluteUrl, canonicalMeta } from "~/lib/seo";
 
 export async function loader() {
   const [projects, certifications] = await Promise.all([getProjects(), getCertifications()]);
-  const selectedProjectSlugs = ["wave-and-wish", "iloilo-farmers-hub", "e-serbisyo-rizal"];
+  const selectedProjectSlugs = [
+    "wave-and-wish",
+    "iloilo-farmers-hub",
+    "e-serbisyo-rizal",
+    "duely",
+    "icslink",
+    "praise-and-pray",
+  ];
   const selectedProjects = selectedProjectSlugs
     .map((slug) => projects.find((project) => project.slug === slug))
     .filter((project): project is Project => Boolean(project));
