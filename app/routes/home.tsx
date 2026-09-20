@@ -142,11 +142,6 @@ function CertificationsSection({ certifications }: { certifications: Certificati
     "(min-width: 1101px) and (hover: hover) and (pointer: fine)",
   );
 
-  useEffect(() => {
-    const smallScreen = window.matchMedia("(max-width: 640px)");
-    if (smallScreen.matches) setOpen(null);
-  }, []);
-
   return (
     <section ref={sectionRef} id="certifications" className="section certifications-section">
       <p className="ghost-word" aria-hidden="true">CERTIFICATIONS</p>
