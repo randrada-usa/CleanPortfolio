@@ -1,8 +1,9 @@
 import type { MetaFunction } from "react-router";
 import { Link, useLoaderData } from "react-router";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import type { PointerEvent as ReactPointerEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   certificationCategories,
   coreStack,
@@ -78,30 +79,30 @@ function AboutStack() {
   return (
     <section id="about" className="section about-section">
       <p className="ghost-word" aria-hidden="true">ABOUT</p>
-      <Reveal className="section-inner about-grid">
+      <div className="section-inner about-grid">
         <div className="about-copy">
-          <h2>I like building the parts that keep everything else reliable.</h2>
-          <p>
+          <Reveal><h2>I like building the parts that keep everything else reliable.</h2></Reveal>
+          <Reveal delay={0.1}><p>
             I’m a Computer Science student and backend-focused developer based in the Philippines. My work spans database design,
             serverless functions, API integrations, secure workflows, and real-world interactive systems. I’m now deepening that
             foundation as I work toward data engineering.
-          </p>
-          <div className="about-actions">
+          </p></Reveal>
+          <Reveal className="about-actions" delay={0.2}>
             <Link className="button button-dark" to="/cv" prefetch="intent">View CV <ArrowIcon /></Link>
-          </div>
+          </Reveal>
         </div>
         <div>
-          <h2 className="core-stack-title">/CORE STACK</h2>
+          <Reveal delay={0.15}><h2 className="core-stack-title">/CORE STACK</h2></Reveal>
           <div className="stack-grid">
-            {Object.entries(coreStack).map(([group, items]) => (
-              <div className="stack-group" key={group}>
+            {Object.entries(coreStack).map(([group, items], index) => (
+              <Reveal className="stack-group" delay={0.22 + index * 0.08} key={group}>
                 <h3>{group}</h3>
                 <div className="tag-list">{items.map((item) => <span key={item}>{item}</span>)}</div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }
@@ -110,13 +111,13 @@ function ProjectsSection({ projects }: { projects: Project[] }) {
   return (
     <section id="projects" className="section projects-section">
       <p className="ghost-word" aria-hidden="true">PROJECTS</p>
-      <Reveal className="section-inner">
-        <h2 className="section-heading">/SELECTED PROJECTS</h2>
+      <div className="section-inner">
+        <Reveal><h2 className="section-heading">/SELECTED PROJECTS</h2></Reveal>
         <div className="project-grid">
-          {projects.map((project) => <ProjectCard key={project.slug} project={project} />)}
+          {projects.map((project, index) => <ProjectCard key={project.slug} project={project} revealDelay={index * 0.11} />)}
         </div>
-        <div className="center-action"><Link className="button" to="/projects" prefetch="intent">View All Projects <ArrowIcon /></Link></div>
-      </Reveal>
+        <Reveal className="center-action" delay={0.33}><Link className="button" to="/projects" prefetch="intent">View All Projects <ArrowIcon /></Link></Reveal>
+      </div>
     </section>
   );
 }
@@ -131,6 +132,7 @@ const categoryCopy: Record<CertificationCategory, string> = {
 
 function CertificationsSection({ certifications }: { certifications: Certification[] }) {
   const [open, setOpen] = useState<CertificationCategory | null>("Data & Analytics");
+  const reducedMotion = useReducedMotion();
   const previewImages = useMemo(() => certificationCategories.flatMap((category) => {
     const image = certifications.find((item) => item.category === category)?.image;
     return image ? [{ src: image }] : [];
@@ -148,14 +150,21 @@ function CertificationsSection({ certifications }: { certifications: Certificati
   return (
     <section ref={sectionRef} id="certifications" className="section certifications-section">
       <p className="ghost-word" aria-hidden="true">CERTIFICATIONS</p>
-      <Reveal className="section-inner">
-        <h2 className="section-heading">/CERTIFICATIONS</h2>
+      <div className="section-inner">
+        <Reveal><h2 className="section-heading">/CERTIFICATIONS</h2></Reveal>
         <div className="cert-accordion">
-          {certificationCategories.map((category) => {
+          {certificationCategories.map((category, index) => {
             const active = open === category;
             const items = certifications.filter((item) => item.category === category);
             return (
-              <div className={`cert-row ${active ? "open" : ""}`} key={category}>
+              <motion.div
+                className={`cert-row ${active ? "open" : ""}`}
+                key={category}
+                initial={reducedMotion ? false : { opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={reducedMotion ? { duration: 0 } : { duration: 0.7, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              >
                 <button
                   className="cert-row-button"
                   aria-expanded={active}
@@ -200,12 +209,12 @@ function CertificationsSection({ certifications }: { certifications: Certificati
                     />
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             );
           })}
         </div>
-        <div className="center-action"><Link className="button" to="/certifications" prefetch="intent">View All {certifications.length} <ArrowIcon /></Link></div>
-      </Reveal>
+        <Reveal className="center-action" delay={0.4}><Link className="button" to="/certifications" prefetch="intent">View All {certifications.length} <ArrowIcon /></Link></Reveal>
+      </div>
     </section>
   );
 }
@@ -256,6 +265,20 @@ function ExperienceSection() {
 
 export default function Home() {
   const { projects, certifications } = useLoaderData<typeof loader>();
+  const [heroReady, setHeroReady] = useState(false);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const revealHero = () => setHeroReady(true);
+    document.addEventListener("portfolio:ready", revealHero);
+    if (!document.querySelector(".portfolio-loader")) revealHero();
+    return () => document.removeEventListener("portfolio:ready", revealHero);
+  }, []);
+
+  const heroEntrance = (delay: number) => reducedMotion
+    ? { initial: false as const, animate: { opacity: 1, y: 0 }, transition: { duration: 0 } }
+    : { initial: { opacity: 0, y: 16 }, animate: heroReady ? { opacity: 1, y: 0 } : undefined,
+        transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } };
 
   useEffect(() => {
     const scrollKey = "portfolio-home-scroll";
@@ -298,11 +321,14 @@ export default function Home() {
     <main>
       <section className="hero" id="home">
         <Header />
-        <h1 className="hero-name" aria-label="Rey Jane Andrada">
+        <motion.h1 className="hero-name" aria-label="Rey Jane Andrada" {...heroEntrance(0)}>
           <span className="name-outline">REY JANE</span><span className="name-solid">ANDRADA</span>
-        </h1>
-        <img
+        </motion.h1>
+        <motion.img
           className="hero-photo"
+          initial={reducedMotion ? false : { opacity: 0 }}
+          animate={heroReady ? { opacity: 1 } : undefined}
+          transition={reducedMotion ? { duration: 0 } : { duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           src="/assets/photos/hero-768.webp"
           srcSet="/assets/photos/hero-480.webp 480w, /assets/photos/hero-768.webp 768w, /assets/photos/hero-1024.webp 1024w"
           sizes="(max-width: 600px) 100vw, (max-width: 900px) 600px, (max-width: 1100px) and (orientation: portrait) 600px, (max-width: 1323px) 62vw, 820px"
@@ -312,7 +338,7 @@ export default function Home() {
           alt="Rey Jane Andrada holding a laptop"
           draggable={false}
         />
-        <div className="hero-copy">
+        <motion.div className="hero-copy" {...heroEntrance(0.14)}>
           <h1>Backend-Focused Developer<br />Aspiring Data Engineer</h1>
           <p>I build reliable backend systems and practical applications—then keep learning toward the data platforms behind them.</p>
           <span className="hero-location">
@@ -322,12 +348,12 @@ export default function Home() {
             </svg>
             Iloilo City, Philippines
           </span>
-        </div>
-        <div className="hero-socials">
+        </motion.div>
+        <motion.div className="hero-socials" {...heroEntrance(0.24)}>
           <SocialPill type="github" label="GitHub" />
           <SocialPill type="linkedin" label="LinkedIn" />
           <SocialPill type="email" label="Email" />
-        </div>
+        </motion.div>
       </section>
       <AboutStack />
       <ProjectsSection projects={projects} />
