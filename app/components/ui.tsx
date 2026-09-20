@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUp, ArrowUpRight, Code2, Link2, Mail, Menu, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowUp, ArrowUpRight, Code2, Mail, Menu, X } from "lucide-react";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -16,6 +16,9 @@ export function ArrowIcon() {
 export function Reveal({
   children,
   className,
+  delay = 0,
+  amount = 0.1,
+  distance = 28,
 }: {
   children: ReactNode;
   className?: string;
@@ -23,7 +26,18 @@ export function Reveal({
   amount?: number | "some" | "all";
   distance?: number;
 }) {
-  return <div className={className}>{children}</div>;
+  const reducedMotion = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      initial={reducedMotion ? false : { opacity: 0, y: distance }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount }}
+      transition={reducedMotion ? { duration: 0 } : { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 export function Availability({ compact = false }: { compact?: boolean }) {
@@ -174,10 +188,16 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
 }
 
 export function SocialPill({ type, label }: { type: keyof typeof socialLinks; label: string }) {
-  const Icon = type === "github" ? Code2 : type === "linkedin" ? Link2 : Mail;
+  const Icon = type === "github" ? Code2 : Mail;
   return (
     <a className={`social-pill social-${type}`} href={socialLinks[type]} target={type === "email" ? undefined : "_blank"} rel="noreferrer">
-      <Icon size={16} aria-hidden="true" /> {label}
+      {type === "linkedin" ? (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <rect x="1" y="1" width="16" height="16" rx="1" stroke="currentColor" strokeWidth="1.35" />
+          <circle cx="5.3" cy="5.5" r="1" fill="currentColor" />
+          <path d="M5.3 8.4v5.2M8.6 13.6V8.4m0 2.4c0-1.5.8-2.5 2.2-2.5 1.5 0 2.2 1 2.2 2.5v2.8" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ) : <Icon size={16} aria-hidden="true" />} {label}
     </a>
   );
 }
@@ -186,16 +206,21 @@ export function ProjectCard({
   project,
   priority = false,
   backTo = "/#projects",
+  revealDelay,
 }: {
   project: Project;
   priority?: boolean;
   backTo?: string;
+  revealDelay?: number;
 }) {
+  const reducedMotion = useReducedMotion();
   return (
     <motion.article
       className="project-card"
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25 }}
+      initial={revealDelay === undefined || reducedMotion ? false : { opacity: 0, y: 28 }}
+      whileInView={revealDelay === undefined ? undefined : { opacity: 1, y: 0, transition: reducedMotion ? { duration: 0 } : { duration: 0.7, delay: revealDelay, ease: [0.22, 1, 0.36, 1] } }}
+      viewport={{ once: true, amount: 0.15 }}
+      whileHover={{ y: -6, transition: { duration: 0.25 } }}
     >
       <Link
         to={`/projects/${project.slug}`} state={{ backTo }} prefetch="intent" aria-label={`View ${project.title}`}

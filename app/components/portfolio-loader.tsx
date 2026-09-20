@@ -37,7 +37,10 @@ export function PortfolioLoader() {
       role="status"
       aria-label="Loading portfolio"
       onAnimationEnd={(event) => {
-        if (event.currentTarget === event.target && exiting) setVisible(false);
+        if (event.currentTarget === event.target && exiting) {
+          setVisible(false);
+          document.dispatchEvent(new Event("portfolio:ready"));
+        }
       }}
     >
       <div className="portfolio-loader-word" aria-hidden="true">
