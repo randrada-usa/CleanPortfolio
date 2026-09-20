@@ -222,10 +222,58 @@ function CertificationsSection({ certifications }: { certifications: Certificati
 const experiencePreviews = experience.flatMap((item) => item.image ? [experiencePreviewImage(item.image)] : []);
 
 function ExperienceSection() {
-  const [hovered, setHovered] = useState<string | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const pointerPosition = useRef<{ x: number; y: number } | null>(null);
+  const reducedMotion = useReducedMotion();
   const { sectionRef, enabled: showPreviews } = usePreviewImages(experiencePreviews, "(min-width: 901px) and (hover: hover)");
+
+  const syncPreview = useCallback(() => {
+    const pointer = pointerPosition.current;
+    if (!pointer || !showPreviews || reducedMotion) { setHoveredIndex(null); return; }
+
+    const row = document.elementFromPoint(pointer.x, pointer.y)?.closest<HTMLElement>(".experience-row");
+    if (!row || !sectionRef.current?.contains(row)) { setHoveredIndex(null); return; }
+
+    const index = Number(row.dataset.experienceIndex);
+    setHoveredIndex(experience[index]?.image ? index : null);
+
+    // Keep the original cursor anchor, scaled with the preview from 200px to 300px.
+    pointerX.set(pointer.x - 150);
+    pointerY.set(pointer.y - 150);
+  }, [pointerX, pointerY, reducedMotion, sectionRef, showPreviews]);
+
+  useEffect(() => {
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(syncPreview);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [syncPreview]);
+
+  const trackPointer = (event: ReactPointerEvent<HTMLElement>) => {
+    if (event.pointerType === "touch") return;
+    pointerPosition.current = { x: event.clientX, y: event.clientY };
+    syncPreview();
+  };
+
   return (
-    <section ref={sectionRef} id="experience" className="section experience-section">
+    <section
+      ref={sectionRef}
+      id="experience"
+      className="section experience-section"
+      onPointerMove={trackPointer}
+      onPointerLeave={() => { pointerPosition.current = null; setHoveredIndex(null); }}
+      onPointerCancel={() => { pointerPosition.current = null; setHoveredIndex(null); }}
+    >
       <p className="ghost-word" aria-hidden="true">EXPERIENCE</p>
       <Reveal className="section-inner">
         <div className="experience-top">
@@ -233,32 +281,37 @@ function ExperienceSection() {
           <p className="experience-tagline">Building &amp; leading since 2023</p>
         </div>
         <div className="experience-list">
-          {experience.map((item) => (
-            <div
+          {experience.map((item, index) => (
+            <motion.div
               className="experience-row"
+              data-experience-index={index}
               key={`${item.organization}-${item.role}`}
-              onMouseEnter={() => setHovered(item.role)}
-              onMouseLeave={() => setHovered(null)}
+              initial={reducedMotion ? false : { opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={reducedMotion ? { duration: 0 } : { duration: 0.7, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
               <div><h3>{item.organization}</h3><p>{item.role}</p></div>
               <time>{item.dates}</time>
-              <AnimatePresence>
-                {showPreviews && hovered === item.role && item.image && (
-                  <motion.img
-                    className="experience-hover"
-                    {...experiencePreviewImage(item.image)}
-                    alt=""
-                    decoding="async"
-                    initial={{ opacity: 0, scale: .9, rotate: 2 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 6 }}
-                    exit={{ opacity: 0, scale: .94 }}
-                  />
-                )}
-              </AnimatePresence>
-            </div>
+            </motion.div>
           ))}
         </div>
       </Reveal>
+      <AnimatePresence initial={false}>
+        {showPreviews && !reducedMotion && hoveredIndex !== null && experience[hoveredIndex]?.image && (
+          <motion.div
+            key={hoveredIndex}
+            className="experience-hover"
+            style={{ left: pointerX, top: pointerY }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <img {...experiencePreviewImage(experience[hoveredIndex].image)} sizes="300px" alt="" decoding="async" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
