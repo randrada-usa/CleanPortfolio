@@ -246,13 +246,19 @@ export function ProjectCard({
 export function CertificationCard({
   certification,
   backTo = "/#certifications",
+  revealDelay,
 }: {
   certification: Certification;
   backTo?: string;
+  revealDelay?: number;
 }) {
+  const reducedMotion = useReducedMotion();
   return (
     <motion.article
       className="cert-card"
+      initial={revealDelay === undefined || reducedMotion ? false : { opacity: 0, y: 28 }}
+      whileInView={revealDelay === undefined ? undefined : { opacity: 1, y: 0, transition: reducedMotion ? { duration: 0 } : { duration: 0.7, delay: revealDelay, ease: [0.22, 1, 0.36, 1] } }}
+      viewport={{ once: true, amount: 0.15 }}
       whileHover={{ y: -5 }}
       transition={{ duration: 0.22 }}
     >

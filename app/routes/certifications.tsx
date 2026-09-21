@@ -83,8 +83,8 @@ export default function CertificationsArchive() {
           ))}
         </div>
         <div className="archive-grid">
-          <AnimatePresence initial={false} mode="popLayout">
-            {filtered.length ? filtered.map((item) => (
+          <AnimatePresence mode="popLayout">
+            {filtered.length ? filtered.map((item, index) => (
               <motion.div
                 className="filter-card-shell"
                 key={item.slug}
@@ -94,7 +94,7 @@ export default function CertificationsArchive() {
                 exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -8, scale: .985 }}
                 transition={prefersReducedMotion ? { duration: 0 } : { duration: .3, ease: [.22, 1, .36, 1], layout: { duration: .36, ease: [.22, 1, .36, 1] } }}
               >
-                <CertificationCard certification={item} backTo={`${location.pathname}${location.search}`} />
+                <CertificationCard certification={item} backTo={`${location.pathname}${location.search}`} revealDelay={(index % 6) * 0.08} />
               </motion.div>
             )) : (
               <motion.p

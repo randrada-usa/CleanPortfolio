@@ -56,7 +56,7 @@ export default function ProjectsArchive() {
           </div>
         </div>
         <div className="archive-grid">
-          {filtered.length ? filtered.map((project) => <ProjectCard key={project.slug} project={project} backTo="/projects" />) : <p className="empty-state">No projects match that search.</p>}
+          {filtered.length ? filtered.map((project, index) => <ProjectCard key={project.slug} project={project} backTo="/projects" revealDelay={(index % 6) * 0.08} />) : <p className="empty-state">No projects match that search.</p>}
         </div>
       </Reveal>
       <Footer />
