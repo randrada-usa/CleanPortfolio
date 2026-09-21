@@ -485,6 +485,7 @@ img { display: block; max-width: 100%; }
   .section-heading { margin-bottom: 2.2rem; font-size: 2.1rem; }
   .about-copy h2 { font-size: 2.15rem; }
   .project-grid, .archive-grid, .more-section .project-grid, .more-section .archive-grid { grid-template-columns: 1fr; }
+  .projects-section .project-grid > .project-card:nth-child(n+4) { display: none; }
   .project-card { box-shadow: none; }
   .card-body p { min-height: 0; }
   .cert-row-button { padding: 1.35rem .4rem; }
