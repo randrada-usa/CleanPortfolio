@@ -38,6 +38,7 @@ export function PortfolioLoader() {
       aria-label="Loading portfolio"
       onAnimationEnd={(event) => {
         if (event.currentTarget === event.target && exiting) {
+          document.documentElement.dataset.portfolioReady = "true";
           setVisible(false);
           document.dispatchEvent(new Event("portfolio:ready"));
         }

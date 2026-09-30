@@ -326,8 +326,17 @@ export default function Home() {
   useEffect(() => {
     const revealHero = () => setHeroReady(true);
     document.addEventListener("portfolio:ready", revealHero);
-    if (!document.querySelector(".portfolio-loader")) revealHero();
-    return () => document.removeEventListener("portfolio:ready", revealHero);
+    if (document.documentElement.dataset.portfolioReady === "true" || !document.querySelector(".portfolio-loader")) {
+      revealHero();
+    }
+
+    // Never leave critical hero content transparent if a browser drops the
+    // loader animation event or the listener mounts after it was dispatched.
+    const fallback = window.setTimeout(revealHero, 2500);
+    return () => {
+      window.clearTimeout(fallback);
+      document.removeEventListener("portfolio:ready", revealHero);
+    };
   }, []);
 
   const heroEntrance = (delay: number) => reducedMotion
