@@ -388,20 +388,24 @@ export default function Home() {
         <motion.h1 className="hero-name" aria-label="Rey Jane Andrada" {...heroEntrance(0)}>
           <span className="name-outline">REY JANE</span><span className="name-solid">ANDRADA</span>
         </motion.h1>
-        <motion.img
+        <motion.div
           className="hero-photo"
-          initial={reducedMotion ? false : { opacity: 0 }}
+          initial={reducedMotion ? false : { opacity: 0.01 }}
           animate={heroReady ? { opacity: 1 } : undefined}
           transition={reducedMotion ? { duration: 0 } : { duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-          src="/assets/photos/hero-768.webp"
-          srcSet="/assets/photos/hero-480.webp 480w, /assets/photos/hero-768.webp 768w, /assets/photos/hero-1024.webp 1024w"
-          sizes="(max-width: 600px) 100vw, (max-width: 900px) 600px, (max-width: 1100px) and (orientation: portrait) 600px, (max-width: 1323px) 62vw, 820px"
-          width={1024}
-          height={1168}
-          fetchPriority="high"
-          alt="Rey Jane Andrada holding a laptop"
-          draggable={false}
-        />
+        >
+          <img
+            className="hero-photo-image"
+            src="/assets/photos/hero-768.webp"
+            srcSet="/assets/photos/hero-480.webp 480w, /assets/photos/hero-768.webp 768w, /assets/photos/hero-1024.webp 1024w"
+            sizes="(max-width: 600px) 100vw, (max-width: 900px) 600px, (max-width: 1100px) and (orientation: portrait) 600px, (max-width: 1323px) 62vw, 820px"
+            width={1024}
+            height={1168}
+            fetchPriority="high"
+            alt="Rey Jane Andrada holding a laptop"
+            draggable={false}
+          />
+        </motion.div>
         <motion.div className="hero-copy" {...heroEntrance(0.14)}>
           <h1>Backend-Focused Developer<br />Aspiring Data Engineer</h1>
           <p>I build reliable backend systems and practical applications—then keep learning toward the data platforms behind them.</p>
