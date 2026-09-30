@@ -452,6 +452,7 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 640px) {
+  .phone-static-motion { opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important; }
   .site-header { padding: 1.35rem 1rem 1rem; }
   .availability.compact { min-height: 40px; padding: .46rem .75rem; font-size: .76rem; }
   .site-header:not(.inner-header).scrolled {

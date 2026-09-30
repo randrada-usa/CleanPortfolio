@@ -320,6 +320,22 @@ function ExperienceSection() {
 
 export default function Home() {
   const { projects, certifications } = useLoaderData<typeof loader>();
+  const [heroReady, setHeroReady] = useState(false);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const revealHero = () => setHeroReady(true);
+    document.addEventListener("portfolio:ready", revealHero);
+    if (document.documentElement.dataset.portfolioReady === "true" || !document.querySelector(".portfolio-loader")) {
+      revealHero();
+    }
+    return () => document.removeEventListener("portfolio:ready", revealHero);
+  }, []);
+
+  const heroEntrance = (delay: number) => reducedMotion
+    ? { initial: false as const, animate: { opacity: 1, y: 0 }, transition: { duration: 0 } }
+    : { initial: { opacity: 0, y: 16 }, animate: heroReady ? { opacity: 1, y: 0 } : undefined,
+        transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } };
 
   useEffect(() => {
     const scrollKey = "portfolio-home-scroll";
@@ -362,10 +378,15 @@ export default function Home() {
     <main>
       <section className="hero" id="home">
         <Header />
-        <h1 className="hero-name" aria-label="Rey Jane Andrada">
+        <motion.h1 className="hero-name phone-static-motion" aria-label="Rey Jane Andrada" {...heroEntrance(0)}>
           <span className="name-outline">REY JANE</span><span className="name-solid">ANDRADA</span>
-        </h1>
-        <div className="hero-photo">
+        </motion.h1>
+        <motion.div
+          className="hero-photo phone-static-motion"
+          initial={reducedMotion ? false : { opacity: 0.01 }}
+          animate={heroReady ? { opacity: 1 } : undefined}
+          transition={reducedMotion ? { duration: 0 } : { duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+        >
           <img
             className="hero-photo-image"
             src="/assets/photos/hero-768.webp"
@@ -377,8 +398,8 @@ export default function Home() {
             alt="Rey Jane Andrada holding a laptop"
             draggable={false}
           />
-        </div>
-        <div className="hero-copy">
+        </motion.div>
+        <motion.div className="hero-copy phone-static-motion" {...heroEntrance(0.14)}>
           <h1>Backend-Focused Developer<br />Aspiring Data Engineer</h1>
           <p>I build reliable backend systems and practical applications—then keep learning toward the data platforms behind them.</p>
           <span className="hero-location">
@@ -388,12 +409,12 @@ export default function Home() {
             </svg>
             Iloilo City, Philippines
           </span>
-        </div>
-        <div className="hero-socials">
+        </motion.div>
+        <motion.div className="hero-socials phone-static-motion" {...heroEntrance(0.24)}>
           <SocialPill type="github" label="GitHub" />
           <SocialPill type="linkedin" label="LinkedIn" />
           <SocialPill type="email" label="Email" />
-        </div>
+        </motion.div>
       </section>
       <AboutStack />
       <ProjectsSection projects={projects} />
