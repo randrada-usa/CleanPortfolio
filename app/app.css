@@ -397,10 +397,10 @@ img { display: block; max-width: 100%; }
 @media (max-width: 900px), (max-width: 1100px) and (orientation: portrait) {
   /* Keep the portrait, name and copy in one flow; short screens can scroll. */
   .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; height: auto; min-height: 100svh; padding: 90px 0 36px; }
-  .hero-name { position: relative; z-index: 3; order: 1; top: auto; bottom: auto; left: auto; right: auto; display: grid; gap: 0; margin: -20px 1rem 0; text-align: center; white-space: normal; }
+  .hero-name { position: relative; z-index: 3; order: 1; top: auto; bottom: auto; left: auto; right: auto; display: grid; gap: 0; margin: 0 1rem; text-align: center; white-space: normal; }
   .hero-name .name-outline { color: #222; -webkit-text-stroke: 0; font-size: .48em; letter-spacing: .08em; }
   .hero-name .name-solid { font-size: .82em; }
-  .hero-photo { position: relative; order: 0; flex-shrink: 0; top: auto; bottom: auto; left: auto; width: min(100%, 600px); height: clamp(280px, calc(100svh - 390px), 560px); transform: none; object-fit: cover; object-position: 50% 17%; -webkit-mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.72) 78%, transparent 96%); mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.72) 78%, transparent 96%); }
+  .hero-photo { position: relative; order: 0; flex-shrink: 0; top: auto; bottom: auto; left: auto; width: min(100%, 600px); height: clamp(280px, calc(100svh - 390px), 560px); transform: none; object-fit: contain; object-position: center bottom; mix-blend-mode: normal; -webkit-mask-image: none; mask-image: none; }
   .hero-copy { position: relative; order: 2; left: auto; right: auto; bottom: auto; width: min(640px, 84%); margin-top: 20px; text-align: center; }
   .hero-copy h1 { font-size: 1.25rem; }
   .hero-copy p { max-width: 470px; margin-inline: auto; }
@@ -469,9 +469,7 @@ img { display: block; max-width: 100%; }
   .hero-photo {
     top: auto;
     height: clamp(280px, calc(100svh - 365px), 470px);
-    object-position: 50% 18%;
-    -webkit-mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.72) 78%, transparent 96%);
-    mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.72) 78%, transparent 96%);
+    object-position: center bottom;
   }
   .hero-name { bottom: auto; font-size: clamp(3.6rem, 17vw, 4.4rem); font-weight: 850; }
   .hero-name .name-outline, .hero-name .name-solid { font-weight: 850; }
