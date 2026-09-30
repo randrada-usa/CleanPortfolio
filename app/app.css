@@ -439,6 +439,7 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 900px) {
+  .mobile-static-motion { opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important; }
   .about-grid { grid-template-columns: 1fr; }
   .project-grid, .archive-grid { grid-template-columns: repeat(2, 1fr); }
   .cert-preview, .experience-hover { display: none; }

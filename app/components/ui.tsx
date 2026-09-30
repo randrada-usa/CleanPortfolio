@@ -29,7 +29,7 @@ export function Reveal({
   const reducedMotion = useReducedMotion();
   return (
     <motion.div
-      className={className}
+      className={className ? `${className} mobile-static-motion` : "mobile-static-motion"}
       initial={reducedMotion ? false : { opacity: 0, y: distance }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount }}
@@ -216,7 +216,7 @@ export function ProjectCard({
   const reducedMotion = useReducedMotion();
   return (
     <motion.article
-      className="project-card"
+      className="project-card mobile-static-motion"
       initial={revealDelay === undefined || reducedMotion ? false : { opacity: 0, y: 28 }}
       whileInView={revealDelay === undefined ? undefined : { opacity: 1, y: 0, transition: reducedMotion ? { duration: 0 } : { duration: 0.7, delay: revealDelay, ease: [0.22, 1, 0.36, 1] } }}
       viewport={{ once: true, amount: 0.15 }}
@@ -255,7 +255,7 @@ export function CertificationCard({
   const reducedMotion = useReducedMotion();
   return (
     <motion.article
-      className="cert-card"
+      className="cert-card mobile-static-motion"
       initial={revealDelay === undefined || reducedMotion ? false : { opacity: 0, y: 28 }}
       whileInView={revealDelay === undefined ? undefined : { opacity: 1, y: 0, transition: reducedMotion ? { duration: 0 } : { duration: 0.7, delay: revealDelay, ease: [0.22, 1, 0.36, 1] } }}
       viewport={{ once: true, amount: 0.15 }}

@@ -86,7 +86,7 @@ export default function CertificationsArchive() {
           <AnimatePresence mode="popLayout">
             {filtered.length ? filtered.map((item, index) => (
               <motion.div
-                className="filter-card-shell"
+                className="filter-card-shell mobile-static-motion"
                 key={item.slug}
                 layout={!prefersReducedMotion}
                 initial={prefersReducedMotion ? false : { opacity: 0, y: 14, scale: .985 }}
@@ -98,7 +98,7 @@ export default function CertificationsArchive() {
               </motion.div>
             )) : (
               <motion.p
-                className="empty-state"
+                className="empty-state mobile-static-motion"
                 key="empty-certifications"
                 initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}

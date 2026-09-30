@@ -160,7 +160,7 @@ function CertificationsSection({ certifications }: { certifications: Certificati
             const items = certifications.filter((item) => item.category === category);
             return (
               <motion.div
-                className={`cert-row ${active ? "open" : ""}`}
+                className={`cert-row mobile-static-motion ${active ? "open" : ""}`}
                 key={category}
                 initial={reducedMotion ? false : { opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -285,7 +285,7 @@ function ExperienceSection() {
         <div className="experience-list">
           {experience.map((item, index) => (
             <motion.div
-              className="experience-row"
+              className="experience-row mobile-static-motion"
               data-experience-index={index}
               key={`${item.organization}-${item.role}`}
               initial={reducedMotion ? false : { opacity: 0, y: 28 }}
