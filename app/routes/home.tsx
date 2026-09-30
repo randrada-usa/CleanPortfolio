@@ -95,7 +95,7 @@ function AboutStack() {
             foundation as I work toward data engineering.
           </p></Reveal>
           <Reveal className="about-actions" delay={0.2}>
-            <Link className="button button-dark" to="/cv" prefetch="intent">View CV <ArrowIcon /></Link>
+            <Link className="button button-dark" to="/cv" prefetch="intent" viewTransition>View CV <ArrowIcon /></Link>
           </Reveal>
         </div>
         <div>
@@ -123,7 +123,7 @@ function ProjectsSection({ projects }: { projects: Project[] }) {
         <div className="project-grid">
           {projects.map((project, index) => <ProjectCard key={project.slug} project={project} revealDelay={index * 0.11} />)}
         </div>
-        <Reveal className="center-action" delay={0.33}><Link className="button" to="/projects" prefetch="intent">View All Projects <ArrowIcon /></Link></Reveal>
+        <Reveal className="center-action" delay={0.33}><Link className="button" to="/projects" prefetch="intent" viewTransition>View All Projects <ArrowIcon /></Link></Reveal>
       </div>
     </section>
   );
@@ -188,7 +188,7 @@ function CertificationsSection({ certifications }: { certifications: Certificati
                             </span>
                           ))}
                         </p>
-                        <Link className="button button-light" tabIndex={active ? 0 : -1} to={`/certifications?category=${encodeURIComponent(category)}`} prefetch="intent">
+                        <Link className="button button-light" tabIndex={active ? 0 : -1} to={`/certifications?category=${encodeURIComponent(category)}`} prefetch="intent" viewTransition>
                           View More <ArrowIcon />
                         </Link>
                       </div>
@@ -215,7 +215,7 @@ function CertificationsSection({ certifications }: { certifications: Certificati
             );
           })}
         </div>
-        <Reveal className="center-action" delay={0.4}><Link className="button" to="/certifications" prefetch="intent">View All {certifications.length} <ArrowIcon /></Link></Reveal>
+        <Reveal className="center-action" delay={0.4}><Link className="button" to="/certifications" prefetch="intent" viewTransition>View All {certifications.length} <ArrowIcon /></Link></Reveal>
       </div>
     </section>
   );

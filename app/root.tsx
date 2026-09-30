@@ -1,4 +1,5 @@
 import type { LinksFunction } from "react-router";
+import { useEffect, useState } from "react";
 import {
   Links,
   Meta,
@@ -7,6 +8,7 @@ import {
   ScrollRestoration,
   isRouteErrorResponse,
   useRouteError,
+  useNavigation,
 } from "react-router";
 import "./app.css";
 import { PortfolioLoader } from "~/components/portfolio-loader";
@@ -49,7 +51,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <><PortfolioLoader /><Outlet /></>;
+  return <><PortfolioLoader /><NavigationFeedback /><Outlet /></>;
+}
+
+function NavigationFeedback() {
+  const navigation = useNavigation();
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (navigation.state === "idle") {
+      setVisible(false);
+      return;
+    }
+    const timer = window.setTimeout(() => setVisible(true), 140);
+    return () => window.clearTimeout(timer);
+  }, [navigation.state]);
+
+  return <div className={`navigation-progress ${visible ? "is-visible" : ""}`} aria-hidden="true" />;
 }
 
 export function ErrorBoundary() {

@@ -122,10 +122,10 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
     <>
       <header className={`${inner ? "site-header inner-header" : "site-header"} ${scrolled ? "scrolled" : ""}`}>
         <div className="header-inner">
-          {inner ? <Link className="back-pill" to={backTo} prefetch="intent">← Back</Link> : <Availability compact />}
+          {inner ? <Link className="back-pill" to={backTo} prefetch="intent" viewTransition>← Back</Link> : <Availability compact />}
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navLinks.map(({ id, label, href }) => (
-              <Link className={activeSection === id ? "is-active" : undefined} aria-current={activeSection === id ? "location" : undefined} key={id} to={href}>
+              <Link className={activeSection === id ? "is-active" : undefined} aria-current={activeSection === id ? "location" : undefined} key={id} to={href} viewTransition={location.pathname !== "/"}>
                 {label}
               </Link>
             ))}
@@ -163,6 +163,7 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
                       aria-current={activeSection === id ? "location" : undefined}
                       key={id}
                       to={href}
+                      viewTransition={location.pathname !== "/"}
                       onClick={() => setOpen(false)}
                     >
                       {label}
@@ -223,7 +224,7 @@ export function ProjectCard({
       whileHover={{ y: -6, transition: { duration: 0.25 } }}
     >
       <Link
-        to={`/projects/${project.slug}`} state={{ backTo }} prefetch="intent" aria-label={`View ${project.title}`}
+        to={`/projects/${project.slug}`} state={{ backTo }} prefetch="intent" viewTransition aria-label={`View ${project.title}`}
         onPointerEnter={(event) => { if (event.pointerType !== "touch") preloadImage(projectDetailImage(project.image)); }}
         onFocus={() => preloadImage(projectDetailImage(project.image))}
         onPointerDown={() => preloadImage(projectDetailImage(project.image))}
@@ -262,7 +263,7 @@ export function CertificationCard({
       whileHover={{ y: -5 }}
       transition={{ duration: 0.22 }}
     >
-      <Link to={`/certifications/${certification.slug}`} state={{ backTo }} prefetch="intent" aria-label={`View ${certification.title}`}>
+      <Link to={`/certifications/${certification.slug}`} state={{ backTo }} prefetch="intent" viewTransition aria-label={`View ${certification.title}`}>
         <div className="cert-media"><img src={certification.image} alt={`${certification.title} certificate`} loading="lazy" /></div>
         <h3>{certification.title}</h3>
         <div className="tag-list"><span>{certification.category}</span><span>{certification.issuer}</span></div>
@@ -284,7 +285,7 @@ export function Footer() {
         <a className="button button-dark" href={socialLinks.email}>Contact Me <ArrowIcon /></a>
       </Reveal>
       <Reveal className="footer-links" delay={0.08}>
-        <Link className="identity-pill" to="/#home" prefetch="intent"><img src="/assets/photos/contact-avatar.webp" alt="" /> Rey Jane Andrada</Link>
+        <Link className="identity-pill" to="/#home" prefetch="intent" viewTransition><img src="/assets/photos/contact-avatar.webp" alt="" /> Rey Jane Andrada</Link>
         <SocialPill type="github" label="GitHub" />
         <SocialPill type="linkedin" label="LinkedIn" />
         <SocialPill type="email" label="Email" />
