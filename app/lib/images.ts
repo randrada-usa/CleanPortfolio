@@ -49,7 +49,11 @@ const localExperienceImages = new Set([
 export function experiencePreviewImage(src: string): ResponsiveImage {
   if (!localExperienceImages.has(src)) return { src };
 
-  const base = src.slice(0, -5);
+  // The ICS photo was replaced in place once; use a versioned URL so browsers
+  // with Vercel's immutable asset cache cannot keep showing the old preview.
+  const base = src === "/assets/experiences/institute-of-computer-science.webp"
+    ? "/assets/experiences/institute-of-computer-science-v2"
+    : src.slice(0, -5);
   return {
     src: `${base}-preview-800.webp`,
     srcSet: `${base}-preview-400.webp 400w, ${base}-preview-800.webp 800w`,
