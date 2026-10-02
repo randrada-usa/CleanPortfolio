@@ -82,6 +82,123 @@ export const meta: MetaFunction = () => [
   },
 ];
 
+type GitHubContribution = {
+  date: string;
+  count: number;
+  level: number;
+};
+
+const githubUsername = "randrada-usa";
+
+function GitHubActivity() {
+  const [contributions, setContributions] = useState<GitHubContribution[] | null>(null);
+  const [failed, setFailed] = useState(false);
+  const [hovered, setHovered] = useState<{ day: GitHubContribution; x: number; y: number } | null>(null);
+  const activityRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`https://github-contributions-api.jogruber.de/v4/${githubUsername}?y=last`, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error("GitHub activity request failed");
+        return response.json() as Promise<{ contributions?: GitHubContribution[] }>;
+      })
+      .then((data) => setContributions(data.contributions ?? []))
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setFailed(true);
+      });
+
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      grid.scrollLeft = grid.scrollWidth - grid.clientWidth;
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [contributions]);
+
+  const updateTooltip = (event: ReactPointerEvent<HTMLSpanElement>, day: GitHubContribution) => {
+    const bounds = activityRef.current?.getBoundingClientRect();
+    if (!bounds) return;
+    setHovered({ day, x: event.clientX - bounds.left, y: event.clientY - bounds.top });
+  };
+
+  if (failed) {
+    return (
+      <a className="github-activity github-activity-fallback" href={socialLinks.github} target="_blank" rel="noreferrer">
+        <span>GitHub activity</span>
+        <span>View profile <ArrowUpRight aria-hidden="true" size={16} /></span>
+      </a>
+    );
+  }
+
+  const total = contributions?.reduce((sum, day) => sum + day.count, 0) ?? 0;
+  const skeleton = Array.from({ length: 371 }, (_, index) => ({
+    date: `loading-${index}`,
+    count: 0,
+    level: index % 17 === 0 ? 1 : 0,
+  }));
+  const days = contributions ?? skeleton;
+
+  return (
+    <div className="github-activity" aria-busy={!contributions} ref={activityRef}>
+      <div className="github-activity-top">
+        <span>GitHub</span>
+        <a href={socialLinks.github} target="_blank" rel="noreferrer">
+          @{githubUsername} <ArrowUpRight aria-hidden="true" size={14} />
+        </a>
+      </div>
+      <div
+        className="github-activity-grid"
+        role="img"
+        aria-label={contributions ? `${total.toLocaleString()} public GitHub contributions in the last year` : "Loading GitHub activity"}
+        ref={gridRef}
+      >
+        <div className="github-activity-dots">
+          {days.map((day) => (
+            <span
+              className="github-activity-cell"
+              data-level={day.level}
+              title={contributions ? `${day.date}: ${day.count} contribution${day.count === 1 ? "" : "s"}` : undefined}
+              onPointerEnter={contributions ? (event) => updateTooltip(event, day) : undefined}
+              onPointerMove={contributions ? (event) => updateTooltip(event, day) : undefined}
+              onPointerLeave={contributions ? () => setHovered(null) : undefined}
+              key={day.date}
+            >
+              <svg viewBox="0 0 13 13" aria-hidden="true">
+                <rect x="1.5" y="1.5" width="10" height="10" rx="1.2" />
+              </svg>
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="github-activity-bottom">
+        <strong>{contributions ? `${total.toLocaleString()} contributions in the last year` : "Loading contributions"}</strong>
+        <span className="github-activity-legend" aria-hidden="true">
+          Less
+          {[0, 1, 2, 3, 4].map((level) => (
+            <svg viewBox="0 0 13 13" data-level={level} key={level}><rect x="1.5" y="1.5" width="10" height="10" rx="1.2" /></svg>
+          ))}
+          More
+        </span>
+      </div>
+      {hovered ? (
+        <span className="github-activity-tooltip" style={{ left: hovered.x, top: hovered.y }}>
+          <strong>{hovered.day.count}</strong> contribution{hovered.day.count === 1 ? "" : "s"}
+          <small>{new Date(`${hovered.day.date}T00:00:00`).toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" })}</small>
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
 function AboutStack() {
   return (
     <section id="about" className="section about-section">
@@ -109,6 +226,9 @@ function AboutStack() {
             ))}
           </div>
         </div>
+        <Reveal className="about-activity" delay={0.28} amount={0.2}>
+          <GitHubActivity />
+        </Reveal>
       </div>
     </section>
   );
