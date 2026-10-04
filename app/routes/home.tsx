@@ -449,7 +449,15 @@ export default function Home() {
     if (document.documentElement.dataset.portfolioReady === "true" || !document.querySelector(".portfolio-loader")) {
       revealHero();
     }
-    return () => document.removeEventListener("portfolio:ready", revealHero);
+
+    // WebKit can visually finish the loader without reliably delivering its
+    // animation-end event. The hero photo is never hidden, and this fallback
+    // ensures the remaining desktop/tablet entrances cannot stay suspended.
+    const fallback = window.setTimeout(revealHero, 2100);
+    return () => {
+      window.clearTimeout(fallback);
+      document.removeEventListener("portfolio:ready", revealHero);
+    };
   }, []);
 
   const heroEntrance = (delay: number) => reducedMotion
@@ -501,12 +509,7 @@ export default function Home() {
         <motion.h1 className="hero-name phone-static-motion" aria-label="Rey Jane Andrada" {...heroEntrance(0)}>
           <span className="name-outline">REY JANE</span><span className="name-solid">ANDRADA</span>
         </motion.h1>
-        <motion.div
-          className="hero-photo phone-static-motion"
-          initial={reducedMotion ? false : { opacity: 0.01 }}
-          animate={heroReady ? { opacity: 1 } : undefined}
-          transition={reducedMotion ? { duration: 0 } : { duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className={`hero-photo${heroReady ? " is-ready" : ""}`}>
           <img
             className="hero-photo-image"
             src="/assets/photos/hero-768.webp"
@@ -518,7 +521,7 @@ export default function Home() {
             alt="Rey Jane Andrada holding a laptop"
             draggable={false}
           />
-        </motion.div>
+        </div>
         <motion.div className="hero-copy phone-static-motion" {...heroEntrance(0.14)}>
           <h1>Backend-Focused Developer<br />Aspiring Data Engineer</h1>
           <p>I build reliable backend systems and practical applications—then keep learning toward the data platforms behind them.</p>
