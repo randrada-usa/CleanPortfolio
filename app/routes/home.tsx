@@ -509,7 +509,7 @@ export default function Home() {
         <motion.h1 className="hero-name phone-static-motion" aria-label="Rey Jane Andrada" {...heroEntrance(0)}>
           <span className="name-outline">REY JANE</span><span className="name-solid">ANDRADA</span>
         </motion.h1>
-        <div className={`hero-photo${heroReady ? " is-ready" : ""}`}>
+        <div className="hero-photo">
           <img
             className="hero-photo-image"
             src="/assets/photos/hero-768.webp"
