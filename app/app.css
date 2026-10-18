@@ -267,7 +267,8 @@ img { display: block; max-width: 100%; }
 .github-activity-fallback { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; border-block: 1px solid var(--line); font-size: .88rem; font-weight: 650; }
 .github-activity-fallback span:last-child { display: inline-flex; align-items: center; gap: .35rem; color: var(--muted); }
 .stack-group .tag-list { gap: .72rem; }
-.stack-group .tag-list span { padding: .66rem .95rem; font-size: .94rem; font-weight: 500; }
+.stack-group .tag-list span { display: inline-flex; align-items: center; gap: .45rem; padding: .66rem .95rem; font-size: .94rem; font-weight: 500; }
+.stack-group .tag-list :is(img, svg) { width: 20px; height: 20px; flex-shrink: 0; object-fit: contain; }
 .tag-list { display: flex; flex-wrap: wrap; gap: .55rem; }
 .tag-list span { padding: .45rem .72rem; border: 1px solid #dededb; border-radius: 999px; background: rgba(255,255,255,.75); font-size: .72rem; }
 

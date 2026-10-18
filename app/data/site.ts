@@ -350,6 +350,29 @@ export const coreStack = {
   Tools: ["Git", "GitHub", "Figma", "Power BI", "Jupyter"],
 };
 
+export const coreStackIcons: Record<string, string> = Object.fromEntries(
+  Object.entries({
+    Python: "python-original.svg",
+    "Node.js": "nodejs-original.svg",
+    PostgreSQL: "postgresql-original.svg",
+    Firebase: "firebase-original.svg",
+    TypeScript: "typescript-original.svg",
+    React: "react-original.svg",
+    "Next.js": "nextjs-original.svg",
+    "Tailwind CSS": "tailwindcss-original.svg",
+    AWS: "Amazon-Web-Services.webp",
+    "Google Cloud": "googlecloud-original.svg",
+    "REST APIs": "restfulAPI-logo.webp",
+    "Gemini API": "Google_Gemini.webp",
+    "Vision API": "Cloud-Vision-API.svg",
+    Git: "git-original.svg",
+    GitHub: "github-original.svg",
+    Figma: "figma-original.svg",
+    "Power BI": "PowerBI-original.svg",
+    Jupyter: "jupyter-original.svg",
+  }).map(([name, file]) => [name, `/assets/icons/skills/${file}`]),
+);
+
 export const socialLinks = {
   email: "mailto:rayalejaga12@gmail.com",
   github: "https://github.com/randrada-usa",

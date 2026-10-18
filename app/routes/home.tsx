@@ -1,12 +1,13 @@
 import type { MetaFunction } from "react-router";
 import { Link, useLoaderData } from "react-router";
 import { AnimatePresence, motion, useMotionValue, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, X } from "lucide-react";
+import { ArrowUpRight, Database, X } from "lucide-react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   certificationCategories,
   coreStack,
+  coreStackIcons,
   experience,
   socialLinks,
   type Certification,
@@ -221,7 +222,14 @@ function AboutStack() {
             {Object.entries(coreStack).map(([group, items], index) => (
               <Reveal className="stack-group" delay={0.22 + index * 0.08} key={group}>
                 <h3>{group}</h3>
-                <div className="tag-list">{items.map((item) => <span key={item}>{item}</span>)}</div>
+                <div className="tag-list">{items.map((item) => (
+                  <span key={item}>
+                    {coreStackIcons[item]
+                      ? <img src={coreStackIcons[item]} alt="" width={20} height={20} loading="lazy" decoding="async" />
+                      : <Database size={20} aria-hidden="true" />}
+                    {item}
+                  </span>
+                ))}</div>
               </Reveal>
             ))}
           </div>
