@@ -16,6 +16,10 @@ export type Project = {
   liveUrl?: string;
   githubUrl?: string;
   gallery?: string[];
+  imageKind?: "logo";
+  achievement?: string;
+  availabilityNote?: string;
+  buildStory?: string;
 };
 
 export type CertificationCategory =
@@ -40,6 +44,40 @@ const certAsset = (name: string) => `/assets/certs/${name}`;
 const experienceAsset = (name: string) => `/assets/experiences/${name}`;
 
 export const projects: Project[] = [
+  {
+    slug: "orbitiq",
+    title: "OrbitIQ",
+    eyebrow: "2nd Runner-Up · RELX AI Summit Hackathon",
+    summary:
+      "AI-assisted invoice review system for detecting exceptions, gathering evidence, and supporting finance analysts with explainable recommendations.",
+    image: projectAsset("orbitiq-logo.webp"),
+    imageKind: "logo",
+    achievement: "2nd Runner-Up · RELX AI Summit Academe Hackathon 2026",
+    availabilityNote: "Public demo unavailable due to restrictions on the hackathon-provided dataset.",
+    buildStory:
+      "OrbitIQ was built during an approximately five-hour hackathon sprint. Team WeUseDockers worked from the provided financial dataset to a functioning end-to-end prototype, getting the complete workflow running in the final minutes before the demo. The project went on to place 2nd Runner-Up.",
+    tags: ["React", "TypeScript", "Python", "FastAPI", "Claude", "AWS Bedrock", "pandas", "SQLite"],
+    role: "Fullstack Developer / Backend & AI Lead",
+    team: "WeUseDockers · 3-person team",
+    timeline: "October 9, 2026 · Approximately 5-hour sprint",
+    projectType: "RELX / Reed Elsevier Philippines AI Summit Academe Hackathon",
+    challenge:
+      "Help finance teams review problematic invoices faster by bringing together purchase orders, supplier records, previous invoices, payments, and existing exceptions. Detect missing POs, amount mismatches, duplicates, and other inconsistencies while keeping the final financial decision with a human analyst.",
+    approach: [
+      "Led the FastAPI backend and AI workflow, processing the supplied CSV-based finance datasets with pandas and SQLite.",
+      "Implemented invoice validation and rule-based financial checks, including PO mismatches and duplicate invoice detection.",
+      "Integrated Claude through AWS Bedrock to explain cases, organize supporting evidence, and recommend a next action.",
+      "Implemented safety controls so AI recommendations could not bypass financial checks or the analyst's final decision.",
+      "Connected the backend workflow with the React and TypeScript frontend, and helped test and prepare the prototype for the live demo.",
+    ],
+    results: [
+      "2nd Runner-Up — RELX / Reed Elsevier Philippines AI Summit Academe Hackathon",
+      "Functioning end-to-end prototype built in approximately five hours",
+      "Explainable recommendations with human-controlled financial decisions",
+      "Team WeUseDockers: Rey Jane Andrada, Christian M. Lañada, and Christian Joseph F. Ortigas",
+      "Mentored by Diego Paul Lee Tian",
+    ],
+  },
   {
     slug: "augustinian-developer-society-website",
     published: false,

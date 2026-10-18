@@ -229,8 +229,8 @@ export function ProjectCard({
         onFocus={() => preloadImage(projectDetailImage(project.image))}
         onPointerDown={() => preloadImage(projectDetailImage(project.image))}
       >
-        <div className="card-media">
-          <img {...projectCardImage(project.image)} alt={`${project.title} interface`} loading={priority ? "eager" : "lazy"} decoding="async" />
+        <div className={`card-media${project.imageKind === "logo" ? " card-media-logo" : ""}`}>
+          <img {...projectCardImage(project.image)} alt={`${project.title} ${project.imageKind === "logo" ? "logo" : "interface"}`} loading={priority ? "eager" : "lazy"} decoding="async" />
           <span className="card-label">{project.eyebrow}</span>
           <span className="card-arrow"><ArrowIcon /></span>
         </div>

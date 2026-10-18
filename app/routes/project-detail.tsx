@@ -56,6 +56,8 @@ export default function ProjectDetail() {
           <div className="detail-title">
             <h1>{project.title}</h1>
             <p className="lead">{project.summary}</p>
+            {project.achievement && <p className="project-achievement">{project.achievement}</p>}
+            {project.availabilityNote ? <p className="project-availability">{project.availabilityNote}</p> : (
             <div className="detail-actions">
               {project.githubUrl ? (
                 <a className="button" href={project.githubUrl} target="_blank" rel="noreferrer"><Code2 size={18} /> GitHub</a>
@@ -68,6 +70,7 @@ export default function ProjectDetail() {
                 <button className="button button-dark" type="button" onClick={() => unavailable("Live version")}>View Live <ExternalLink size={18} /></button>
               )}
             </div>
+            )}
           </div>
           <aside className="detail-meta">
             <div className="meta-item"><span>My Role</span><strong>{project.role}</strong></div>
@@ -75,10 +78,11 @@ export default function ProjectDetail() {
             <div className="meta-item"><span>Stack</span><strong>{project.tags.join(" · ")}</strong></div>
           </aside>
         </section>
-        <img className="detail-image" {...projectDetailImage(project.image)} alt={`${project.title} project`} loading="eager" fetchPriority="high" decoding="async" />
+        <img className={`detail-image${project.imageKind === "logo" ? " detail-image-logo" : ""}`} {...projectDetailImage(project.image)} alt={`${project.title} ${project.imageKind === "logo" ? "logo" : "project"}`} loading="eager" fetchPriority="high" decoding="async" />
         <section className="case-study">
           <h2>/CASE STUDY</h2>
           <div>
+            {project.buildStory && <div className="case-block"><h3>The build story</h3><p>{project.buildStory}</p></div>}
             <div className="case-block"><h3>The challenge</h3><p>{project.challenge}</p></div>
             <div className="case-block"><h3>Technical approach</h3><ul>{project.approach.map((item) => <li key={item}>{item}</li>)}</ul></div>
             <div className="case-block"><h3>Results</h3><div className="result-grid">{project.results.map((item) => <div key={item}>{item}</div>)}</div></div>

@@ -280,6 +280,10 @@ img { display: block; max-width: 100%; }
 .card-arrow { position: absolute; right: 1rem; bottom: 1rem; display: grid; place-items: center; width: 44px; height: 44px; opacity: 0; border-radius: 50%; background: white; transform: translateY(8px); transition: opacity .25s, transform .25s; }
 .card-body { padding: 1.1rem; }
 .card-body h3 { margin: 0 0 .72rem; font-size: 1.45rem; line-height: 1.25; letter-spacing: -.035em; }
+.card-media-logo { background: white; }
+.card-media-logo img { object-fit: contain; padding: 2.5rem 1.5rem; filter: none; }
+.card-body .project-achievement, .project-achievement { min-height: 0; color: #075747; font-weight: 700; line-height: 1.5; }
+.project-availability { color: #5d5d5a; line-height: 1.6; }
 .cert-card h3 { margin: 0 0 .65rem; font-size: 1.15rem; line-height: 1.35; letter-spacing: -.03em; }
 .card-body p { min-height: 2.9em; margin: 0 0 1rem; color: #5d5d5a; font-size: .9rem; line-height: 1.5; }
 .center-action { display: flex; justify-content: center; margin-top: 3.5rem; }
@@ -377,6 +381,7 @@ img { display: block; max-width: 100%; }
 .meta-item span { display: block; margin-bottom: .45rem; color: #999; font-size: .82rem; }
 .meta-item strong { font-size: 1.2rem; }
 .detail-image { width: 100%; max-height: 78vh; object-fit: cover; border: 1px solid #ddd; background: white; }
+.detail-image-logo { aspect-ratio: 16 / 9; object-fit: contain; padding: clamp(1.5rem, 5vw, 5rem); }
 .certificate-detail-image { object-fit: contain; padding: 1rem; }
 .cv-hero { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(230px, .55fr); gap: 5vw; align-items: end; padding: 2rem 0 5rem; }
 .cv-hero .detail-tags { grid-column: 1 / -1; }
