@@ -1,17 +1,50 @@
-# Rey Jane Andrada — Portfolio v2
+# Rey Jane Andrada — Portfolio
 
-React Router 7 portfolio with local content fallbacks and Sanity-ready schemas.
+My personal portfolio as a backend-focused developer and aspiring data engineer, showcasing projects, technical contributions, certifications, and community experience.
 
-## Local development
+The site includes project case studies covering the problems, implementation decisions, and outcomes behind my work—from student applications and organization platforms to commissioned games and hackathon prototypes.
+
+## Highlights
+
+- Project case studies with my role, technical approach, and results
+- Certifications and participation in workshops, hackathons, and developer communities
+- Core Stack with technology icons
+- GitHub contributions cached during the browser session
+- CV preview and PDF download
+- Responsive layouts and reduced-motion support
+
+## Built with
+
+React Router 7 · React · TypeScript · Vite · Framer Motion · Sanity
+
+## Run locally
+
+Use Node.js 24.
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 
-## Content
+## Checks
 
-Projects and certifications currently load from `app/data/site.ts`, using assets in `public/assets`. To connect Sanity:
+```sh
+npm test
+npm run typecheck
+npm run build
+```
+
+GitHub Actions runs these checks on pushes and pull requests.
+
+## Content and assets
+
+Projects and certifications use local content in `app/data/site.ts`, with optional Sanity integration. Public assets live in `public/assets`.
+
+Selected certificate signatures are blurred in the published images. Projects subject to confidentiality or dataset restrictions include an availability note.
+
+## Sanity setup
+
+To connect Sanity:
 
 1. Run `npm run sanity -- init` and create/select a project.
 2. Copy `.env.example` to `.env.local`.
@@ -38,7 +71,3 @@ preloaded at low priority when their section comes within 400 px of the viewport
 Project cards preload the responsive detail image on pointer hover, keyboard focus,
 or pointer down, alongside React Router's existing route prefetching. Speculative
 image preloads are skipped on data-saver and 2G connections; visible images still load.
-
-## CV
-
-The Download CV control is intentionally disabled until the final PDF is supplied.
