@@ -4,8 +4,8 @@ import { Code2, ExternalLink, X } from "lucide-react";
 import { useState } from "react";
 import { useLoaderData, useLocation } from "react-router";
 import { Footer, Header, ProjectCard, Reveal } from "~/components/ui";
+import { ProjectMedia } from "~/components/project-gallery";
 import { getProjects } from "~/lib/content.server";
-import { projectDetailImage } from "~/lib/images";
 import { canonicalMeta } from "~/lib/seo";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -32,19 +32,24 @@ export default function ProjectDetail() {
   const { project, related } = useLoaderData<typeof loader>();
   const location = useLocation();
   const [privateNoticeOpen, setPrivateNoticeOpen] = useState(false);
+  const [unavailableTarget, setUnavailableTarget] = useState<"source" | "live">("source");
   const requestedBackTo = (location.state as { backTo?: string } | null)?.backTo;
   const backTo = requestedBackTo === "/projects" ? "/projects" : "/#projects";
   const isPrivateCommission = ["wave-and-wish", "praise-and-pray"].includes(project.slug);
-  const hasPrivateRepository = isPrivateCommission || ["icslink", "duely"].includes(project.slug);
+  const hasPrivateRepository = isPrivateCommission || ["icslink", "duely", "csiteach"].includes(project.slug);
+  const isDevelopmentNotice = project.slug === "duely" && unavailableTarget === "live";
   const privateRepositoryDescription = project.slug === "duely"
-    ? "Duely is an actively developed Android beta. Its source repository is private, and no public beta build is available yet."
-    : "ICSLink is an internal Institute of Computer Science project. Its source repository is private, but the deployed platform is available through View Live.";
-  const unavailable = (label: string) => {
+    ? "Duely's source repository is private."
+    : project.slug === "csiteach"
+      ? "CSITeach's source repository is private. The deployed platform is available through View Live."
+      : "ICSLink is an internal Institute of Computer Science project. Its source repository is private, but the deployed platform is available through View Live.";
+  const unavailable = (target: "source" | "live") => {
     if (hasPrivateRepository) {
+      setUnavailableTarget(target);
       setPrivateNoticeOpen(true);
       return;
     }
-    window.alert(`${label} is currently unavailable for ${project.title}.`);
+    window.alert(`${target === "source" ? "GitHub repository" : "Live version"} is currently unavailable for ${project.title}.`);
   };
 
   return (
@@ -59,15 +64,15 @@ export default function ProjectDetail() {
             {project.achievement && <p className="project-achievement">{project.achievement}</p>}
             {project.availabilityNote ? <p className="project-availability">{project.availabilityNote}</p> : (
             <div className="detail-actions">
-              {project.githubUrl ? (
+              {project.githubUrl && !hasPrivateRepository ? (
                 <a className="button" href={project.githubUrl} target="_blank" rel="noreferrer"><Code2 size={18} /> GitHub</a>
               ) : (
-                <button className="button" type="button" onClick={() => unavailable("GitHub repository")}><Code2 size={18} /> GitHub</button>
+                <button className="button" type="button" onClick={() => unavailable("source")}><Code2 size={18} /> GitHub</button>
               )}
               {project.liveUrl ? (
                 <a className="button button-dark" href={project.liveUrl} target="_blank" rel="noreferrer">View Live <ExternalLink size={18} /></a>
               ) : (
-                <button className="button button-dark" type="button" onClick={() => unavailable("Live version")}>View Live <ExternalLink size={18} /></button>
+                <button className="button button-dark" type="button" onClick={() => unavailable("live")}>View Live <ExternalLink size={18} /></button>
               )}
             </div>
             )}
@@ -78,7 +83,7 @@ export default function ProjectDetail() {
             <div className="meta-item"><span>Stack</span><strong>{project.tags.join(" · ")}</strong></div>
           </aside>
         </section>
-        <img className={`detail-image${project.imageKind === "logo" ? " detail-image-logo" : ""}`} {...projectDetailImage(project.image)} alt={`${project.title} ${project.imageKind === "logo" ? "logo" : "project"}`} loading="eager" fetchPriority="high" decoding="async" />
+        <ProjectMedia project={project} />
         <section className="case-study">
           <h2>/CASE STUDY</h2>
           <div>
@@ -99,10 +104,12 @@ export default function ProjectDetail() {
           <Dialog.Overlay className="private-dialog-overlay" />
           <Dialog.Content className="private-dialog-content">
             <Dialog.Close className="private-dialog-close" aria-label="Close private project notice"><X size={20} /></Dialog.Close>
-            <span className="private-dialog-label">{isPrivateCommission ? "PRIVATE COMMISSION" : "PRIVATE REPOSITORY"}</span>
-            <Dialog.Title>{isPrivateCommission ? `${project.title} is not publicly accessible.` : `${project.title}'s source code is private.`}</Dialog.Title>
+            <span className="private-dialog-label">{isDevelopmentNotice ? "UNDER DEVELOPMENT" : isPrivateCommission ? "PRIVATE COMMISSION" : "PRIVATE REPOSITORY"}</span>
+            <Dialog.Title>{isDevelopmentNotice ? "Duely is still under development." : isPrivateCommission ? `${project.title} is not publicly accessible.` : `${project.title}'s source code is private.`}</Dialog.Title>
             <Dialog.Description>
-              {isPrivateCommission
+              {isDevelopmentNotice
+                ? "Duely is an actively developed Android beta. A public build is not available yet."
+                : isPrivateCommission
                 ? "This project was created as a private commission, so both the live version and source repository are private."
                 : privateRepositoryDescription}
             </Dialog.Description>

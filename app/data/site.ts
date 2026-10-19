@@ -45,12 +45,40 @@ const experienceAsset = (name: string) => `/assets/experiences/${name}`;
 
 export const projects: Project[] = [
   {
+    slug: "csiteach",
+    title: "CSITeach",
+    eyebrow: "Student Mentoring Platform",
+    summary:
+      "Supported junior developers through QA, backend architecture guidance, and targeted backend contributions to Holotech Society's student mentoring platform.",
+    image: projectAsset("csiteach/cover.webp"),
+    gallery: Array.from({ length: 21 }, (_, index) => projectAsset(`csiteach/screen-${String(index + 1).padStart(2, "0")}.webp`)),
+    liveUrl: "https://csiteach.vercel.app/",
+    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Supabase"],
+    role: "QA & Technical Mentor",
+    team: "Holotech Society · Junior-led development team",
+    timeline: "2026",
+    projectType: "Student Mentoring Platform",
+    challenge:
+      "Help a junior development team build a structured mentoring platform that brings mentor applications, topic review, mentee matching, session records, and program oversight into one consistent experience.",
+    approach: [
+      "Mentored the junior developers on backend architecture and how to structure the platform's backend workflows.",
+      "Focused primarily on quality assurance, helping review the system and its mentor, mentee, and administrator experiences.",
+      "Made limited backend coding contributions while the junior developers implemented most of the platform.",
+    ],
+    results: [
+      "Junior-led mentoring platform supported through QA and technical guidance",
+      "Shared workflows for mentors, mentees, and program administrators",
+      "Project screenshots show topic management, matching, session logs, reports, and program oversight",
+    ],
+  },
+  {
     slug: "orbitiq",
     title: "OrbitIQ",
     eyebrow: "2nd Runner-Up · RELX AI Summit Hackathon",
     summary:
       "AI-assisted invoice review system for detecting exceptions, gathering evidence, and supporting finance analysts with explainable recommendations.",
     image: projectAsset("orbitiq-logo.webp"),
+    gallery: [projectAsset("orbitiq/award-certificate.webp"), projectAsset("orbitiq/hackathon-group.webp")],
     imageKind: "logo",
     achievement: "2nd Runner-Up · RELX AI Summit Academe Hackathon 2026",
     availabilityNote: "Public demo unavailable due to restrictions on the hackathon-provided dataset.",
@@ -80,7 +108,7 @@ export const projects: Project[] = [
   },
   {
     slug: "augustinian-developer-society-website",
-    published: false,
+    published: true,
     title: "Augustinian Developer Society Website",
     eyebrow: "Organization Website",
     summary:
@@ -114,8 +142,22 @@ export const projects: Project[] = [
     eyebrow: "AI Student Task Organizer",
     summary:
       "Founded and led a three-person team building an Android-first student organizer that turns assignment photos into editable tasks through on-device OCR and optional AI assistance.",
-    image: projectAsset("duely.webp"),
-    githubUrl: "https://github.com/randrada-usa/Duely",
+    image: projectAsset("duely/cover-logo.webp"),
+    imageKind: "logo",
+    gallery: [
+      projectAsset("duely/01-duely-overview.webp"),
+      projectAsset("duely/02-scan-with-ocr-or-ai-assist.webp"),
+      projectAsset("duely/03-review-and-organize-tasks.webp"),
+      projectAsset("duely/04-calendar-deadlines-and-reminders.webp"),
+      projectAsset("duely/05-duely-plus-revenuecat-test-store.webp"),
+      projectAsset("duely/06-guided-student-onboarding.webp"),
+      projectAsset("duely/07-clear-permission-choices.webp"),
+      projectAsset("duely/08-google-sign-in-or-guest.webp"),
+      projectAsset("duely/09-home-and-next-actions.webp"),
+      projectAsset("duely/10-task-search-filters-and-empty-state.webp"),
+      projectAsset("duely/11-profile-reminders-and-backup.webp"),
+      projectAsset("duely/12-branded-dialogs-and-safe-actions.webp"),
+    ],
     tags: ["React Native", "Expo", "TypeScript", "Supabase", "Google ML Kit", "Gemini", "RevenueCat"],
     role: "Founder, Product & Technical Lead",
     team: "Independent Product · 3-person team",
@@ -174,6 +216,7 @@ export const projects: Project[] = [
     summary:
       "Led a six-person team to deliver a touchless festival game in seven days, serving 280+ players with zero crashes.",
     image: projectAsset("wave-and-wish.webp"),
+    gallery: Array.from({ length: 11 }, (_, index) => projectAsset(`wave-and-wish/photo-${String(index + 1).padStart(2, "0")}.webp`)),
     tags: ["Python", "Pygame", "OpenCV", "MediaPipe"],
     role: "Development Lead & Overall Team Lead",
     team: "6-BYTE Studios · 6-person team",

@@ -2,14 +2,30 @@ export type ResponsiveImage = { src: string; srcSet?: string; sizes?: string; wi
 
 // Originals remain available; each view requests only the resolution it needs.
 const localProjectImages = new Set([
+  "/assets/projects/csiteach/cover.webp",
+  "/assets/projects/csiteach/screen-01.webp",
   "/assets/projects/ads-website-2026.webp",
   "/assets/projects/duely.webp",
+  "/assets/projects/duely/cover-logo.webp",
   "/assets/projects/icslink.webp",
   "/assets/projects/wave-and-wish.webp",
   "/assets/projects/praise-and-pray.webp",
   "/assets/projects/IFC-v3.webp",
   "/assets/projects/e-serbisyo-rizal-v3.webp",
 ]);
+
+export function projectThumbnailImage(src: string) {
+  if (src === "/assets/projects/duely/cover-logo.webp") {
+    return { src: "/assets/projects/duely/cover-logo-thumb.webp", width: 320, height: 180 };
+  }
+  if (/^\/assets\/projects\/duely\/\d{2}-[\w-]+\.webp$/.test(src)) {
+    return { src: src.replace(/\.webp$/, "-thumb.webp"), width: 320, height: 213 };
+  }
+  if (/^\/assets\/projects\/(?:csiteach\/(?:cover|screen-\d{2})|wave-and-wish\/photo-\d{2}|orbitiq\/(?:award-certificate|hackathon-group))\.webp$/.test(src)) {
+    return { src: src.replace(/\.webp$/, "-thumb.webp"), width: 320, height: 180 };
+  }
+  return projectCardImage(src);
+}
 
 export function projectCardImage(src: string) {
   // CMS images and future assets keep their original URL until variants exist.
