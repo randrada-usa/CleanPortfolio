@@ -43,6 +43,18 @@ const projectAsset = (name: string) => `/assets/projects/${name}`;
 const certAsset = (name: string) => `/assets/certs/${name}`;
 const experienceAsset = (name: string) => `/assets/experiences/${name}`;
 
+export const projectOrder = [
+  "wave-and-wish",
+  "duely",
+  "csiteach",
+  "icslink",
+  "orbitiq",
+  "augustinian-developer-society-website",
+  "praise-and-pray",
+  "iloilo-farmers-hub",
+  "e-serbisyo-rizal",
+];
+
 export const projects: Project[] = [
   {
     slug: "csiteach",

@@ -7,18 +7,7 @@ import { getProjects } from "~/lib/content.server";
 import { canonicalMeta } from "~/lib/seo";
 
 export async function loader() {
-  const projects = await getProjects();
-  const featuredSlugs = ["wave-and-wish", "iloilo-farmers-hub", "e-serbisyo-rizal"];
-  const featuredOrder = new Map(featuredSlugs.map((slug, index) => [slug, index]));
-
-  return projects
-    .map((project, index) => ({ project, index }))
-    .sort((a, b) => {
-      const aOrder = featuredOrder.get(a.project.slug) ?? Number.MAX_SAFE_INTEGER;
-      const bOrder = featuredOrder.get(b.project.slug) ?? Number.MAX_SAFE_INTEGER;
-      return aOrder - bOrder || a.index - b.index;
-    })
-    .map(({ project }) => project);
+  return getProjects();
 }
 
 export function headers() {

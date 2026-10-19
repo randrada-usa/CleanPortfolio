@@ -1,5 +1,5 @@
 import { createClient } from "@sanity/client";
-import { certifications as localCertifications, projects as localProjects } from "~/data/site";
+import { certifications as localCertifications, projects as localProjects, projectOrder } from "~/data/site";
 import type { Certification, Project } from "~/data/site";
 
 const projectId = process.env.SANITY_PROJECT_ID;
@@ -11,8 +11,13 @@ export const sanityClient = projectId
   : null;
 
 function publicProjects(projects: Project[]) {
-  if (process.env.NODE_ENV !== "production") return projects;
-  return projects.filter((project) => project.published !== false);
+  const visible = process.env.NODE_ENV === "production"
+    ? projects.filter((project) => project.published !== false)
+    : projects;
+  const order = new Map(projectOrder.map((slug, index) => [slug, index]));
+  return [...visible].sort((a, b) =>
+    (order.get(a.slug) ?? Number.MAX_SAFE_INTEGER) - (order.get(b.slug) ?? Number.MAX_SAFE_INTEGER),
+  );
 }
 
 export async function getProjects(): Promise<Project[]> {

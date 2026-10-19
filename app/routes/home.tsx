@@ -23,17 +23,7 @@ import { getCachedGitHubContributions, githubUsername, loadGitHubContributions, 
 
 export async function loader() {
   const [projects, certifications] = await Promise.all([getProjects(), getCertifications()]);
-  const selectedProjectSlugs = [
-    "orbitiq",
-    "wave-and-wish",
-    "iloilo-farmers-hub",
-    "e-serbisyo-rizal",
-    "duely",
-    "icslink",
-  ];
-  const selectedProjects = selectedProjectSlugs
-    .map((slug) => projects.find((project) => project.slug === slug))
-    .filter((project): project is Project => Boolean(project));
+  const selectedProjects = projects.slice(0, 6);
 
   return { projects: selectedProjects, certifications };
 }
