@@ -121,7 +121,7 @@ export const projects: Project[] = [
   },
   {
     slug: "augustinian-developer-society-website",
-    published: true,
+    published: false,
     title: "Augustinian Developer Society Website",
     eyebrow: "Organization Website",
     summary:
