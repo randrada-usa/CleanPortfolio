@@ -25,6 +25,7 @@ export const projectType = defineType({
     defineField({ name: "approach", type: "array", of: [{ type: "text" }] }),
     defineField({ name: "results", type: "array", of: [{ type: "string" }] }),
     defineField({ name: "gallery", type: "array", of: [{ type: "image", options: { hotspot: true } }] }),
+    defineField({ name: "youtubeVideoId", title: "YouTube video ID", type: "string", description: "The video ID from its YouTube link, such as HDtbj-mOPM8. Plays first in the project details; the card image stays unchanged.", validation: (rule) => rule.regex(/^[A-Za-z0-9_-]{11}$/) }),
     defineField({ name: "liveUrl", title: "Live URL", type: "url" }),
     defineField({ name: "githubUrl", title: "GitHub URL", type: "url" }),
   ],

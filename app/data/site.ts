@@ -16,6 +16,7 @@ export type Project = {
   liveUrl?: string;
   githubUrl?: string;
   gallery?: string[];
+  youtubeVideoId?: string;
   imageKind?: "logo";
   achievement?: string;
   availabilityNote?: string;
@@ -151,6 +152,7 @@ export const projects: Project[] = [
   {
     slug: "duely",
     title: "Duely",
+    youtubeVideoId: "HDtbj-mOPM8",
     eyebrow: "AI Student Task Organizer",
     summary:
       "I founded and led a three-person team building an Android-first student organizer that turns assignment photos into editable tasks through on-device OCR and optional AI assistance.",

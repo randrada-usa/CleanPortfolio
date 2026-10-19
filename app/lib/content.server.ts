@@ -25,7 +25,7 @@ export async function getProjects(): Promise<Project[]> {
   const content = await sanityClient.fetch<Project[]>(`*[_type == "project"] | order(order asc) {
     "slug": slug.current, published, title, eyebrow, summary, "image": image.asset->url,
     tags, role, team, timeline, projectType, challenge, approach, results,
-    liveUrl, githubUrl, imageKind, achievement, availabilityNote, buildStory, "gallery": gallery[].asset->url
+    liveUrl, githubUrl, imageKind, achievement, availabilityNote, buildStory, youtubeVideoId, "gallery": gallery[].asset->url
   }`);
   return publicProjects(content.length ? content : localProjects);
 }
