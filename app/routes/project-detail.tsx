@@ -33,7 +33,8 @@ export default function ProjectDetail() {
   const location = useLocation();
   const [privateNoticeOpen, setPrivateNoticeOpen] = useState(false);
   const [unavailableTarget, setUnavailableTarget] = useState<"source" | "live">("source");
-  const requestedBackTo = (location.state as { backTo?: string } | null)?.backTo;
+  const projectState = location.state as { backTo?: string; projectOrigin?: string } | null;
+  const requestedBackTo = projectState?.backTo;
   const backTo = requestedBackTo === "/projects" ? "/projects" : "/#projects";
   const isPrivateCommission = ["wave-and-wish", "praise-and-pray"].includes(project.slug);
   const hasPrivateRepository = isPrivateCommission || ["icslink", "duely", "csiteach"].includes(project.slug);
@@ -54,7 +55,7 @@ export default function ProjectDetail() {
 
   return (
     <main className="detail-page">
-      <Header inner backTo={backTo} />
+      <Header inner backTo={projectState?.projectOrigin?.startsWith("/") && !projectState.projectOrigin.startsWith("//") ? projectState.projectOrigin : backTo} backInHistory={Boolean(projectState?.projectOrigin)} />
       <Reveal className="detail-main" amount={0.02}>
         <section className="detail-hero">
           <div className="detail-tags tag-list"><span>{project.projectType}</span><span>{project.team}</span></div>

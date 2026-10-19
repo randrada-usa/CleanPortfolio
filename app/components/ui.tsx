@@ -3,7 +3,7 @@ import { ArrowUp, ArrowUpRight, Code2, Mail, Menu, X } from "lucide-react";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import type { Certification, Project } from "~/data/site";
 import { socialLinks, talkLink } from "~/data/site";
 import { projectCardImage, projectDetailImage } from "~/lib/images";
@@ -63,11 +63,12 @@ function sectionFromPath(pathname: string): NavSection | null {
   return null;
 }
 
-export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backTo?: string }) {
+export function Header({ inner = false, backTo = "/", backInHistory = false }: { inner?: boolean; backTo?: string; backInHistory?: boolean }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<NavSection | null>(() => sectionFromPath(location.pathname));
 
   useEffect(() => {
@@ -122,7 +123,11 @@ export function Header({ inner = false, backTo = "/" }: { inner?: boolean; backT
     <>
       <header className={`${inner ? "site-header inner-header" : "site-header"} ${scrolled ? "scrolled" : ""}`}>
         <div className="header-inner">
-          {inner ? <Link className="back-pill" to={backTo} prefetch="intent" viewTransition>← Back</Link> : <Availability compact />}
+          {inner ? <Link className="back-pill" to={backTo} prefetch="intent" viewTransition onClick={(event) => {
+            if (!backInHistory || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            event.preventDefault();
+            navigate(-1);
+          }}>← Back</Link> : <Availability compact />}
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navLinks.map(({ id, label, href }) => (
               <Link className={activeSection === id ? "is-active" : undefined} aria-current={activeSection === id ? "location" : undefined} key={id} to={href} viewTransition={location.pathname !== "/"}>
@@ -215,6 +220,7 @@ export function ProjectCard({
   revealDelay?: number;
 }) {
   const reducedMotion = useReducedMotion();
+  const location = useLocation();
   return (
     <motion.article
       className="project-card mobile-static-motion"
@@ -224,7 +230,7 @@ export function ProjectCard({
       whileHover={{ y: -6, transition: { duration: 0.25 } }}
     >
       <Link
-        to={`/projects/${project.slug}`} state={{ backTo }} prefetch="intent" viewTransition aria-label={`View ${project.title}`}
+        to={`/projects/${project.slug}`} state={{ backTo, projectOrigin: `${location.pathname}${location.search}${location.hash}` }} prefetch="intent" viewTransition aria-label={`View ${project.title}`}
         onPointerEnter={(event) => { if (event.pointerType !== "touch") preloadImage(projectDetailImage(project.image)); }}
         onFocus={() => preloadImage(projectDetailImage(project.image))}
         onPointerDown={() => preloadImage(projectDetailImage(project.image))}

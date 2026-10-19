@@ -21,6 +21,9 @@ import { usePreviewImages } from "~/lib/use-preview-images";
 import { absoluteUrl, canonicalMeta } from "~/lib/seo";
 import { getCachedGitHubContributions, githubUsername, loadGitHubContributions, type GitHubContribution } from "~/lib/github-contributions";
 
+// A document reload should restore once, not on later returns from project pages.
+let hasMountedHome = false;
+
 export async function loader() {
   const [projects, certifications] = await Promise.all([getProjects(), getCertifications()]);
   const selectedProjects = projects.slice(0, 6);
@@ -453,7 +456,8 @@ export default function Home() {
   useEffect(() => {
     const scrollKey = "portfolio-home-scroll";
     const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
-    const shouldRestorePosition = navigation?.type === "reload";
+    const shouldRestorePosition = !hasMountedHome && navigation?.type === "reload";
+    hasMountedHome = true;
     let frame = 0;
 
     document.documentElement.classList.add("home-scrollbar");
