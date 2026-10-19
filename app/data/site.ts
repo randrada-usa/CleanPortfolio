@@ -156,7 +156,7 @@ export const projects: Project[] = [
     eyebrow: "AI Student Task Organizer",
     summary:
       "I founded and led a three-person team building an Android-first student organizer that turns assignment photos into editable tasks through on-device OCR and optional AI assistance.",
-    image: projectAsset("duely/cover-logo.webp"),
+    image: projectAsset("duely/cover-logo-v2.webp"),
     imageKind: "logo",
     gallery: [
       projectAsset("duely/01-duely-overview.webp"),

@@ -6,7 +6,7 @@ const localProjectImages = new Set([
   "/assets/projects/csiteach/screen-01.webp",
   "/assets/projects/ads-website-2026.webp",
   "/assets/projects/duely.webp",
-  "/assets/projects/duely/cover-logo.webp",
+  "/assets/projects/duely/cover-logo-v2.webp",
   "/assets/projects/icslink.webp",
   "/assets/projects/wave-and-wish.webp",
   "/assets/projects/praise-and-pray.webp",
@@ -15,8 +15,8 @@ const localProjectImages = new Set([
 ]);
 
 export function projectThumbnailImage(src: string) {
-  if (src === "/assets/projects/duely/cover-logo.webp") {
-    return { src: "/assets/projects/duely/cover-logo-thumb.webp", width: 320, height: 180 };
+  if (src === "/assets/projects/duely/cover-logo-v2.webp") {
+    return { src: "/assets/projects/duely/cover-logo-v2-thumb.webp", width: 320, height: 180 };
   }
   if (/^\/assets\/projects\/duely\/\d{2}-[\w-]+\.webp$/.test(src)) {
     return { src: src.replace(/\.webp$/, "-thumb.webp"), width: 320, height: 213 };
