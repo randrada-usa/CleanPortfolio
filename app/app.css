@@ -275,6 +275,10 @@ img { display: block; max-width: 100%; }
 .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
 .project-card { overflow: hidden; border-radius: 5px; background: #fafafa; border: 1px solid #e4e4e0; box-shadow: 0 16px 45px rgba(0,0,0,.07); }
 .card-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #ecece8; }
+.card-media::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.14); opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+.card-label, .card-arrow { z-index: 1; }
+.project-card:focus-within .card-media::after { opacity: 1; }
+.project-card:focus-within .card-arrow { opacity: 1; transform: translateY(0); }
 .card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s, filter .4s; filter: saturate(.82); }
 .card-label { position: absolute; top: .75rem; left: .75rem; padding: .42rem .65rem; border-radius: 999px; background: white; font-size: .6rem; font-weight: 700; text-transform: uppercase; }
 .card-arrow { position: absolute; right: 1rem; bottom: 1rem; display: grid; place-items: center; width: 44px; height: 44px; opacity: 0; border-radius: 50%; background: white; transform: translateY(8px); transition: opacity .25s, transform .25s; }
@@ -356,6 +360,7 @@ img { display: block; max-width: 100%; }
   .back-to-top:hover { transform: scale(1.05); box-shadow: 0 12px 24px rgba(0,0,0,.18); }
   .project-card:hover img { transform: scale(1.025); filter: saturate(1); }
   .project-card:hover .card-arrow { opacity: 1; transform: translateY(0); }
+  .project-card:hover .card-media::after { opacity: 1; }
   .cert-card:hover img { transform: scale(1.02); }
   .experience-row:hover { background: rgba(255,255,255,.04); }
 }
@@ -583,6 +588,7 @@ img { display: block; max-width: 100%; }
     box-shadow: 0 4px 12px rgba(0,0,0,.09);
   }
   .project-card:active .card-arrow { opacity: 1; transform: translateY(0); }
+  .project-card:active .card-media::after { opacity: 1; }
   .cert-row-button { transition: background-color .09s ease, transform .09s ease; }
   .cert-row-button:active { background: rgba(0,0,0,.055); transform: scale(.992); }
   .mobile-navigation a { transition: color .09s ease, transform .09s ease; }
