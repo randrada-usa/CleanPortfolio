@@ -21,7 +21,7 @@ export function projectThumbnailImage(src: string) {
   if (/^\/assets\/projects\/duely\/\d{2}-[\w-]+\.webp$/.test(src)) {
     return { src: src.replace(/\.webp$/, "-thumb.webp"), width: 320, height: 213 };
   }
-  if (/^\/assets\/projects\/(?:csiteach\/(?:cover|screen-\d{2})|wave-and-wish\/photo-\d{2}|orbitiq\/(?:award-certificate|hackathon-group))\.webp$/.test(src)) {
+  if (/^\/assets\/projects\/(?:csiteach\/(?:cover|screen-\d{2})|wave-and-wish\/photo-\d{2}|orbitiq\/(?:award-certificate|hackathon-(?:group|presentation|awards|team)))\.webp$/.test(src)) {
     return { src: src.replace(/\.webp$/, "-thumb.webp"), width: 320, height: 180 };
   }
   return projectCardImage(src);

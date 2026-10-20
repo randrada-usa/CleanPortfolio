@@ -91,7 +91,13 @@ export const projects: Project[] = [
     summary:
       "I led the backend and AI workflow for an invoice review system that detects exceptions, gathers evidence, and supports finance analysts with explainable recommendations.",
     image: projectAsset("orbitiq-logo.webp"),
-    gallery: [projectAsset("orbitiq/award-certificate.webp"), projectAsset("orbitiq/hackathon-group.webp")],
+    gallery: [
+      projectAsset("orbitiq/award-certificate.webp"),
+      projectAsset("orbitiq/hackathon-presentation.webp"),
+      projectAsset("orbitiq/hackathon-team.webp"),
+      projectAsset("orbitiq/hackathon-awards.webp"),
+      projectAsset("orbitiq/hackathon-group.webp"),
+    ],
     imageKind: "logo",
     achievement: "2nd Runner-Up · RELX AI Summit Academe Hackathon 2026",
     availabilityNote: "I can't share a public demo due to restrictions on the hackathon-provided dataset.",
