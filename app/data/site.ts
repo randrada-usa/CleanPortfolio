@@ -67,8 +67,6 @@ export const projects: Project[] = [
     image: projectAsset("pusa-run/01-main-menu.webp"),
     gallery: [
       projectAsset("pusa-run/02-settings.webp"),
-      projectAsset("pusa-run/03-tutorial-move-left.webp"),
-      projectAsset("pusa-run/04-tutorial-jump.webp"),
     ],
     tags: ["Python", "Pygame", "OpenCV", "MediaPipe", "NumPy"],
     role: "Game Developer & Computer Vision Engineer",
