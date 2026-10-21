@@ -1,6 +1,6 @@
 import type { MetaFunction } from "react-router";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Search } from "lucide-react";
+import { Filter, Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useLoaderData, useLocation, useSearchParams } from "react-router";
 import { CertificationCard, Footer, Header, Reveal } from "~/components/ui";
@@ -46,6 +46,7 @@ export default function CertificationsArchive() {
     certificationCategories.includes(initial as CertificationCategory) ? initial as CertificationCategory : "All",
   );
   const [query, setQuery] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -62,6 +63,7 @@ export default function CertificationsArchive() {
 
   const chooseCategory = (next: "All" | CertificationCategory) => {
     setCategory(next);
+    setFiltersOpen(false);
     if (next === "All") setParams({}); else setParams({ category: next });
   };
 
@@ -77,10 +79,16 @@ export default function CertificationsArchive() {
             <Search aria-hidden="true" size={18} />
             <input id="cert-search" className="search-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by title or issuer…" />
           </div>
-          <button className={`filter-button ${category === "All" ? "active" : ""}`} onClick={() => chooseCategory("All")}>All</button>
+          <button className={`cert-filter-toggle${filtersOpen ? " is-open" : ""}${category !== "All" ? " has-filter" : ""}`} type="button" aria-label={filtersOpen ? "Close certification filters" : "Open certification filters"} aria-expanded={filtersOpen} aria-controls="certification-filters" onClick={() => setFiltersOpen((open) => !open)}>
+            {filtersOpen ? <X size={20} aria-hidden="true" /> : <Filter size={20} aria-hidden="true" />}
+            {category !== "All" && <span className="sr-only">Current category: {category}</span>}
+          </button>
+          <div id="certification-filters" className={`cert-filter-options${filtersOpen ? " is-open" : ""}`} role="group" aria-label="Certification categories">
+          <button className={`filter-button ${category === "All" ? "active" : ""}`} aria-pressed={category === "All"} onClick={() => chooseCategory("All")}>All</button>
           {certificationCategories.map((item) => (
-            <button className={`filter-button ${category === item ? "active" : ""}`} key={item} onClick={() => chooseCategory(item)}>{item}</button>
+            <button className={`filter-button ${category === item ? "active" : ""}`} aria-pressed={category === item} key={item} onClick={() => chooseCategory(item)}>{item}</button>
           ))}
+          </div>
         </div>
         <div className="archive-grid">
           <AnimatePresence mode="popLayout">

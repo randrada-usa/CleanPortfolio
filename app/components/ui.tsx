@@ -141,11 +141,9 @@ export function Header({ inner = false, backTo = "/", backInHistory = false }: {
             </a>
           )}
           {inner && <Availability compact />}
-          {!inner && (
-            <button className="menu-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open menu">
-              <Menu size={20} />
-            </button>
-          )}
+          <button className="menu-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} aria-controls={open ? "mobile-navigation" : undefined}>
+            <Menu size={20} />
+          </button>
         </div>
       </header>
 
@@ -161,7 +159,7 @@ export function Header({ inner = false, backTo = "/", backInHistory = false }: {
                 transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
               >
                 <button type="button" onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
-                <nav className="mobile-navigation" aria-label="Mobile navigation">
+                <nav id="mobile-navigation" className="mobile-navigation" aria-label="Mobile navigation">
                   {navLinks.map(({ id, label, href }) => (
                     <Link
                       className={activeSection === id ? "is-active" : undefined}
