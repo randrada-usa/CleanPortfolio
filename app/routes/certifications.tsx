@@ -1,7 +1,7 @@
-import type { MetaFunction } from "react-router";
+import type { MetaFunction, ShouldRevalidateFunctionArgs } from "react-router";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Filter, Search, X } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData, useLocation, useSearchParams } from "react-router";
 import { CertificationCard, Footer, Header, Reveal } from "~/components/ui";
 import { certificationCategories, type CertificationCategory } from "~/data/site";
@@ -26,6 +26,16 @@ function certificationPriority(title: string, issuer: string, category: "All" | 
 
 export async function loader() { return getCertifications(); }
 
+export function shouldRevalidate({ currentUrl, nextUrl, defaultShouldRevalidate }: ShouldRevalidateFunctionArgs) {
+  if (currentUrl.pathname !== nextUrl.pathname) return defaultShouldRevalidate;
+
+  const currentParams = new URLSearchParams(currentUrl.search);
+  const nextParams = new URLSearchParams(nextUrl.search);
+  currentParams.delete("category");
+  nextParams.delete("category");
+  return currentParams.toString() === nextParams.toString() ? false : defaultShouldRevalidate;
+}
+
 export function headers() {
   return { "Cache-Control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400" };
 }
@@ -47,6 +57,43 @@ export default function CertificationsArchive() {
   );
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const filterToggleRef = useRef<HTMLButtonElement>(null);
+  const filterOptionsRef = useRef<HTMLDivElement>(null);
+  const animateFilterResults = !prefersReducedMotion && !isMobileViewport;
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 900px)");
+    const updateViewport = () => setIsMobileViewport(media.matches);
+    updateViewport();
+    media.addEventListener("change", updateViewport);
+    return () => media.removeEventListener("change", updateViewport);
+  }, []);
+
+  useEffect(() => {
+    if (!filtersOpen) return;
+
+    const closeOnOutsideClick = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (filterToggleRef.current?.contains(target) || filterOptionsRef.current?.contains(target)) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      setFiltersOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setFiltersOpen(false);
+      filterToggleRef.current?.focus();
+    };
+
+    document.addEventListener("click", closeOnOutsideClick, true);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("click", closeOnOutsideClick, true);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [filtersOpen]);
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -64,11 +111,12 @@ export default function CertificationsArchive() {
   const chooseCategory = (next: "All" | CertificationCategory) => {
     setCategory(next);
     setFiltersOpen(false);
-    if (next === "All") setParams({}); else setParams({ category: next });
+    if (next === "All") setParams({}, { replace: true, preventScrollReset: true });
+    else setParams({ category: next }, { replace: true, preventScrollReset: true });
   };
 
   return (
-    <main className="archive-page">
+    <main className={`archive-page${filtersOpen ? " cert-filters-open" : ""}`}>
       <Header inner backTo="/#certifications" />
       <Reveal className="archive-main" amount={0.02}>
         <h1 className="archive-title">/CERTIFICATIONS</h1>
@@ -79,11 +127,11 @@ export default function CertificationsArchive() {
             <Search aria-hidden="true" size={18} />
             <input id="cert-search" className="search-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by title or issuer…" />
           </div>
-          <button className={`cert-filter-toggle${filtersOpen ? " is-open" : ""}${category !== "All" ? " has-filter" : ""}`} type="button" aria-label={filtersOpen ? "Close certification filters" : "Open certification filters"} aria-expanded={filtersOpen} aria-controls="certification-filters" onClick={() => setFiltersOpen((open) => !open)}>
+          <button ref={filterToggleRef} className={`cert-filter-toggle${filtersOpen ? " is-open" : ""}${category !== "All" ? " has-filter" : ""}`} type="button" aria-label={filtersOpen ? "Close certification filters" : "Open certification filters"} aria-expanded={filtersOpen} aria-controls="certification-filters" onClick={() => setFiltersOpen((open) => !open)}>
             {filtersOpen ? <X size={20} aria-hidden="true" /> : <Filter size={20} aria-hidden="true" />}
             {category !== "All" && <span className="sr-only">Current category: {category}</span>}
           </button>
-          <div id="certification-filters" className={`cert-filter-options${filtersOpen ? " is-open" : ""}`} role="group" aria-label="Certification categories">
+          <div ref={filterOptionsRef} id="certification-filters" className={`cert-filter-options${filtersOpen ? " is-open" : ""}`} role="group" aria-label="Certification categories">
           <button className={`filter-button ${category === "All" ? "active" : ""}`} aria-pressed={category === "All"} onClick={() => chooseCategory("All")}>All</button>
           {certificationCategories.map((item) => (
             <button className={`filter-button ${category === item ? "active" : ""}`} aria-pressed={category === item} key={item} onClick={() => chooseCategory(item)}>{item}</button>
@@ -91,16 +139,16 @@ export default function CertificationsArchive() {
           </div>
         </div>
         <div className="archive-grid">
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode={animateFilterResults ? "popLayout" : "sync"} initial={animateFilterResults}>
             {filtered.length ? filtered.map((item, index) => (
               <motion.div
                 className="filter-card-shell mobile-static-motion"
                 key={item.slug}
-                layout={!prefersReducedMotion}
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 14, scale: .985 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -8, scale: .985 }}
-                transition={prefersReducedMotion ? { duration: 0 } : { duration: .3, ease: [.22, 1, .36, 1], layout: { duration: .36, ease: [.22, 1, .36, 1] } }}
+                layout={animateFilterResults}
+                initial={animateFilterResults ? { opacity: 0, y: 14, scale: .985 } : false}
+                animate={animateFilterResults ? { opacity: 1, y: 0, scale: 1 } : undefined}
+                exit={animateFilterResults ? { opacity: 0, y: -8, scale: .985 } : undefined}
+                transition={animateFilterResults ? { duration: .3, ease: [.22, 1, .36, 1], layout: { duration: .36, ease: [.22, 1, .36, 1] } } : { duration: 0 }}
               >
                 <CertificationCard certification={item} backTo={`${location.pathname}${location.search}`} revealDelay={(index % 6) * 0.08} />
               </motion.div>
@@ -108,9 +156,9 @@ export default function CertificationsArchive() {
               <motion.p
                 className="empty-state mobile-static-motion"
                 key="empty-certifications"
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
+                initial={animateFilterResults ? { opacity: 0, y: 8 } : false}
+                animate={animateFilterResults ? { opacity: 1, y: 0 } : undefined}
+                exit={animateFilterResults ? { opacity: 0 } : undefined}
               >
                 No certifications match that search.
               </motion.p>
