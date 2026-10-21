@@ -2,6 +2,7 @@ export type ResponsiveImage = { src: string; srcSet?: string; sizes?: string; wi
 
 // Originals remain available; each view requests only the resolution it needs.
 const localProjectImages = new Set([
+  ...["01-main-menu", "02-settings", "03-tutorial-move-left", "04-tutorial-jump"].map((name) => `/assets/projects/pusa-run/${name}.webp`),
   "/assets/projects/csiteach/cover.webp",
   "/assets/projects/csiteach/screen-01.webp",
   "/assets/projects/ads-website-2026.webp",
@@ -15,6 +16,9 @@ const localProjectImages = new Set([
 ]);
 
 export function projectThumbnailImage(src: string) {
+  if (src.startsWith("/assets/projects/pusa-run/") && localProjectImages.has(src)) {
+    return { src: src.replace(/\.webp$/, "-thumb.webp"), width: 320, height: 180 };
+  }
   if (src === "/assets/projects/duely/cover-logo-v2.webp") {
     return { src: "/assets/projects/duely/cover-logo-v2-thumb.webp", width: 320, height: 180 };
   }

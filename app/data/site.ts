@@ -52,11 +52,47 @@ export const projectOrder = [
   "orbitiq",
   "augustinian-developer-society-website",
   "praise-and-pray",
+  "pusa-run",
   "iloilo-farmers-hub",
   "e-serbisyo-rizal",
 ];
 
 export const projects: Project[] = [
+  {
+    slug: "pusa-run",
+    title: "pUSA Run",
+    eyebrow: "Body-Controlled Endless Runner",
+    summary:
+      "I handled game programming and computer vision for our four-person team's campus-inspired endless runner, guiding Pipin through Rada Hall with body movement or keyboard controls.",
+    image: projectAsset("pusa-run/01-main-menu.webp"),
+    gallery: [
+      projectAsset("pusa-run/02-settings.webp"),
+      projectAsset("pusa-run/03-tutorial-move-left.webp"),
+      projectAsset("pusa-run/04-tutorial-jump.webp"),
+    ],
+    tags: ["Python", "Pygame", "OpenCV", "MediaPipe", "NumPy"],
+    role: "Game Developer & Computer Vision Engineer",
+    team: "4-person Academic Team",
+    timeline: "2026 · Semester project in development",
+    projectType: "Academic Game Development Project",
+    availabilityNote: "pUSA Run is a Windows desktop game. A browser demo isn't available.",
+    buildStory:
+      "I worked as the developer in a four-person academic team, alongside teammates responsible for project management, design, and QA and sound engineering. Our game takes inspiration from the University of San Agustin campus, following Pipin, a campus cat, as he escapes a rat through Rada Hall. I handled all programming except sound implementation. Our design document plans development across one academic semester.",
+    challenge:
+      "Our team wanted to turn a familiar campus setting and Pipin's chase into a playful, motion-controlled runner. My challenge was to translate the team's concept and visual assets into responsive three-lane gameplay, with keyboard controls available when a webcam or suitable tracking setup isn't available.",
+    approach: [
+      "I handled all programming except sound implementation, including the Pygame interface, game logic, and computer vision controls.",
+      "I used OpenCV and MediaPipe to track upper-body landmarks, calibrate the player's position, and translate movement into lane changes and jumps.",
+      "I implemented keyboard controls, guided tutorials, camera settings, pause and restart flows, and local preferences.",
+      "I kept camera-frame processing in memory without saving webcam footage.",
+    ],
+    results: [
+      "Our team created a campus-inspired runner set in Rada Hall at the University of San Agustin",
+      "I programmed the game systems and computer vision controls, while my teammates contributed project management, design, QA, and sound implementation",
+      "I provided body-controlled play and a keyboard-only option",
+      "I added calibration, tutorial instructions, and configurable camera settings",
+    ],
+  },
   {
     slug: "csiteach",
     title: "CSITeach",
