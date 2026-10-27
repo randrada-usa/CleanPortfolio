@@ -19,7 +19,11 @@ function certificationPriority(title: string, issuer: string, category: "All" | 
   if (title === "AI Fundamentals") return 3;
   if (title === "Python Developer Associate") return 4;
   if (issuer === "Anthropic" || title.startsWith("Claude")) return 5;
-  if (issuer.includes("AWS") || title.startsWith("AWS ")) return 6;
+  if (
+    title !== "AI on the Cloud" &&
+    !title.startsWith("AWS Community Day") &&
+    (issuer.includes("AWS") || title.startsWith("AWS "))
+  ) return 6;
   if (issuer.includes("Cisco")) return 7;
   return 8;
 }
