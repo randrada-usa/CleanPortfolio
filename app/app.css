@@ -188,6 +188,12 @@ img { display: block; max-width: 100%; }
     background: #181818;
     background-clip: padding-box;
   }
+  /* The home scrollbar's space is reserved from the first paint (via :has, before React adds the
+     class), so the page never shifts sideways when it appears. While the loader is up, the bar
+     keeps its space but stays invisible. */
+  html:has(#home.hero):not([data-portfolio-ready]) { scrollbar-color: transparent transparent; }
+  html:has(#home.hero):not([data-portfolio-ready])::-webkit-scrollbar-track,
+  html:has(#home.hero):not([data-portfolio-ready])::-webkit-scrollbar-thumb { background: transparent; }
   .site-header:not(.inner-header) .desktop-nav {
     transition: gap .5s cubic-bezier(.22,1,.36,1), font-size .5s cubic-bezier(.22,1,.36,1);
   }
