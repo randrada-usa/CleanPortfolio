@@ -255,10 +255,8 @@ export const projects: Project[] = [
       "I coordinated the three-person team, reviewed contributions before merge, and established continuous integration with 75 automated tests plus 44 Playwright desktop and mobile browser scenarios.",
     ],
     results: [
-      "We supported 22 attendees in our first live workshop",
-      "Our platform processed 44 check-in and checkout scans",
-      "We had 4 additional workshops scheduled",
-      "We projected 100+ attendee visits across the workshop series",
+      "120 students used our platform across the workshop series",
+      "Our platform processed about 240 check-in and checkout scans",
       "I designed the platform for 150 potential organization members",
       "Our checks included 75 automated tests and 44 Playwright browser scenarios",
     ],
@@ -471,7 +469,7 @@ export const experience: Experience[] = [
     highlights: [
       "I led a three-person team through a two-week sprint to build ICSLink, our event platform for discovery, registration, QR ticketing, attendance, and reporting.",
       "I set up code review before merge and continuous integration with 75 automated tests and 44 Playwright browser scenarios.",
-      "ICSLink supported 22 attendees and 44 check-in and checkout scans at its first live workshop, and was designed for 150 potential members.",
+      "ICSLink was used by 120 students across our workshops, processing about 240 check-in and checkout scans, and was designed for 150 potential members.",
     ],
     tools: ["React", "TypeScript", "Supabase", "Cloudflare Pages", "Playwright"],
     relatedProjects: ["icslink"],
