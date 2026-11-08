@@ -5,11 +5,13 @@ export type GitHubContribution = {
 };
 
 export const githubUsername = "randrada-usa";
-const githubCacheKey = `portfolio:github-contributions:v1:${githubUsername}`;
+export const githubContributionsEndpoint = "/api/github-contributions";
+export const githubRequestTimeoutMs = 8000;
+const githubCacheKey = `portfolio:github-contributions:v2:${githubUsername}`;
 let githubContributionsCache: GitHubContribution[] | null = null;
 let githubContributionsRequest: Promise<GitHubContribution[]> | null = null;
 
-function isGitHubContributions(value: unknown): value is GitHubContribution[] {
+export function isGitHubContributions(value: unknown): value is GitHubContribution[] {
   return Array.isArray(value) && value.every((day) =>
     day && typeof day.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(day.date)
     && Number.isInteger(day.count) && day.count >= 0
@@ -29,7 +31,9 @@ export function loadGitHubContributions(): Promise<GitHubContribution[]> {
     // Memory caching still works when browser storage is unavailable.
   }
   if (!githubContributionsRequest) {
-    githubContributionsRequest = fetch(`https://github-contributions-api.jogruber.de/v4/${githubUsername}?y=last`)
+    // Our own route fetches from GitHub on the server and is cached by the CDN.
+    // The timeout stops a slow upstream from leaving the grid loading forever.
+    githubContributionsRequest = fetch(githubContributionsEndpoint, { signal: AbortSignal.timeout(githubRequestTimeoutMs) })
       .then(async (response) => {
         if (!response.ok) throw new Error("GitHub activity request failed");
         const data = await response.json();

@@ -80,6 +80,7 @@ export const meta: MetaFunction = () => [
 function GitHubActivity() {
   const [contributions, setContributions] = useState<GitHubContribution[] | null>(getCachedGitHubContributions);
   const [failed, setFailed] = useState(false);
+  const [snapshotDate, setSnapshotDate] = useState<string | null>(null);
   const [hovered, setHovered] = useState<{ day: GitHubContribution; x: number; y: number } | null>(null);
   const activityRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -88,6 +89,12 @@ function GitHubActivity() {
     let active = true;
     loadGitHubContributions()
       .then((data) => { if (active) setContributions(data); })
+      .catch(() => import("~/data/github-contributions-snapshot").then((snapshot) => {
+        // Live data is unavailable: show the last known history instead of an empty section.
+        if (!active) return;
+        setSnapshotDate(snapshot.snapshotCapturedOn);
+        setContributions(snapshot.githubContributionsSnapshot);
+      }))
       .catch(() => { if (active) setFailed(true); });
 
     // Let the shared request finish and populate the cache across page changes.
@@ -139,7 +146,7 @@ function GitHubActivity() {
       <div
         className="github-activity-grid"
         role="img"
-        aria-label={contributions ? `${total.toLocaleString()} public GitHub contributions in the last year` : "Loading GitHub activity"}
+        aria-label={contributions ? `${total.toLocaleString()} public GitHub contributions${snapshotDate ? ` as of ${snapshotDate}` : " in the last year"}` : "Loading GitHub activity"}
         ref={gridRef}
       >
         <div className="github-activity-dots">
@@ -161,7 +168,11 @@ function GitHubActivity() {
         </div>
       </div>
       <div className="github-activity-bottom">
-        <strong>{contributions ? `${total.toLocaleString()} contributions in the last year` : "Loading contributions"}</strong>
+        <strong>{!contributions
+          ? "Loading contributions"
+          : snapshotDate
+            ? `${total.toLocaleString()} contributions · as of ${new Date(`${snapshotDate}T00:00:00`).toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" })}`
+            : `${total.toLocaleString()} contributions in the last year`}</strong>
         <span className="github-activity-legend" aria-hidden="true">
           Less
           {[0, 1, 2, 3, 4].map((level) => (

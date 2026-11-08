@@ -10,4 +10,5 @@ export default [
   route("robots.txt", "routes/robots.ts"),
   route("sitemap.xml", "routes/sitemap.ts"),
   route("*", "routes/not-found.tsx"),
+  route("api/github-contributions", "routes/api.github-contributions.ts"),
 ] satisfies RouteConfig;
