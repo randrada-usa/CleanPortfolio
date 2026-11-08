@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 
 const days = [{ date: "2026-10-19", count: 3, level: 2 }];
-const cacheKey = "portfolio:github-contributions:v1:randrada-usa";
+const cacheKey = "portfolio:github-contributions:v2:randrada-usa";
 let moduleId = 0;
 const freshModule = () => import(`../app/lib/github-contributions.ts?test=${++moduleId}`);
 const response = (contributions = days) => ({ ok: true, json: async () => ({ contributions }) });
@@ -36,7 +36,8 @@ test("shares an in-flight request and reuses the result on later visits", async 
   assert.deepEqual(await cache.loadGitHubContributions(), days);
   assert.deepEqual(cache.getCachedGitHubContributions(), days);
   assert.equal(fetch.mock.callCount(), 1);
-  assert.equal(fetch.mock.calls[0].arguments[0], "https://github-contributions-api.jogruber.de/v4/randrada-usa?y=last");
+  assert.equal(fetch.mock.calls[0].arguments[0], "/api/github-contributions");
+  assert.ok(fetch.mock.calls[0].arguments[1]?.signal instanceof AbortSignal, "request has a timeout signal");
   assert.deepEqual(JSON.parse(values.get(cacheKey)), days);
 });
 
@@ -89,4 +90,15 @@ test("caches a valid empty contribution list", async (t) => {
   assert.deepEqual(await cache.loadGitHubContributions(), []);
   assert.deepEqual(await cache.loadGitHubContributions(), []);
   assert.equal(fetch.mock.callCount(), 1);
+});
+
+test("a request that hangs past the timeout rejects so the snapshot can show", async (t) => {
+  setup(t, (_url, { signal }) => new Promise((_resolve, reject) => {
+    if (signal.aborted) reject(signal.reason);
+    else signal.addEventListener("abort", () => reject(signal.reason));
+  }));
+  t.mock.method(AbortSignal, "timeout", () => AbortSignal.abort(new DOMException("timed out", "TimeoutError")));
+  const cache = await freshModule();
+  await assert.rejects(cache.loadGitHubContributions(), { name: "TimeoutError" });
+  assert.equal(cache.getCachedGitHubContributions(), null);
 });

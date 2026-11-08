@@ -71,3 +71,12 @@ preloaded at low priority when their section comes within 400 px of the viewport
 Project cards preload the responsive detail image on pointer hover, keyboard focus,
 or pointer down, alongside React Router's existing route prefetching. Speculative
 image preloads are skipped on data-saver and 2G connections; visible images still load.
+
+## GitHub contributions
+
+The About section's contribution grid loads from `/api/github-contributions`, which the CDN caches for six hours.
+
+1. Create a GitHub fine-grained personal access token (public repositories, read-only; no extra permissions).
+2. Add it to the Vercel project as the `GITHUB_TOKEN` environment variable, then redeploy.
+
+Without a token, the route uses the free community API. If every source fails, the grid shows the bundled snapshot in `app/data/github-contributions-snapshot.ts`, labelled with its date.
