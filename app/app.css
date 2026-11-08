@@ -348,7 +348,7 @@ img { display: block; max-width: 100%; }
 .experience-row-link { position: absolute; inset: 0; z-index: 1; }
 .experience-row-link:focus-visible { outline: 2px solid white; outline-offset: -2px; }
 .experience-row { cursor: pointer; }
-.experience-more { display: inline-flex; align-items: center; gap: .35rem; margin-top: 2.4rem; color: #ededeb; font-size: .95rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: .2rem; }
+.experience-more { display: flex; width: fit-content; align-items: center; gap: .35rem; margin: 2.4rem .7rem 0 auto; color: #ededeb; font-size: .95rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: .2rem; }
 .experience-more svg { transition: transform .2s ease; }
 .experience-more:hover svg { transform: translate(.15rem, -.15rem); }
 
@@ -741,6 +741,7 @@ img { display: block; max-width: 100%; }
   .experience-tagline { margin-bottom: 2rem; font-size: .7rem; }
   .experience-row { grid-template-columns: 1fr; gap: .8rem; padding: 1.2rem .35rem; }
   .experience-row time { font-size: .72rem; }
+  .experience-more { margin-right: .35rem; font-size: .82rem; }
   .contact-section { min-height: 100svh; padding: 5rem 1rem 1.5rem; }
   .contact-section h2 { font-size: clamp(1.25rem, 6vw, 1.5rem); }
   .footer-links { position: relative; grid-template-columns: 1fr 1fr; gap: .65rem; margin-top: auto; }
