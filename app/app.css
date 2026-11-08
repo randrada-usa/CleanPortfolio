@@ -495,10 +495,9 @@ img { display: block; max-width: 100%; }
 .cv-document-heading { display: flex; justify-content: space-between; align-items: end; width: min(950px, 100%); margin: 0 auto 2rem; }
 .cv-document-heading .kicker { margin-bottom: .55rem; }
 .cv-document-heading h2 { margin: 0; font-size: clamp(1.7rem, 3vw, 3rem); letter-spacing: -.045em; }
-.cv-pdf-preview { display: block; width: min(950px, 100%); height: clamp(900px, 118vw, 1230px); margin: auto; border: 0; background: white; box-shadow: 0 20px 55px rgba(0,0,0,.1); }
-.cv-pdf-preview img { width: 100%; height: 100%; object-fit: contain; }
-.cv-pdf-preview img, .cv-mobile-preview img { pointer-events: none; user-select: none; -webkit-user-drag: none; }
-.cv-mobile-preview { display: none; }
+.cv-pages { display: grid; gap: clamp(1.25rem, 3vw, 2.5rem); width: min(950px, 100%); margin: auto; }
+.cv-page-sheet { aspect-ratio: 1530 / 1980; overflow: hidden; background: white; box-shadow: 0 20px 55px rgba(0,0,0,.1); }
+.cv-page-sheet img { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; user-select: none; -webkit-user-drag: none; }
 .private-dialog-overlay { position: fixed; z-index: 1000; inset: 0; background: rgba(15,15,15,.48); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .private-dialog-content { position: fixed; z-index: 1001; top: 50%; left: 50%; width: min(500px, calc(100% - 2rem)); padding: 2.2rem; border: 1px solid rgba(255,255,255,.1); border-radius: 26px; color: white; background: #242424; box-shadow: 0 28px 80px rgba(0,0,0,.32); transform: translate(-50%, -50%); }
 .private-dialog-overlay[data-state="open"] { animation: dialog-overlay-in .25s ease-out; }
@@ -760,9 +759,8 @@ img { display: block; max-width: 100%; }
   .cv-meta { grid-template-columns: repeat(3, 1fr); }
   .cv-document { padding: .8rem; }
   .cv-document-heading { align-items: center; margin-bottom: 1rem; padding: .5rem; }
-  .cv-pdf-preview { display: none; }
-  .cv-mobile-preview { display: block; overflow: hidden; border: 1px solid #d4d4d0; background: white; box-shadow: 0 12px 30px rgba(0,0,0,.08); }
-  .cv-mobile-preview img { width: 100%; }
+  .cv-pages { gap: .8rem; }
+  .cv-page-sheet { border: 1px solid #d4d4d0; box-shadow: 0 12px 30px rgba(0,0,0,.08); }
   .detail-image { min-height: 250px; }
   .case-study { padding: 4rem 0; }
   .result-grid { grid-template-columns: 1fr; }

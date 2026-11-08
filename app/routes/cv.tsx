@@ -3,8 +3,12 @@ import { Download, ExternalLink, FileText } from "lucide-react";
 import { Footer, Header, Reveal } from "~/components/ui";
 import { canonicalMeta } from "~/lib/seo";
 
-const cvPdf = "/assets/cv/Rey-Jane-Andrada-CV-2026-08.pdf";
-const cvPreview = "/assets/cv/rey-jane-andrada-cv-preview-2026-08-v3.webp";
+const cvPdf = "/assets/cv/Rey-Jane-Andrada-CV-2026-11.pdf";
+// One preview image per PDF page. Use new file names for each update so cached copies never show old pages.
+const cvPages = [
+  "/assets/cv/rey-jane-andrada-cv-2026-11-page-1.webp",
+  "/assets/cv/rey-jane-andrada-cv-2026-11-page-2.webp",
+];
 
 export function headers() {
   return { "Cache-Control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400" };
@@ -22,7 +26,7 @@ export default function CvPage() {
       <Header inner backTo="/#about" />
       <Reveal className="detail-main cv-main" amount={0.02}>
         <section className="cv-hero">
-          <div className="detail-tags tag-list"><span>Curriculum Vitae</span><span>PDF · 1 page</span></div>
+          <div className="detail-tags tag-list"><span>Curriculum Vitae</span><span>PDF · {cvPages.length} pages</span></div>
           <div className="cv-title">
             <p className="kicker">/CV</p>
             <h1>Experience, projects, and technical foundations.</h1>
@@ -34,8 +38,8 @@ export default function CvPage() {
           </div>
           <aside className="detail-meta cv-meta">
             <div className="meta-item"><span>Format</span><strong>PDF</strong></div>
-            <div className="meta-item"><span>Length</span><strong>One page</strong></div>
-            <div className="meta-item"><span>Updated</span><strong>August 2026</strong></div>
+            <div className="meta-item"><span>Length</span><strong>{cvPages.length} pages</strong></div>
+            <div className="meta-item"><span>Updated</span><strong>November 2026</strong></div>
           </aside>
         </section>
 
@@ -47,11 +51,20 @@ export default function CvPage() {
             </div>
             <FileText aria-hidden="true" size={30} strokeWidth={1.5} />
           </div>
-          <div className="cv-pdf-preview">
-            <img src={cvPreview} alt="Preview of Rey Jane Andrada's current one-page curriculum vitae" draggable={false} />
-          </div>
-          <div className="cv-mobile-preview">
-            <img src={cvPreview} alt="Preview of Rey Jane Andrada's one-page curriculum vitae" draggable={false} />
+          <div className="cv-pages">
+            {cvPages.map((page, index) => (
+              <div className="cv-page-sheet" key={page}>
+                <img
+                  src={page}
+                  width={1530}
+                  height={1980}
+                  alt={`Page ${index + 1} of ${cvPages.length} of Rey Jane Andrada's curriculum vitae`}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  draggable={false}
+                />
+              </div>
+            ))}
           </div>
         </section>
       </Reveal>
