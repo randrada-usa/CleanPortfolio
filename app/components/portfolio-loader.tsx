@@ -45,7 +45,7 @@ export function PortfolioLoader() {
       }}
     >
       <div className="portfolio-loader-word" aria-hidden="true">
-        <span>Loading /RJ</span>
+        <span data-text="Loading /RJ">Loading /RJ</span>
       </div>
       <span className="sr-only">Loading portfolio</span>
     </div>

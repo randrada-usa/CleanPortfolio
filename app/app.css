@@ -51,20 +51,39 @@ img { display: block; max-width: 100%; }
   transition: transform .42s cubic-bezier(.4,0,.2,1);
 }
 .portfolio-loader.is-exiting .portfolio-loader-word { transform: scale(.985); }
+/* Three stacked copies of the word give clean letters. The font builds letters like A, R and J
+   from overlapping shapes, so a plain text stroke would also trace their hidden inner edges.
+   1. The span: a stroke twice the visible width. Only its outer half shows.
+   2. ::before: the word filled with the background colour, covering the inner half and every overlap.
+   3. ::after: the word in solid ink, fill and stroke drawn together so filled letters have no seam,
+      revealed left to right by an animated clip. */
 .portfolio-loader-word span {
+  position: relative;
   display: block;
   color: transparent;
   white-space: nowrap;
-  -webkit-text-stroke: 2px var(--loader-ink, #151515);
-  background: linear-gradient(var(--loader-ink, #151515) 0 0) 0 / 0% 100% no-repeat;
-  background-clip: text;
-  -webkit-background-clip: text;
+  -webkit-text-stroke: 4px var(--loader-ink, #151515);
+}
+.portfolio-loader-word span::before,
+.portfolio-loader-word span::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+}
+.portfolio-loader-word span::before {
+  color: var(--loader-background, #fff);
+  -webkit-text-stroke: 0;
+}
+.portfolio-loader-word span::after {
+  color: var(--loader-ink, #151515);
+  -webkit-text-stroke: 4px var(--loader-ink, #151515);
+  clip-path: inset(-20% 100% -20% -10%);
   animation: loader-fill-sweep 2.2s cubic-bezier(.45,0,.2,1) infinite;
 }
 @keyframes loader-fill-sweep {
-  0% { background-size: 0% 100%; }
-  70%, 88% { background-size: 120% 100%; }
-  100% { background-size: 0% 100%; }
+  0% { clip-path: inset(-20% 100% -20% -10%); }
+  70%, 88% { clip-path: inset(-20% -20% -20% -10%); }
+  100% { clip-path: inset(-20% 100% -20% -10%); }
 }
 @keyframes loader-exit { to { opacity: 0; visibility: hidden; pointer-events: none; } }
 
@@ -154,15 +173,15 @@ img { display: block; max-width: 100%; }
 .menu-trigger:active { transform: scale(.92); }
 
 @media (min-width: 901px) {
-  html.home-scrollbar {
+  html:is(.home-scrollbar, :has(#home.hero)) {
     scrollbar-width: thin;
     scrollbar-color: #181818 #e5e5e1;
   }
-  html.home-scrollbar::-webkit-scrollbar { display: block; width: 10px; }
-  html.home-scrollbar::-webkit-scrollbar-track {
+  html:is(.home-scrollbar, :has(#home.hero))::-webkit-scrollbar { display: block; width: 10px; }
+  html:is(.home-scrollbar, :has(#home.hero))::-webkit-scrollbar-track {
     background: linear-gradient(to right, transparent calc(50% - .5px), #c7c7c3 calc(50% - .5px), #c7c7c3 calc(50% + .5px), transparent calc(50% + .5px));
   }
-  html.home-scrollbar::-webkit-scrollbar-thumb {
+  html:is(.home-scrollbar, :has(#home.hero))::-webkit-scrollbar-thumb {
     min-height: 56px;
     border: 3px solid transparent;
     border-radius: 999px;
@@ -747,7 +766,7 @@ img { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
   .portfolio-loader.is-exiting { animation-duration: .01ms; }
-  .portfolio-loader-word span { background-size: 100% 100%; animation: none; }
+  .portfolio-loader-word span::after { clip-path: none; animation: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
