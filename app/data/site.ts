@@ -170,7 +170,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/randrada-usa/ADS_website_2026",
     tags: ["Next.js 16", "React 19", "TypeScript", "Sanity", "GSAP", "styled-components"],
     role: "Web Development Lead",
-    team: "Augustinian Developer Society · 4-person development team",
+    team: "Augustinian Developer Society · 6-person development team",
     timeline: "Aug 30, 2026–Present · Awaiting launch",
     projectType: "Official Organization Website",
     challenge:
@@ -481,7 +481,7 @@ export const experience: Experience[] = [
     dates: "June 2026–Present",
     image: experienceAsset("ads-web-development-lead.webp"),
     summary:
-      "I lead the four-person team building ADS USA's official website, owning frontend development and turning the design direction into a responsive, accessible site.",
+      "I lead the six-person team building ADS USA's official website, owning frontend development and turning the design direction into a responsive, accessible site.",
     highlights: [
       "I implemented the homepage, navigation, organization story, initiatives, events, departments, team profiles, partners, and FAQs.",
       "I built reusable GSAP animation patterns with reduced-motion support so movement never hides content.",
