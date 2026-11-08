@@ -7,8 +7,9 @@ export default [
   route("projects/:slug", "routes/project-detail.tsx"),
   route("certifications", "routes/certifications.tsx"),
   route("certifications/:slug", "routes/certification-detail.tsx"),
+  route("experience", "routes/experience.tsx"),
   route("robots.txt", "routes/robots.ts"),
   route("sitemap.xml", "routes/sitemap.ts"),
-  route("*", "routes/not-found.tsx"),
   route("api/github-contributions", "routes/api.github-contributions.ts"),
+  route("*", "routes/not-found.tsx"),
 ] satisfies RouteConfig;

@@ -414,9 +414,14 @@ function ExperienceSection() {
             >
               <div><h3>{item.organization}</h3><p>{item.role}</p></div>
               <time>{item.dates}</time>
+              {/* Covers the whole row so it opens this role on the full experience page. */}
+              <Link className="experience-row-link" to={index === 0 ? "/experience" : `/experience#${item.slug}`} prefetch="intent" aria-label={`${item.role} at ${item.organization}: view details`} />
             </motion.div>
           ))}
         </div>
+        <Link className="experience-more" to="/experience" prefetch="intent">
+          See full experience <ArrowUpRight aria-hidden="true" size={16} />
+        </Link>
       </Reveal>
       <AnimatePresence initial={false}>
         {showPreviews && !reducedMotion && hoveredIndex !== null && experience[hoveredIndex]?.image && (
@@ -430,6 +435,7 @@ function ExperienceSection() {
             transition={{ duration: 0.2 }}
           >
             <img {...experiencePreviewImage(experience[hoveredIndex].image)} sizes="300px" alt="" decoding="async" />
+            <span className="experience-hover-label">View details <ArrowUpRight aria-hidden="true" size={14} /></span>
           </motion.div>
         )}
       </AnimatePresence>
