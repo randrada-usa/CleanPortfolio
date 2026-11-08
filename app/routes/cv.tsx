@@ -3,11 +3,11 @@ import { Download, ExternalLink, FileText } from "lucide-react";
 import { Footer, Header, Reveal } from "~/components/ui";
 import { canonicalMeta } from "~/lib/seo";
 
-const cvPdf = "/assets/cv/Rey-Jane-Andrada-CV-2026-11.pdf";
+const cvPdf = "/assets/cv/Rey-Jane-Andrada-CV-2026-11-v2.pdf";
 // One preview image per PDF page. Use new file names for each update so cached copies never show old pages.
 const cvPages = [
-  "/assets/cv/rey-jane-andrada-cv-2026-11-page-1.webp",
-  "/assets/cv/rey-jane-andrada-cv-2026-11-page-2.webp",
+  "/assets/cv/rey-jane-andrada-cv-2026-11-v2-page-1.webp",
+  "/assets/cv/rey-jane-andrada-cv-2026-11-v2-page-2.webp",
 ];
 
 export function headers() {
