@@ -60,6 +60,7 @@ type NavSection = typeof navLinks[number]["id"];
 function sectionFromPath(pathname: string): NavSection | null {
   if (pathname.startsWith("/projects")) return "projects";
   if (pathname.startsWith("/certifications")) return "certifications";
+  if (pathname.startsWith("/experience")) return "experience";
   return null;
 }
 

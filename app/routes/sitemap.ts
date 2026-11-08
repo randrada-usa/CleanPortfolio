@@ -17,6 +17,7 @@ export async function loader() {
     "/",
     "/projects",
     ...projects.map((project) => `/projects/${project.slug}`),
+    "/experience",
     "/certifications",
     ...certifications.map((certification) => `/certifications/${certification.slug}`),
     "/cv",

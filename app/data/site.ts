@@ -442,12 +442,94 @@ export const certificationCategories: CertificationCategory[] = [
   "Hackathons & Events",
 ];
 
-export const experience = [
-  { organization: "Institute of Computer Science", role: "Vice President for Technology", dates: "June 2026–Present", image: experienceAsset("institute-of-computer-science.webp") },
-  { organization: "Augustinian Developers Society", role: "Web Development Lead", dates: "June 2026–Present", image: experienceAsset("ads-web-development-lead.webp") },
-  { organization: "6-BYTE Studios", role: "CEO / Full-Stack Developer", dates: "June 2025–Present", image: experienceAsset("6-byte-studios.webp") },
-  { organization: "Holotech Society", role: "Vice Chairperson — External", dates: "June 2025–2026", image: experienceAsset("holotech-society.webp") },
-  { organization: "Augustinian Developers Society", role: "Senior Developer", dates: "Aug 2025–2026", image: experienceAsset("ads-senior-developer.webp") },
+export type Experience = {
+  /** Used for the /experience#slug link from the home page. */
+  slug: string;
+  organization: string;
+  role: string;
+  dates: string;
+  image: string;
+  /** Optional details shown on /experience. A role without them still shows its header. */
+  summary?: string;
+  highlights?: string[];
+  tools?: string[];
+  /** Project slugs. Unpublished projects are skipped on the live site. */
+  relatedProjects?: string[];
+};
+
+// DRAFT write-ups: drafted from the project case studies above. Review and correct them,
+// and add details for the roles that have none yet (ADS Senior Developer, Holotech's external work).
+export const experience: Experience[] = [
+  {
+    slug: "ics-vp-technology",
+    organization: "Institute of Computer Science",
+    role: "Vice President for Technology",
+    dates: "June 2026–Present",
+    image: experienceAsset("institute-of-computer-science.webp"),
+    summary:
+      "I lead the institute's technology work, building internal tools that replace paper forms and scattered spreadsheets with systems our members and organizers can rely on.",
+    highlights: [
+      "I led a three-person team through a two-week sprint to build ICSLink, our event platform for discovery, registration, QR ticketing, attendance, and reporting.",
+      "I set up code review before merge and continuous integration with 75 automated tests and 44 Playwright browser scenarios.",
+      "ICSLink supported 22 attendees and 44 check-in and checkout scans at its first live workshop, and was designed for 150 potential members.",
+    ],
+    tools: ["React", "TypeScript", "Supabase", "Cloudflare Pages", "Playwright"],
+    relatedProjects: ["icslink"],
+  },
+  {
+    slug: "ads-web-development-lead",
+    organization: "Augustinian Developers Society",
+    role: "Web Development Lead",
+    dates: "June 2026–Present",
+    image: experienceAsset("ads-web-development-lead.webp"),
+    summary:
+      "I lead the four-person team building ADS USA's official website, owning frontend development and turning the design direction into a responsive, accessible site.",
+    highlights: [
+      "I implemented the homepage, navigation, organization story, initiatives, events, departments, team profiles, partners, and FAQs.",
+      "I built reusable GSAP animation patterns with reduced-motion support so movement never hides content.",
+      "I integrated Sanity CMS with draft previews so the organization can keep its content up to date after launch.",
+    ],
+    tools: ["Next.js", "React", "TypeScript", "Sanity", "GSAP"],
+    relatedProjects: ["augustinian-developer-society-website"],
+  },
+  {
+    slug: "6-byte-studios",
+    organization: "6-BYTE Studios",
+    role: "CEO / Full-Stack Developer",
+    dates: "June 2025–Present",
+    image: experienceAsset("6-byte-studios.webp"),
+    summary:
+      "I founded and run 6-BYTE Studios, a six-person team that builds commissioned, camera-controlled games for festivals and community events.",
+    highlights: [
+      "I led development of Wave & Wish, a touchless festival game we built in seven days. It served 280+ players over seven hours with zero crashes.",
+      "I led Praise & Pray, a three-week paid commission for Estancia Baptist Church that serves 20–40 participants per weekend day.",
+      "I built the shared hand-tracking architecture with MediaPipe and OpenCV, and packaged the games to run reliably on Windows.",
+    ],
+    tools: ["Python", "Pygame", "OpenCV", "MediaPipe", "PyInstaller"],
+    relatedProjects: ["wave-and-wish", "praise-and-pray"],
+  },
+  {
+    slug: "holotech-society",
+    organization: "Holotech Society",
+    role: "Vice Chairperson — External",
+    dates: "June 2025–2026",
+    image: experienceAsset("holotech-society.webp"),
+    summary:
+      "I represented Holotech Society externally and supported its technical projects, including mentoring the junior team behind CSITeach.",
+    highlights: [
+      "I mentored junior developers on backend architecture for CSITeach, the society's student mentoring platform.",
+      "I led quality assurance across the mentor, mentee, and administrator experiences.",
+    ],
+    tools: ["Next.js", "TypeScript", "Supabase", "PostgreSQL"],
+    relatedProjects: ["csiteach"],
+  },
+  {
+    slug: "ads-senior-developer",
+    organization: "Augustinian Developers Society",
+    role: "Senior Developer",
+    dates: "Aug 2025–2026",
+    image: experienceAsset("ads-senior-developer.webp"),
+  },
 ];
 
 export const coreStack = {
