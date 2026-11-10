@@ -80,7 +80,7 @@ export default function ExperiencePage() {
       <Header inner backTo="/#experience" />
       <Reveal className="archive-main" amount={0.02}>
         <h1 className="archive-title">/EXPERIENCE</h1>
-        <p className="archive-count">{roles.length} roles · Building &amp; leading since 2023</p>
+        <p className="archive-count">Building &amp; leading since 2023</p>
         <div className="experience-layout">
           <nav className="experience-index" aria-label="Roles">
             {roles.map((role, index) => (
